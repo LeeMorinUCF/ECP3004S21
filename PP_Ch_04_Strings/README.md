@@ -1,18 +1,67 @@
 # PP_Ch_4_Strings
 
+## Creating Strings of Characters
 
 
 ```python 
->>> 'She said, "That' + "'" + 's hard to read."'
-'She said, "That\'s hard to read."'
+>>> 'Aristotle'
+'Aristotle'
+>>> "Isaac Newton"
+'Isaac Newton'
 
 ``` 
+
+```python 
+>>> 'Charles Darwin"
+  File "<stdin>", line 1
+    'Charles Darwin"
+                   ^
+SyntaxError: EOL while scanning string literal
+
+``` 
+
+
+
+```python 
+>>> ''
+''
+>>> ""
+''
+
+``` 
+
+### Operations on Strings
+
+
+
+```python 
+>>> len('Albert Einstein')
+15
+>>> len('123!')
+4
+>>> len(' ')
+1
+>>> len('')
+0
+
+``` 
+
+
 
 ```python 
 >>> 'Albert' + ' Einstein'
 'Albert Einstein'
 
 ``` 
+
+```python 
+>>> "Alan Turing" + ''
+'Alan Turing'
+>>> "" + 'Grace Hopper'
+'Grace Hopper'
+
+``` 
+
 
 ```python 
 >>> 'NH' + 3
@@ -33,58 +82,6 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 ```python 
 >>> 'Four score and ' + str(7) + ' years ago'
 'Four score and 7 years ago'
-
-``` 
-
-```python 
->>> ''
-''
->>> ""
-''
-
-``` 
-
-```python 
->>> "Alan Turing" + ''
-'Alan Turing'
->>> "" + 'Grace Hopper'
-'Grace Hopper'
-
-``` 
-
-```python 
->>> first = 'John'
->>> last = 'Doe'
->>> print(last + ', ' + first)
-``` 
-
-```python 
-def repeat(s: str, n: int) -> str:
-    """ Return s repeated n times; if n is negative, return the empty string.
-
-    >>> repeat('yes', 4)
-    'yesyesyesyes'
-    >>> repeat('no', 0)
-
-    >>> repeat('no', -2)
-
-    >>> repeat('yesnomaybe', 3)
-
-    """
-
-``` 
-
-```python 
-def total_length(s1: str, s2: str) -> int:
-    """ Return the sum of the lengths of s1 and s2.
-
-    >>> total_length('yes', 'no')
-    5
-    >>> total_length('yes', '')
-
-    >>> total_length('YES!!!!', 'Noooooo')
-
-    """
 
 ``` 
 
@@ -113,6 +110,69 @@ Traceback (most recent call last):
 ValueError: could not convert string to float: 'b'
 ``` 
 
+
+```python 
+>>> 'AT' * 5
+'ATATATATAT'
+>>> 4 * '-'
+'----'
+
+``` 
+
+```python 
+>>> 'GC' * 0
+''
+>>> 'TATATATA' * -3
+''
+
+``` 
+
+
+```python 
+>>> sequence = 'ATTGTCCCCC'
+>>> len(sequence)
+10
+>>> new_sequence = sequence + 'GGCCTCCTGC'
+>>> new_sequence
+'ATTGTCCCCCGGCCTCCTGC'
+>>> new_sequence * 2
+'ATTGTCCCCCGGCCTCCTGCATTGTCCCCCGGCCTCCTGC'
+``` 
+
+
+
+## using Special Characters in Strings
+
+
+```python 
+>>> 'that's not going to work'
+  File "<stdin>", line 1
+    'that's not going to work'
+          ^
+SyntaxError: invalid syntax
+
+``` 
+
+
+```python 
+>>> "that's better"
+"that's better"
+>>> 'She said, "That is better."'
+'She said, "That is better."'
+
+``` 
+
+
+
+
+```python 
+>>> 'She said, "That' + "'" + 's hard to read."'
+'She said, "That\'s hard to read."'
+
+``` 
+
+
+
 ```python 
 >>> len('\'')
 1
@@ -121,14 +181,9 @@ ValueError: could not convert string to float: 'b'
 
 ``` 
 
-```python 
->>> 'Charles Darwin"
-  File "<stdin>", line 1
-    'Charles Darwin"
-                   ^
-SyntaxError: EOL while scanning string literal
+## Creating a Multiline String
 
-``` 
+
 
 ```python 
 >>> 'one
@@ -145,12 +200,9 @@ SyntaxError: EOL while scanning string literal
 'one\ntwo\nthree'
 ``` 
 
-```python 
-'''Should you want a string
-that crosses multiple lines,
-Use matched triple quotes.'''
 
-``` 
+## Printing Information
+
 
 ```python 
 >>> print(1 + 1)
@@ -177,6 +229,56 @@ three	four
 
 ``` 
 
+
+```python 
+>>> numbers = '''one
+... two
+... three'''
+>>> numbers
+'one\ntwo\nthree'
+>>> print(numbers)
+one
+two
+three
+
+``` 
+
+
+
+```python 
+'''Should you want a string
+that crosses multiple lines,
+Use matched triple quotes.'''
+
+``` 
+
+```python 
+>>> print(1, 2, 3)
+1 2 3
+>>>
+``` 
+
+```python 
+>>> print()
+
+>>> 
+``` 
+
+```python 
+>>> print(1, 'two', 'three', 4.0)
+1 two three 4.0
+``` 
+
+
+```python 
+>>> radius = 5
+>>> print("The diameter of the circle is", radius * 2, "cm.")
+The diameter of the circle is 10 cm.
+
+``` 
+
+
+
 ```python 
 >>> help(print)
 Help on built-in function print in module builtins:
@@ -195,7 +297,8 @@ a b c
 >>> print('a', 'b', 'c', sep=', ')
 a, b, c
 >>> print('a', 'b', 'c', sep=', ', end='')
-a, b, c>>>
+a, b, c
+>>>
 
 ``` 
 
@@ -216,106 +319,10 @@ print(convert_to_celsius(10.4), end=' Celsius.\n')
 
 ``` 
 
-```python 
->>> print(1, 'two', 'three', 4.0)
-1 two three 4.0
-``` 
 
-```python 
->>> numbers = '''one
-... two
-... three'''
->>> numbers
-'one\ntwo\nthree'
->>> print(numbers)
-one
-two
-three
+## Getting Information from the Keyboard
 
-``` 
 
-```python 
->>> print(1, 2, 3)
-1 2 3
->>>
-``` 
-
-```python 
->>> print()
-
->>> 
-``` 
-
-```python 
->>> radius = 5
->>> print("The diameter of the circle is", radius * 2, "cm.")
-The diameter of the circle is 10 cm.
-
-``` 
-
-```python 
->>> 'AT' * 5
-'ATATATATAT'
->>> 4 * '-'
-'----'
-
-``` 
-
-```python 
->>> 'GC' * 0
-''
->>> 'TATATATA' * -3
-''
-
-``` 
-
-```python 
->>> "that's better"
-"that's better"
->>> 'She said, "That is better."'
-'She said, "That is better."'
-
-``` 
-
-```python 
->>> 'that's not going to work'
-  File "<stdin>", line 1
-    'that's not going to work'
-          ^
-SyntaxError: invalid syntax
-
-``` 
-
-```python 
->>> 'Aristotle'
-'Aristotle'
->>> "Isaac Newton"
-'Isaac Newton'
-
-``` 
-
-```python 
->>> sequence = 'ATTGTCCCCC'
->>> len(sequence)
-10
->>> new_sequence = sequence + 'GGCCTCCTGC'
->>> new_sequence
-'ATTGTCCCCCGGCCTCCTGC'
->>> new_sequence * 2
-'ATTGTCCCCCGGCCTCCTGCATTGTCCCCCGGCCTCCTGC'
-``` 
-
-```python 
->>> len('Albert Einstein')
-15
->>> len('123!')
-4
->>> len(' ')
-1
->>> len('')
-0
-
-``` 
 
 ```python 
 >>> species = input()
@@ -360,4 +367,50 @@ Please enter a species: Python curtus
 Python curtus
 
 ``` 
+
+
+
+
+## Exercises
+
+
+
+```python 
+>>> first = 'John'
+>>> last = 'Doe'
+>>> print(last + ', ' + first)
+``` 
+
+```python 
+def repeat(s: str, n: int) -> str:
+    """ Return s repeated n times; if n is negative, return the empty string.
+
+    >>> repeat('yes', 4)
+    'yesyesyesyes'
+    >>> repeat('no', 0)
+
+    >>> repeat('no', -2)
+
+    >>> repeat('yesnomaybe', 3)
+
+    """
+
+``` 
+
+```python 
+def total_length(s1: str, s2: str) -> int:
+    """ Return the sum of the lengths of s1 and s2.
+
+    >>> total_length('yes', 'no')
+    5
+    >>> total_length('yes', '')
+
+    >>> total_length('YES!!!!', 'Noooooo')
+
+    """
+
+``` 
+
+
+
 
