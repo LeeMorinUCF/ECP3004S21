@@ -1,17 +1,15 @@
 # PP_Ch_5_Boolean
 
+## A Boolean Type
+
+### Boolean Operators
 
 
 ```python 
-ph = float(input("Enter the ph level: "))
-if ph < 7.0:
-    print("It's acidic!")
-elif ph < 4.0:
-    print("It's a strong acid!")
-``` 
-
-```python 
->>> x = 15 > 5
+>>> not True
+False
+>>> not False
+True
 
 ``` 
 
@@ -28,22 +26,14 @@ False
 ``` 
 
 ```python 
->>> b1 = False
->>> b2 = False
->>> (b1 and not b2) or (b2 and not b1)
-False
->>> b1 = False
->>> b2 = True
->>> (b1 and not b2) or (b2 and not b1)
+>>> True or True
 True
->>> b1 = True
->>> b2 = False
->>> (b1 and not b2) or (b2 and not b1)
-True
->>> b1 = True
->>> b2 = True
->>> (b1 and not b2) or (b2 and not b1)
+>>> False or False
 False
+>>> True or False
+True
+>>> False or True
+True
 
 ``` 
 
@@ -57,282 +47,34 @@ True
 
 ``` 
 
+
+
+#### Building an Exclusive ```or``` Expression
+
+
 ```python 
->>> not True
+>>> b1 = False
+>>> b2 = False
+>>> (b1 and not b2) or (b2 and not b1)
 False
->>> not False
+>>> b1 = False
+>>> b2 = True
+>>> (b1 and not b2) or (b2 and not b1)
 True
-
-``` 
-
-```python 
->>> True or True
+>>> b1 = True
+>>> b2 = False
+>>> (b1 and not b2) or (b2 and not b1)
 True
->>> False or False
-False
->>> True or False
-True
->>> False or True
-True
-
-``` 
-
-```python 
->>> x = 3
->>> 1 < x <= 5
-True
-
-``` 
-
-```python 
->>> 3 < 5 != True
-True
->>> 3 < 5 != False
-True
-
-``` 
-
-```python 
->>> x = 3
->>> (1 < x) and (x <= 5)
-True
->>> x = 7
->>> (1 < x) and (x <= 5)
+>>> b1 = True
+>>> b2 = True
+>>> (b1 and not b2) or (b2 and not b1)
 False
 
 ``` 
 
-```python 
->>> 1 / 0
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-ZeroDivisionError: division by zero
-``` 
 
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 8.5
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-... elif ph > 7.0:
-...     print(ph, "is basic.")
-...
-8.5 is basic.
->>>
+### Relational Operators
 
-``` 
-
-```python 
->>> compound = input('Enter the compound: ')
-Enter the compound: CH4
->>> if compound == "H2O":
-...     print("Water")
-... elif compound == "NH3":
-...     print("Ammonia")
-... elif compound == "CH4":
-...     print("Methane")
-...
-Methane
->>>
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 7.0
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-... elif ph > 7.0:
-...     print(ph, "is basic.")
-...
->>>
-
-``` 
-
-```python 
->>> ph = 2
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-... elif ph < 3.0:
-...     print(ph, "is VERY acidic! Be careful.")
-...
-2 is acidic.
-``` 
-
-```python 
->>> compound = input('Enter the compound: ')
-Enter the compound: H2SO4
->>> if compound == "H2O":
-...     print("Water")
-... elif compound == "NH3":
-...     print("Ammonia")
-... elif compound == "CH4":
-...     print("Methane")
-... else:
-...     print("Unknown compound")
-...
-Unknown compound
->>>
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 8.0
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-...
->>>
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 6.0
->>> if ph < 7.0: 
-...     print(ph, "is acidic.")
-... 
-6.0 is acidic.
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 6.0
->>> if ph < 7.0:
-...     ph = 8.0
-...
->>> if ph > 7.0:
-...     print(ph, "is acidic.")
-...
-8.0 is acidic.
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 6.0
->>> if ph < 7.0:
-...     ph = 8.0
->>> elif ph > 7.0:
-...     print(ph, "is acidic.")
-...
->>>
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 6
->>> if ph < 7.0:
-... print(ph, "is acidic.")
-  File "<stdin>", line 2
-    print(ph, "is acidic.")
-        ^
-IndentationError: expected an indented block
-``` 
-
-```python 
-ph = 8.0
-if ph < 7.0:
-    print(ph, "is acidic.")
-print("You should be careful with that!")
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 6.0
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-...     print("You should be careful with that!")
-... 
-6.0 is acidic.
-You should be careful with that!
-
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 8.0
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-... 
->>> print("You should be careful with that!")
-You should be careful with that!
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 8.0
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-... print("You should be careful with that!")
-  File "<stdin>", line 3
-    print("You should be careful with that!")
-        ^
-SyntaxError: invalid syntax
-``` 
-
-```python 
->>> ph = float(input('Enter the pH level: '))
-Enter the pH level: 8.5
->>> if ph < 7.0:
-...     print(ph, "is acidic.")
-...
->>> if ph > 7.0:
-...     print(ph, "is basic.")
-...
-8.5 is basic.
->>>
-
-``` 
-
-```python 
-value = input('Enter the pH level: ')
-if len(value) > 0:
-    ph = float(value)
-    if ph < 7.0:
-        print(ph, "is acidic.")
-    elif ph > 7.0:
-        print(ph, "is basic.")
-    else:
-        print(ph, "is neutral.")
-else:
-    print("No pH value was given!")
-
-``` 
-
-```python 
->>> not 0
-True
->>> not 1
-False
->>> not 34.2
-False
->>> not -87
-False
-
-``` 
-
-```python 
->>> not ''
-True
->>> not 'bad'
-False
-
-``` 
-
-```python 
->>> (2 < 3) or (1 / 0)
-True
-
-``` 
-
-```python 
->>> x = 5
->>> y = 10
->>> z = 20
->>> (x < y) and (y < z)
-True
-
-``` 
 
 ```python 
 >>> 45 > 34
@@ -390,6 +132,10 @@ False
 
 ``` 
 
+
+### Combining Comparisons
+
+
 ```python 
 >>> x = 2
 >>> y = 5
@@ -398,6 +144,88 @@ False
 True
 
 ``` 
+
+```python 
+>>> x = 5
+>>> y = 10
+>>> z = 20
+>>> (x < y) and (y < z)
+True
+
+``` 
+
+```python 
+>>> x = 3
+>>> (1 < x) and (x <= 5)
+True
+>>> x = 7
+>>> (1 < x) and (x <= 5)
+False
+
+``` 
+
+
+```python 
+>>> x = 3
+>>> 1 < x <= 5
+True
+
+``` 
+
+```python 
+>>> 3 < 5 != True
+True
+>>> 3 < 5 != False
+True
+
+``` 
+
+#### Using Numbers and Strings with Boolean Operators
+
+```python 
+>>> not 0
+True
+>>> not 1
+False
+>>> not 34.2
+False
+>>> not -87
+False
+
+``` 
+
+```python 
+>>> not ''
+True
+>>> not 'bad'
+False
+
+``` 
+
+
+
+### Short Circuit Evaluation
+
+
+```python 
+>>> 1 / 0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: division by zero
+
+``` 
+
+```python 
+>>> (2 < 3) or (1 / 0)
+True
+
+``` 
+
+
+
+
+### Comparing Strings
+
 
 ```python 
 >>> 'A' < 'a'
@@ -434,4 +262,255 @@ True
 True
 
 ``` 
+
+
+
+
+## Choosing Which Statements to Execute
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 6.0
+>>> if ph < 7.0: 
+...     print(ph, "is acidic.")
+... 
+6.0 is acidic.
+
+``` 
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 8.0
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+...
+>>>
+
+``` 
+
+
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 6
+>>> if ph < 7.0:
+... print(ph, "is acidic.")
+  File "<stdin>", line 2
+    print(ph, "is acidic.")
+        ^
+IndentationError: expected an indented block
+``` 
+
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 6.0
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+...     print("You should be careful with that!")
+... 
+6.0 is acidic.
+You should be careful with that!
+
+``` 
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 8.0
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+... 
+>>> print("You should be careful with that!")
+You should be careful with that!
+``` 
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 8.0
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+... print("You should be careful with that!")
+  File "<stdin>", line 3
+    print("You should be careful with that!")
+        ^
+SyntaxError: invalid syntax
+``` 
+
+
+```python 
+ph = 8.0
+if ph < 7.0:
+    print(ph, "is acidic.")
+print("You should be careful with that!")
+
+``` 
+
+
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 8.5
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+...
+>>> if ph > 7.0:
+...     print(ph, "is basic.")
+...
+8.5 is basic.
+>>>
+
+``` 
+
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 8.5
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+... elif ph > 7.0:
+...     print(ph, "is basic.")
+...
+8.5 is basic.
+>>>
+
+``` 
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 7.0
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+... elif ph > 7.0:
+...     print(ph, "is basic.")
+...
+>>>
+
+``` 
+
+
+
+```python 
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 6.0
+>>> if ph < 7.0:
+...     ph = 8.0
+...
+>>> if ph > 7.0:
+...     print(ph, "is acidic.")
+...
+8.0 is acidic.
+>>> ph = float(input('Enter the pH level: '))
+Enter the pH level: 6.0
+>>> if ph < 7.0:
+...     ph = 8.0
+>>> elif ph > 7.0:
+...     print(ph, "is acidic.")
+...
+>>>
+
+``` 
+
+
+
+
+
+
+```python 
+>>> compound = input('Enter the compound: ')
+Enter the compound: CH4
+>>> if compound == "H2O":
+...     print("Water")
+... elif compound == "NH3":
+...     print("Ammonia")
+... elif compound == "CH4":
+...     print("Methane")
+...
+Methane
+>>>
+
+``` 
+
+```python 
+>>> compound = input('Enter the compound: ')
+Enter the compound: H2SO4
+>>> if compound == "H2O":
+...     print("Water")
+... elif compound == "NH3":
+...     print("Ammonia")
+... elif compound == "CH4":
+...     print("Methane")
+... else:
+...     print("Unknown compound")
+...
+Unknown compound
+>>>
+
+``` 
+
+
+## Nested ```if``` Statements
+
+
+
+```python 
+value = input('Enter the pH level: ')
+if len(value) > 0:
+    ph = float(value)
+    if ph < 7.0:
+        print(ph, "is acidic.")
+    elif ph > 7.0:
+        print(ph, "is basic.")
+    else:
+        print(ph, "is neutral.")
+else:
+    print("No pH value was given!")
+
+``` 
+
+
+
+## Remembering Results of a Boolean Expression Evaluation
+
+
+
+```python 
+>>> x = 15 > 5
+
+
+``` 
+
+
+
+
+## Exercises
+
+
+
+
+```python 
+ph = float(input("Enter the ph level: "))
+if ph < 7.0:
+    print("It's acidic!")
+elif ph < 4.0:
+    print("It's a strong acid!")
+``` 
+
+
+```python 
+>>> ph = 2
+>>> if ph < 7.0:
+...     print(ph, "is acidic.")
+... elif ph < 3.0:
+...     print(ph, "is VERY acidic! Be careful.")
+...
+2 is acidic.
+``` 
+
 
