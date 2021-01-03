@@ -1,5 +1,595 @@
 # PP_Ch_9_Loops
 
+# Repeating Code Using Loops
+
+## Processing Items in a List
+
+```python 
+>>> velocities = [0.0, 9.81, 19.62, 29.43]
+>>> print('Metric:', velocities[0], 'm/sec;',
+... 'Imperial:', velocities[0] * 3.28, 'ft/sec')
+Metric: 0.0 m/sec; Imperial: 0.0 ft/sec
+>>> print('Metric:', velocities[1], 'm/sec;',
+... 'Imperial:', velocities[1] * 3.28, 'ft/sec')
+Metric: 9.81 m/sec; Imperial: 32.1768 ft/sec
+>>> print('Metric:', velocities[2], 'm/sec; ',
+... 'Imperial:', velocities[2] * 3.28, 'ft/sec')
+Metric: 19.62 m/sec; Imperial: 64.3536 ft/sec
+>>> print('Metric:', velocities[3], 'm/sec; ',
+... 'Imperial:', velocities[3] * 3.28, 'ft/sec')
+Metric: 29.43 m/sec; Imperial: 96.5304 ft/sec
+
+``` 
+
+
+
+```python 
+>>> velocities = [0.0, 9.81, 19.62, 29.43]
+>>> for velocity in velocities:
+...     print('Metric:', velocity, 'm/sec;',
+...     'Imperial:', velocity * 3.28, 'ft/sec')
+...
+Metric: 0.0 m/sec; Imperial: 0.0 ft/sec
+Metric: 9.81 m/sec; Imperial: 32.1768 ft/sec
+Metric: 19.62 m/sec; Imperial: 64.3536 ft/sec
+Metric: 29.43 m/sec; Imperial: 96.5304 ft/sec
+
+``` 
+
+
+
+```python 
+>>> speed = 2
+>>> velocities = [0.0, 9.81, 19.62, 29.43]
+>>> for speed in velocities:
+...     print('Metric:', speed, 'm/sec')
+... 
+Metric: 0.0 m/sec
+Metric: 9.81 m/sec
+Metric: 19.62 m/sec
+Metric: 29.43 m/sec
+>>> print('Final:', speed)
+Final: 29.43
+
+``` 
+
+
+## Processing Characters in Strings
+
+```python 
+>>> country = 'United States of America'
+>>> for ch in country:
+...     if ch.isupper():
+...         print(ch)
+... 
+U
+S
+A
+
+``` 
+
+## Looping Over a Range of Numbers
+
+
+```python 
+>>> range(10)
+range(0, 10)
+``` 
+
+```python 
+>>> for num in range(10):
+...     print(num)
+... 
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+``` 
+
+
+```python 
+>>> list(range(10))
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+``` 
+
+```python 
+>>> list(range(3))
+[0, 1, 2]
+>>> list(range(1))
+[0]
+>>> list(range(0))
+[]
+``` 
+
+
+```python 
+>>> list(range(1, 5))
+[1, 2, 3, 4]
+>>> list(range(1, 10))
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> list(range(5, 10))
+[5, 6, 7, 8, 9]
+
+``` 
+
+```python 
+>>> list(range(2000, 2050, 4))
+[2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048]
+
+``` 
+
+```python 
+>>> list(range(2050, 2000, -4))
+[2050, 2046, 2042, 2038, 2034, 2030, 2026, 2022, 2018, 2014, 2010, 2006, 2002]
+
+``` 
+
+```python 
+>>> list(range(2000, 2050, -4))
+[]
+>>> list(range(2050, 2000, 4))
+[]
+
+``` 
+
+```python 
+>>> total = 0
+>>> for i in range(1, 101):
+...     total = total + i
+... 
+>>> total
+5050
+
+``` 
+
+
+## Processing Lists Using Indices
+
+
+
+
+
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> for num in values:
+...     num = num * 2
+... 
+>>> values
+[4, 10, 3, 8, -6]
+``` 
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> for num in values:
+...     num = num * 2
+...     print(num)
+... 
+8
+20
+6
+16
+-12
+>>> print(values)
+[4, 10, 3, 8, -6]
+
+``` 
+
+
+
+
+
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> len(values)
+5
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+>>> list(range(len(values)))
+[0, 1, 2, 3, 4]
+
+``` 
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> for i in range(len(values)):
+...     print(i)
+... 
+0
+1
+2
+3
+4
+``` 
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> for i in range(len(values)):
+...     print(i, values[i])
+... 
+0 4
+1 10
+2 3
+3 8
+4 -6
+
+``` 
+
+```python 
+>>> values = [4, 10, 3, 8, -6]
+>>> for i in range(len(values)):
+...     values[i] = values[i] * 2
+... 
+>>> values
+[8, 20, 6, 16, -12]
+``` 
+
+
+
+### Processing Parallel Lists Using Indices
+
+
+```python 
+>>> metals = ['Li', 'Na', 'K']
+>>> weights = [6.941, 22.98976928, 39.0983]
+``` 
+
+
+
+
+```python 
+>>> metals = ['Li', 'Na', 'K']
+>>> weights = [6.941, 22.98976928, 39.0983]
+>>> for i in range(len(metals)):
+...     print(metals[i], weights[i])
+... 
+Li 6.941
+Na 22.98976928
+K 39.0983
+``` 
+
+## Nesting Loops in Loops
+
+
+
+```python 
+>>> outer = ['Li', 'Na', 'K']
+>>> inner = ['F', 'Cl', 'Br']
+>>> for metal in outer:
+...     for halogen in inner:
+...         print(metal + halogen)
+...
+...
+LiF
+LiCl
+LiBr
+NaF
+NaCl
+NaBr
+KF
+KCl
+KBr
+
+``` 
+
+
+
+
+```python 
+def print_table(n: int) -> None:
+    """Print the multiplication table for numbers 1 through n inclusive.
+
+    >>> print_table(5)
+        1       2       3       4       5
+    1   1       2       3       4       5
+    2   2       4       6       8       10
+    3   3       6       9       12      15
+    4   4       8       12      16      20
+    5   5       10      15      20      25
+    """
+    # The numbers to include in the table.
+    numbers = list(range(1, n + 1))
+
+    # Print the header row.
+    for i in numbers:
+        print('\t' + str(i), end='')
+
+    # End the header row.
+    print()
+
+    # Print each row number and the contents of each row.
+    for i in numbers:  #(1)
+
+        print (i, end='')  #(2)
+        for j in numbers:   #(3)
+            print('\t' + str(i * j), end='') #(4)
+
+        # End the current row.
+        print() #(5)
+
+``` 
+
+
+
+### Looping Over Nested Lists
+
+
+```python 
+>>> elements = [['Li', 'Na', 'K'], ['F', 'Cl', 'Br']]
+>>> for inner_list in elements:
+...     print(inner_list)
+... 
+['Li', 'Na', 'K']
+['F', 'Cl', 'Br']
+
+``` 
+
+```python 
+>>> elements = [['Li', 'Na', 'K'], ['F', 'Cl', 'Br']]
+>>> for inner_list in elements:
+...     for item in inner_list:
+...         print(item)
+... 
+Li
+Na
+K
+F
+Cl
+Br
+``` 
+
+
+
+
+
+### Looping Over Ragged Lists
+
+
+```python 
+>>> info = [['Isaac Newton', 1643, 1727],
+...         ['Charles Darwin', 1809, 1882],
+...         ['Alan Turing', 1912, 1954, 'alan@bletchley.uk']]
+>>> for item in info:
+...     print(len(item))
+...
+3
+3
+4
+
+``` 
+
+```python 
+>>> drinking_times_by_day = [["9:02", "10:17", "13:52", "18:23", "21:31"],
+...                          ["8:45", "12:44", "14:52", "22:17"],
+...                          ["8:55", "11:11", "12:34", "13:46",
+...                           "15:52", "17:08", "21:15"],
+...                          ["9:15", "11:44", "16:28"],
+...                          ["10:01", "13:33", "16:45", "19:00"],
+...                          ["9:34", "11:16", "15:52", "20:37"],
+...                          ["9:01", "12:24", "18:51", "23:13"]]
+>>> for day in drinking_times_by_day:
+...     for drinking_time in day:
+...         print(drinking_time, end=' ')
+...     print()
+...
+9:02 10:17 13:52 18:23 21:31
+8:45 12:44 14:52 22:17
+8:55 11:11 12:34 13:46 15:52 17:08 21:15
+9:15 11:44 16:28
+10:01 13:33 16:45 19:00
+9:34 11:16 15:52 20:37
+9:01 12:24 18:51 23:13
+``` 
+
+
+
+
+## Looping Until a Condition is Reached
+
+```python 
+>>> rabbits = 3
+>>> while rabbits > 0:
+...     print(rabbits)
+...     rabbits = rabbits - 1
+...
+3
+2
+1
+
+``` 
+
+```python 
+time = 0
+population = 1000   # 1000 bacteria to start with
+growth_rate = 0.21 # 21% growth per minute
+while population < 2000:
+    population = population + growth_rate * population
+    print(round(population))
+    time = time + 1
+	
+print("It took", time, "minutes for the bacteria to double.")
+print("The final population was", round(population), "bacteria.")
+
+``` 
+
+```python 
+1210
+1464
+1772
+2144
+It took 4 minutes for the bacteria to double.
+The final population was 2144 bacteria.
+``` 
+
+
+### Infinite Loops
+
+```python 
+# Use multivalued assignment to set up controls
+time, population, growth_rate = 0, 1000, 0.21
+
+# Don't stop until we're exactly double the original size
+while population != 2000:
+    population = population + growth_rate * population
+    print(round(population))
+    time = time + 1
+
+print("It took", time, "minutes for the bacteria to double.")
+
+``` 
+
+```python 
+1210
+1464
+1772
+2144
+...3,680 lines or so later...
+inf
+inf
+inf
+...and so on forever...
+``` 
+
+
+## Repetition Based on User Input
+
+```python 
+text = ""
+while text != "quit":
+    text = input("Please enter a chemical formula (or 'quit' to exit): ")
+    if text == "quit":
+        print("...exiting program")
+    elif text == "H2O":
+        print("Water")
+    elif text == "NH3":
+        print("Ammonia")
+    elif text == "CH4":
+        print("Methane")
+    else:
+        print("Unknown compound")
+
+``` 
+
+
+```python 
+Please enter a chemical formula (or 'quit' to exit): CH4
+Methane
+Please enter a chemical formula (or 'quit' to exit): H2O
+Water
+Please enter a chemical formula (or 'quit' to exit): quit
+...exiting program
+
+``` 
+
+
+
+## Controlling Loops Using ```beark``` and ```continue```
+
+### The ```break``` Statement
+
+
+```python 
+while True:
+    text = input("Please enter a chemical formula (or 'quit' to exit): ")
+    if text == "quit":
+        print("...exiting program")
+        break
+    elif text == "H2O":
+        print("Water")
+    elif text == "NH3":
+        print("Ammonia")
+    elif text == "CH4":
+        print("Methane")
+    else:
+        print("Unknown compound")
+
+``` 
+
+
+
+```python 
+>>> s = 'C3H7'
+>>> digit_index = -1 # This will be -1 until we find a digit.
+>>> for i in range(len(s)):
+...     # If we haven't found a digit, and s[i] is a digit
+...     if digit_index == -1 and s[i].isdigit():
+...         digit_index = i
+...
+>>> digit_index
+1
+``` 
+
+
+```python 
+>>> s = 'C3H7'
+>>> digit_index = -1 # This will be -1 until we find a digit.
+>>> for i in range(len(s)):
+...     # If we find a digit
+...     if s[i].isdigit():
+...         digit_index = i
+...         break  # This exits the loop.
+...
+>>> digit_index
+1
+``` 
+
+
+### The ```continue``` Statement
+
+
+
+```python 
+>>> s = 'C3H7'                   
+>>> total = 0                    
+>>> count = 0                    
+>>> for i in range(len(s)):      
+...     if not s[i].isalpha():
+...         total = total + int(s[i])
+...         count = count + 1
+... 
+>>> total
+10
+>>> count
+2
+
+``` 
+
+```python 
+>>> s = 'C3H7'
+>>> total = 0 # The sum of the digits seen so far.
+>>> count = 0 # The number of digits seen so far.
+>>> for i in range(len(s)):
+...     if s[i].isalpha():
+...         continue
+...     total = total + int(s[i])
+...     count = count + 1
+...
+>>> total
+10
+>>> count
+2
+
+``` 
+
+### A Warning About ```break``` and ```continue```
+
+
+
+
+
+
+
+
+## Additional Code Snippets
 
 
 ```python 
@@ -26,39 +616,6 @@ def f(a, b, c):
     print('hola')
   else:
     print('Select a language')
-
-``` 
-
-```python 
->>> s = 'C3H7'
->>> total = 0 # The sum of the digits seen so far.
->>> count = 0 # The number of digits seen so far.
->>> for i in range(len(s)):
-...     if s[i].isalpha():
-...         continue
-...     total = total + int(s[i])
-...     count = count + 1
-...
->>> total
-10
->>> count
-2
-
-``` 
-
-```python 
->>> s = 'C3H7'                   
->>> total = 0                    
->>> count = 0                    
->>> for i in range(len(s)):      
-...     if not s[i].isalpha():
-...         total = total + int(s[i])
-...         count = count + 1
-... 
->>> total
-10
->>> count
-2
 
 ``` 
 
@@ -129,49 +686,6 @@ def count_fragments(fragment, dna):
 
 ``` 
 
-```python 
->>> info = [['Isaac Newton', 1643, 1727],
-...         ['Charles Darwin', 1809, 1882],
-...         ['Alan Turing', 1912, 1954, 'alan@bletchley.uk']]
->>> for item in info:
-...     print(len(item))
-...
-3
-3
-4
-
-``` 
-
-```python 
->>> s = 'C3H7'
->>> digit_index = -1 # This will be -1 until we find a digit.
->>> for i in range(len(s)):
-...     # If we find a digit
-...     if s[i].isdigit():
-...         digit_index = i
-...         break  # This exits the loop.
-...
->>> digit_index
-1
-``` 
-
-```python 
->>> s = 'C3H7'
->>> digit_index = -1 # This will be -1 until we find a digit.
->>> for i in range(len(s)):
-...     # If we haven't found a digit, and s[i] is a digit
-...     if digit_index == -1 and s[i].isdigit():
-...         digit_index = i
-...
->>> digit_index
-1
-
-
-
-
-
-
-``` 
 
 ```python 
 >>> for x in enumerate('abc'):
@@ -303,72 +817,6 @@ media.show(lake)
 ``` 
 
 ```python 
->>> total = 0
->>> for i in range(1, 101):
-...     total = total + i
-... 
->>> total
-5050
-
-``` 
-
-```python 
->>> list(range(2000, 2050, 4))
-[2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048]
-
-``` 
-
-```python 
->>> list(range(2050, 2000, -4))
-[2050, 2046, 2042, 2038, 2034, 2030, 2026, 2022, 2018, 2014, 2010, 2006, 2002]
-
-``` 
-
-```python 
->>> list(range(2000, 2050, -4))
-[]
->>> list(range(2050, 2000, 4))
-[]
-
-``` 
-
-```python 
->>> metals = ['Li', 'Na', 'K']
->>> weights = [6.941, 22.98976928, 39.0983]
->>> for i in range(len(metals)):
-...     print(metals[i], weights[i])
-... 
-Li 6.941
-Na 22.98976928
-K 39.0983
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> for num in values:
-...     num = num * 2
-... 
->>> values
-[4, 10, 3, 8, -6]
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> for num in values:
-...     num = num * 2
-...     print(num)
-... 
-8
-20
-6
-16
--12
->>> print(values)
-[4, 10, 3, 8, -6]
-
-``` 
-
-```python 
 import media
 baseball = media.load_picture('baseball.png')
 lake = media.load_picture('lake.png')
@@ -381,40 +829,6 @@ for y in range(0, height):
         to_p = media.get_pixel(lake, 50 + x, 25 + y)
         media.set_color(to_p, media.get_color(from_p))
 media.show(lake)
-
-``` 
-
-```python 
-def print_table(n: int) -> None:
-    """Print the multiplication table for numbers 1 through n inclusive.
-
-    >>> print_table(5)
-        1       2       3       4       5
-    1   1       2       3       4       5
-    2   2       4       6       8       10
-    3   3       6       9       12      15
-    4   4       8       12      16      20
-    5   5       10      15      20      25
-    """
-    # The numbers to include in the table.
-    numbers = list(range(1, n + 1))
-
-    # Print the header row.
-    for i in numbers:
-        print('\t' + str(i), end='')
-
-    # End the header row.
-    print()
-
-    # Print each row number and the contents of each row.
-    for i in numbers:  #(1)
-
-        print (i, end='')  #(2)
-        for j in numbers:   #(3)
-            print('\t' + str(i * j), end='') #(4)
-
-        # End the current row.
-        print() #(5)
 
 ``` 
 
@@ -446,115 +860,6 @@ def print_table(n: int) -> None:
 ``` 
 
 ```python 
->>> drinking_times_by_day = [["9:02", "10:17", "13:52", "18:23", "21:31"],
-...                          ["8:45", "12:44", "14:52", "22:17"],
-...                          ["8:55", "11:11", "12:34", "13:46",
-...                           "15:52", "17:08", "21:15"],
-...                          ["9:15", "11:44", "16:28"],
-...                          ["10:01", "13:33", "16:45", "19:00"],
-...                          ["9:34", "11:16", "15:52", "20:37"],
-...                          ["9:01", "12:24", "18:51", "23:13"]]
->>> for day in drinking_times_by_day:
-...     for drinking_time in day:
-...         print(drinking_time, end=' ')
-...     print()
-...
-9:02 10:17 13:52 18:23 21:31
-8:45 12:44 14:52 22:17
-8:55 11:11 12:34 13:46 15:52 17:08 21:15
-9:15 11:44 16:28
-10:01 13:33 16:45 19:00
-9:34 11:16 15:52 20:37
-9:01 12:24 18:51 23:13
-``` 
-
-```python 
->>> elements = [['Li', 'Na', 'K'], ['F', 'Cl', 'Br']]
->>> for inner_list in elements:
-...     for item in inner_list:
-...         print(item)
-... 
-Li
-Na
-K
-F
-Cl
-Br
-``` 
-
-```python 
->>> metals = ['Li', 'Na', 'K']
->>> weights = [6.941, 22.98976928, 39.0983]
-``` 
-
-```python 
->>> country = 'United States of America'
->>> for ch in country:
-...     if ch.isupper():
-...         print(ch)
-... 
-U
-S
-A
-
-``` 
-
-```python 
->>> list(range(1, 5))
-[1, 2, 3, 4]
->>> list(range(1, 10))
-[1, 2, 3, 4, 5, 6, 7, 8, 9]
->>> list(range(5, 10))
-[5, 6, 7, 8, 9]
-
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> len(values)
-5
->>> list(range(5))
-[0, 1, 2, 3, 4]
->>> list(range(len(values)))
-[0, 1, 2, 3, 4]
-
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> for i in range(len(values)):
-...     print(i)
-... 
-0
-1
-2
-3
-4
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> for i in range(len(values)):
-...     print(i, values[i])
-... 
-0 4
-1 10
-2 3
-3 8
-4 -6
-
-``` 
-
-```python 
->>> values = [4, 10, 3, 8, -6]
->>> for i in range(len(values)):
-...     values[i] = values[i] * 2
-... 
->>> values
-[8, 20, 6, 16, -12]
-``` 
-
-```python 
 >>> values = [1, 2, 3]
 >>> for i in range(len(values)):
 ...     values[i] = 2 * values[i]
@@ -575,43 +880,6 @@ A
 ``` 
 
 ```python 
->>> for num in range(10):
-...     print(num)
-... 
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-``` 
-
-```python 
->>> range(10)
-range(0, 10)
-``` 
-
-```python 
->>> list(range(10))
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
-``` 
-
-```python 
->>> list(range(3))
-[0, 1, 2]
->>> list(range(1))
-[0]
->>> list(range(0))
-[]
-``` 
-
-```python 
 from typing import List
 
 def remove_neg(num_list: List[float]) -> None:
@@ -629,61 +897,7 @@ def remove_neg(num_list: List[float]) -> None:
 
 ``` 
 
-```python 
->>> rabbits = 3
->>> while rabbits > 0:
-...     print(rabbits)
-...     rabbits = rabbits - 1
-...
-3
-2
-1
 
-``` 
-
-```python 
->>> elements = [['Li', 'Na', 'K'], ['F', 'Cl', 'Br']]
->>> for inner_list in elements:
-...     print(inner_list)
-... 
-['Li', 'Na', 'K']
-['F', 'Cl', 'Br']
-
-``` 
-
-```python 
-text = ""
-while text != "quit":
-    text = input("Please enter a chemical formula (or 'quit' to exit): ")
-    if text == "quit":
-        print("…exiting program")
-    elif text == "H2O":
-        print("Water")
-    elif text == "NH3":
-        print("Ammonia")
-    elif text == "CH4":
-        print("Methane")
-    else:
-        print("Unknown compound")
-
-``` 
-
-```python 
-while True:
-    text = input("Please enter a chemical formula (or 'quit' to exit): ")
-    if text == "quit":
-        print("…exiting program")
-        break
-    elif text == "H2O":
-        print("Water")
-    elif text == "NH3":
-        print("Ammonia")
-    elif text == "CH4":
-        print("Methane")
-    else:
-        print("Unknown compound")
-
-``` 
 
 ```python 
 while True:
@@ -710,107 +924,4 @@ Unknown compound
 
 ``` 
 
-```python 
-Please enter a chemical formula (or 'quit' to exit): CH4
-Methane
-Please enter a chemical formula (or 'quit' to exit): H2O
-Water
-Please enter a chemical formula (or 'quit' to exit): quit
-…exiting program
-
-``` 
-
-```python 
->>> velocities = [0.0, 9.81, 19.62, 29.43]
->>> for velocity in velocities:
-...     print('Metric:', velocity, 'm/sec;',
-...     'Imperial:', velocity * 3.28, 'ft/sec')
-...
-Metric: 0.0 m/sec; Imperial: 0.0 ft/sec
-Metric: 9.81 m/sec; Imperial: 32.1768 ft/sec
-Metric: 19.62 m/sec; Imperial: 64.3536 ft/sec
-Metric: 29.43 m/sec; Imperial: 96.5304 ft/sec
-
-``` 
-
-```python 
->>> velocities = [0.0, 9.81, 19.62, 29.43]
->>> print('Metric:', velocities[0], 'm/sec;',
-... 'Imperial:', velocities[0] * 3.28, 'ft/sec')
-Metric: 0.0 m/sec; Imperial: 0.0 ft/sec
->>> print('Metric:', velocities[1], 'm/sec;',
-... 'Imperial:', velocities[1] * 3.28, 'ft/sec')
-Metric: 9.81 m/sec; Imperial: 32.1768 ft/sec
->>> print('Metric:', velocities[2], 'm/sec; ',
-... 'Imperial:', velocities[2] * 3.28, 'ft/sec')
-Metric: 19.62 m/sec; Imperial: 64.3536 ft/sec
->>> print('Metric:', velocities[3], 'm/sec; ',
-... 'Imperial:', velocities[3] * 3.28, 'ft/sec')
-Metric: 29.43 m/sec; Imperial: 96.5304 ft/sec
-
-``` 
-
-```python 
->>> speed = 2
->>> velocities = [0.0, 9.81, 19.62, 29.43]
->>> for speed in velocities:
-...     print('Metric:', speed, 'm/sec')
-... 
-Metric: 0.0 m/sec
-Metric: 9.81 m/sec
-Metric: 19.62 m/sec
-Metric: 29.43 m/sec
->>> print('Final:', speed)
-Final: 29.43
-
-``` 
-
-```python 
-time = 0
-population = 1000   # 1000 bacteria to start with
-growth_rate = 0.21 # 21% growth per minute
-while population < 2000:
-    population = population + growth_rate * population
-    print(round(population))
-    time = time + 1
-	
-print("It took", time, "minutes for the bacteria to double.")
-print("The final population was", round(population), "bacteria.")
-
-``` 
-
-```python 
-1210
-1464
-1772
-2144
-It took 4 minutes for the bacteria to double.
-The final population was 2144 bacteria.
-``` 
-
-```python 
-# Use multivalued assignment to set up controls
-time, population, growth_rate = 0, 1000, 0.21
-
-# Don't stop until we're exactly double the original size
-while population != 2000:
-    population = population + growth_rate * population
-    print(round(population))
-    time = time + 1
-
-print("It took", time, "minutes for the bacteria to double.")
-
-``` 
-
-```python 
-1210
-1464
-1772
-2144
-...3,680 lines or so later...
-inf
-inf
-inf
-...and so on forever...
-``` 
 
