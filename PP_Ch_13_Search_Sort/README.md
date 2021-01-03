@@ -1,5 +1,183 @@
 # PP_Ch_13_Search_Sort
 
+# Searching and Sorting
+
+## Searching a List
+
+
+```python 
+>>> ['d', 'a', 'b', 'a'].index('a')
+1
+
+``` 
+
+```python 
+index(...)
+    L.index(value, [start, [stop]]) -> integer -- return first index of value
+
+``` 
+
+### An Overview of Linear Search
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """Return the index of the first occurrence of value in lst, or return
+    -1 if value is not in lst.
+
+    >>> linear_search([2, 5, 1, -3], 5)
+    1
+    >>> linear_search([2, 4, 2], 2)
+    0
+    >>> linear_search([2, 5, 1, -3], 4)
+    -1
+    >>> linear_search([], 5)
+    -1
+    """
+
+    # examine the items at each index i in lst, starting at index 0:
+    #    is lst[i] the value we are looking for?  if so, stop searching.
+
+``` 
+
+#### The ```while``` Loop Version of Linear Learch
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """Return the index of the first occurrence of value in lst, or return
+    -1 if value is not in lst.
+
+    >>> linear_search([2, 5, 1, -3], 5)
+    1
+    >>> linear_search([2, 4, 2], 2)
+    0
+    >>> linear_search([2, 5, 1, -3], 4)
+    -1
+    >>> linear_search([], 5)
+    -1
+    """
+
+    i = 0  # The index of the next item in lst to examine.
+
+    # Keep going until we reach the end of lst or until we find value.
+    while i != len(lst) and lst[i] != value:
+        i = i + 1
+
+    # If we fell off the end of the list, we didn't find value.
+    if i == len(lst):
+        return -1
+    else:
+        return i
+
+``` 
+
+
+#### The ```for``` Loop Version of Linear Learch
+
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """... Exactly the same docstring goes here ...
+    """
+
+    for i in range(len(lst)):
+        if lst[i] == value:
+            return i
+
+    return -1
+
+``` 
+
+#### Sentinel Search
+
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """... Exactly the same docstring goes here ...
+    """
+
+    # Add the sentinel.
+    lst.append(value)
+
+    i = 0
+
+    # Keep going until we find value.
+    while lst[i] != value:
+        i = i + 1
+
+    # Remove the sentinel.
+    lst.pop()
+
+    # If we reached the end of the list we didn't find value.
+    if i == len(lst):
+        return -1
+    else:
+        return i
+
+``` 
+
+#### Timing the Searches
+
+
+
+```python 
+import time
+import linear_search_1
+import linear_search_2
+import linear_search_3
+
+from typing import Callable, Any
+
+def time_it(search: Callable[[list, Any], Any], L: list, v: Any) -> float:
+    """Time how long it takes to run function search to find
+    value v in list L.
+    """
+
+    t1 = time.perf_counter()
+    search(L, v)
+    t2 = time.perf_counter()
+    return (t2 - t1) * 1000.0
+
+def print_times(v: Any, L: list) -> None:
+    """Print the number of milliseconds it takes for linear_search(v, L)
+    to run for list.index, the while loop linear search, the for loop
+    linear search, and sentinel search.
+    """
+
+    # Get list.index's running time.
+    t1 = time.perf_counter()
+    L.index(v)
+    t2 = time.perf_counter()
+    index_time = (t2 - t1) * 1000.0
+
+    # Get the other three running times.
+    while_time = time_it(linear_search_1.linear_search, L, v)
+    for_time = time_it(linear_search_2.linear_search, L, v)
+    sentinel_time = time_it(linear_search_3.linear_search, L, v)
+
+    print("{0}\t{1:.2f}\t{2:.2f}\t{3:.2f}\t{4:.2f}".format(
+            v, while_time, for_time, sentinel_time, index_time))
+
+L = list(range(10000001))  # A list with just over ten million values
+
+print_times(10, L)  # How fast is it to search near the beginning?
+print_times(5000000, L)  # How fast is it to search near the middle?
+print_times(10000000, L)  # How fast is it to search near the end?
+
+``` 
+
+
+
+## Binary Search
+
+
 
 
 ```python 
@@ -50,6 +228,465 @@ if __name__ == '__main__':
     doctest.testmod()
 
 ``` 
+
+
+
+
+## Sorting
+
+
+
+```python 
+def find_largest(n: int, L: list) -> list:
+    """Return the n largest values in L in order from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> find_largest(3, L)
+    [4, 5, 7]
+    """
+
+    copy = sorted(L)
+    return copy[-n:]
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+``` 
+
+
+### Selection Sort
+
+
+```python 
+def selection_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> selection_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    i = 0
+    while i != len(L):
+        # Find the index of the smallest item in L[i:]
+        # Swap that smallest item with L[i]
+        i = i + 1
+
+``` 
+
+
+
+```python 
+def selection_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> selection_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    i = 0
+    while i != len(L):
+        # Find the index of the smallest item in L[i:]
+        L[i], L[smallest] = L[smallest], L[i]
+        i = i + 1
+
+``` 
+
+```python 
+
+
+def find_min(L: list, b: int) -> int:
+    """Precondition: L[b:] is not empty.
+    Return the index of the smallest value in L[b:].
+
+    >>> find_min([3, -1, 7, 5], 0)
+    1
+    >>> find_min([3, -1, 7, 5], 1)
+    1
+    >>> find_min([3, -1, 7, 5], 2)
+    3
+    """
+
+    smallest = b  # The index of the smallest so far.
+    i = b + 1
+    while i != len(L):
+        if L[i] < L[smallest]:
+            # We found a smaller item at L[i].
+            smallest = i
+
+        i = i + 1
+
+    return smallest
+
+def selection_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> selection_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    i = 0
+    while i != len(L):
+        smallest = find_min(L, i)
+        L[i], L[smallest] = L[smallest], L[i]
+        i = i + 1
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+``` 
+
+
+
+```python
+def selection_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> selection_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    >>> L = []
+    >>> selection_sort(L)
+    >>> L
+    []
+    >>> L = [1]
+    >>> selection_sort(L)
+    >>> L
+    [1]
+    >>> L = [2, 1]
+    >>> selection_sort(L)
+    >>> L
+    [1, 2]
+    >>> L = [1, 2]
+    >>> selection_sort(L)
+    >>> L
+    [1, 2]
+    >>> L = [3, 3, 3]
+    >>> selection_sort(L)
+    >>> L
+    [3, 3, 3]
+    >>> L = [-5, 3, 0, 3, -6, 2, 1, 1]
+    >>> selection_sort(L)
+    >>> L
+    [-6, -5, 0, 1, 1, 2, 3, 3]
+    """
+
+    i = 0
+
+    while i != len(L):
+        smallest = find_min(L, i)
+        L[i], L[smallest] = L[smallest], L[i]
+        i = i + 1
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+```
+
+
+### Insertion Sort
+
+
+```python 
+def insertion_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> insertion_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    i = 0
+    while i != len(L):
+        # Insert L[i] where it belongs in L[0:i+1].
+        i = i + 1
+
+``` 
+
+```python 
+
+
+def insert(L: list, b: int) -> None:
+    """Precondition: L[0:b] is already sorted.
+    Insert L[b] where it belongs in L[0:b + 1].
+
+    >>> L = [3, 4, -1, 7, 2, 5]
+    >>> insert(L, 2)
+    >>> L
+    [-1, 3, 4, 7, 2, 5]
+    >>> insert(L, 4)
+    >>> L
+    [-1, 2, 3, 4, 7, 5]
+    """
+
+    # Find where to insert L[b] by searching backwards from L[b]
+    # for a smaller item.
+    i = b
+    while i != 0 and L[i - 1] >= L[b]:
+        i = i - 1
+
+    # Move L[b] to index i, shifting the following values to the right.
+    value = L[b]
+    del L[b]
+    L.insert(i, value)
+
+def insertion_sort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> insertion_sort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    i = 0
+
+    while i != len(L):
+        insert(L, i)
+        i = i + 1
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+``` 
+
+
+#### Performance
+
+
+```python 
+import time
+import random
+from sorts import selection_sort
+from sorts import insertion_sort
+
+def built_in(L: list) -> None:
+    """Call list.sort --- we need our own function to do this so that we can
+    treat it as we treat our own sorts.
+    """
+
+    L.sort()
+
+def print_times(L: list) -> None:
+    """Print the number of milliseconds it takes for selection sort, insertion
+    sort, and list.sort to run.
+    """
+
+    print(len(L), end='\t')
+    for func in (selection_sort, insertion_sort, built_in):
+        if func in (selection_sort, insertion_sort) and len(L) > 10000:
+            continue
+
+        L_copy = L[:]
+        t1 = time.perf_counter()
+        func(L_copy)
+        t2 = time.perf_counter()
+        print("{0:7.1f}".format((t2 - t1) * 1000.), end='\t')
+
+    print()  # Print a newline.
+
+for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
+    L = list(range(list_size))
+    random.shuffle(L)
+    print_times(L)
+
+``` 
+
+
+
+## More Efficient Sorting Algorithms
+
+
+
+### A First Attempt
+
+```python 
+import bisect
+
+def bin_sort(values: list) -> list:
+    """Return a sorted version of the values.  (This does not mutate values.)
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> bin_sort(L)
+    [-1, 2, 3, 4, 5, 7]
+    """
+	
+    result = []
+    for v in values:
+        bisect.insort_left(result, v)
+
+    return result
+
+``` 
+
+
+
+## Merge Sort: A Faster Sorting Algorithm
+
+
+### Merging Two Sorted Lists
+
+
+```python 
+
+
+def merge(L1: list, L2: list) -> list:
+    """Merge sorted lists L1 and L2 into a new list and return that new list.
+    >>> merge([1, 3, 4, 6], [1, 2, 5, 7])
+    [1, 1, 2, 3, 4, 5, 6, 7]
+    """
+
+    newL = []
+    i1 = 0
+    i2 = 0
+
+    # For each pair of items L1[i1] and L2[i2], copy the smaller into newL.
+    while i1 != len(L1) and i2 != len(L2):
+        if L1[i1] <= L2[i2]:
+            newL.append(L1[i1])
+            i1 += 1
+        else:
+            newL.append(L2[i2])
+            i2 += 1
+
+    # Gather any leftover items from the two sections.
+    # Note that one of them will be empty because of the loop condition.
+    newL.extend(L1[i1:])
+    newL.extend(L2[i2:])
+    return newL
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+``` 
+
+
+
+### Merge Sort
+
+
+
+```python 
+def mergesort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+	
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> mergesort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+``` 
+
+
+
+
+```python 
+def mergesort(L: list) -> None:
+    """Reorder the items in L from smallest to largest.
+
+    >>> L = [3, 4, 7, -1, 2, 5]
+    >>> mergesort(L)
+    >>> L
+    [-1, 2, 3, 4, 5, 7]
+    """
+
+    # Make a list of 1-item lists so that we can start merging.
+    workspace = []
+    for i in range(len(L)):
+        workspace.append([L[i]])
+
+    # The next two lists to merge are workspace[i] and workspace[i + 1].
+    i = 0
+    # As long as there are at least two more lists to merge, merge them.
+    while i < len(workspace) - 1:
+        L1 = workspace[i]
+        L2 = workspace[i + 1]
+        newL = merge(L1, L2)
+        workspace.append(newL)
+        i += 2
+
+    # Copy the result back into L.
+    if len(workspace) != 0:
+        L[:] = workspace[-1][:]
+
+``` 
+
+### Merge Sort Analysis
+
+
+```python 
+import time
+import random
+from sorts import selection_sort
+from sorts import insertion_sort
+from sorts import mergesort
+
+
+def built_in(L):
+    """ (list) -> NoneType
+    Call list.sort --- we need our own function to do this so that we can
+    treat it as we treat our own sorts."""
+
+    L.sort()
+
+
+def print_times(L):
+    """ (list) -> NoneType
+
+    Print the number of milliseconds it takes for selection sort, insertion
+    sort, and list.sort to run.
+    """
+
+    print(len(L), end='\t')
+    for func in (selection_sort, insertion_sort, mergesort, built_in):
+        if func in (selection_sort, insertion_sort) and len(L) > 10000:
+            continue
+
+        L_copy = L[:]
+        t1 = time.perf_counter()
+        func(L_copy)
+        t2 = time.perf_counter()
+        print("{0:7.1f}".format((t2 - t1) * 1000.), end='\t')
+    print()  # Print a newline.
+
+for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
+    L = list(range(list_size))
+    random.shuffle(L)
+    print_times(L)
+
+``` 
+
+
+
+
+
+
+
+
+
+
+
+
+## Additional Code Snippets
+
+
+
+
+
+
+
 
 ```python 
 """Test binary search."""
@@ -170,23 +807,6 @@ print_times(10000000, L)  # How fast is it to search near the end?
 
 ``` 
 
-```python 
-import bisect
-
-def bin_sort(values: list) -> list:
-    """Return a sorted version of the values.  (This does not mutate values.)
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> bin_sort(L)
-    [-1, 2, 3, 4, 5, 7]
-    """
-	
-    result = []
-    for v in values:
-        bisect.insort_left(result, v)
-
-    return result
-
-``` 
 
 ```python 
 import bisect
@@ -210,193 +830,6 @@ def bin_sort(values):
 [1] -> [1]
 [1, 2] -> [1, 2, 2]
 [2, 1] -> [1, 2, 1]
-
-``` 
-
-```python 
->>> ['d', 'a', 'b', 'a'].index('a')
-1
-
-``` 
-
-```python 
-index(...)
-    L.index(value, [start, [stop]]) -> integer -- return first index of value
-
-``` 
-
-```python 
-from typing import Any
-
-def linear_search(lst: list, value: Any) -> int:
-    """Return the index of the first occurrence of value in lst, or return
-    -1 if value is not in lst.
-
-    >>> linear_search([2, 5, 1, -3], 5)
-    1
-    >>> linear_search([2, 4, 2], 2)
-    0
-    >>> linear_search([2, 5, 1, -3], 4)
-    -1
-    >>> linear_search([], 5)
-    -1
-    """
-
-    i = 0  # The index of the next item in lst to examine.
-
-    # Keep going until we reach the end of lst or until we find value.
-    while i != len(lst) and lst[i] != value:
-        i = i + 1
-
-    # If we fell off the end of the list, we didn't find value.
-    if i == len(lst):
-        return -1
-    else:
-        return i
-
-``` 
-
-```python 
-from typing import Any
-
-def linear_search(lst: list, value: Any) -> int:
-    """… Exactly the same docstring goes here …
-    """
-
-    for i in range(len(lst)):
-        if lst[i] == value:
-            return i
-
-    return -1
-
-``` 
-
-```python 
-from typing import Any
-
-def linear_search(lst: list, value: Any) -> int:
-    """… Exactly the same docstring goes here …
-    """
-
-    # Add the sentinel.
-    lst.append(value)
-
-    i = 0
-
-    # Keep going until we find value.
-    while lst[i] != value:
-        i = i + 1
-
-    # Remove the sentinel.
-    lst.pop()
-
-    # If we reached the end of the list we didn't find value.
-    if i == len(lst):
-        return -1
-    else:
-        return i
-
-``` 
-
-```python 
-from typing import Any
-
-def linear_search(lst: list, value: Any) -> int:
-    """Return the index of the first occurrence of value in lst, or return
-    -1 if value is not in lst.
-
-    >>> linear_search([2, 5, 1, -3], 5)
-    1
-    >>> linear_search([2, 4, 2], 2)
-    0
-    >>> linear_search([2, 5, 1, -3], 4)
-    -1
-    >>> linear_search([], 5)
-    -1
-    """
-
-    # examine the items at each index i in lst, starting at index 0:
-    #    is lst[i] the value we are looking for?  if so, stop searching.
-
-``` 
-
-```python 
-import time
-import linear_search_1
-import linear_search_2
-import linear_search_3
-
-from typing import Callable, Any
-
-def time_it(search: Callable[[list, Any], Any], L: list, v: Any) -> float:
-    """Time how long it takes to run function search to find
-    value v in list L.
-    """
-
-    t1 = time.perf_counter()
-    search(L, v)
-    t2 = time.perf_counter()
-    return (t2 - t1) * 1000.0
-
-def print_times(v: Any, L: list) -> None:
-    """Print the number of milliseconds it takes for linear_search(v, L)
-    to run for list.index, the while loop linear search, the for loop
-    linear search, and sentinel search.
-    """
-
-    # Get list.index's running time.
-    t1 = time.perf_counter()
-    L.index(v)
-    t2 = time.perf_counter()
-    index_time = (t2 - t1) * 1000.0
-
-    # Get the other three running times.
-    while_time = time_it(linear_search_1.linear_search, L, v)
-    for_time = time_it(linear_search_2.linear_search, L, v)
-    sentinel_time = time_it(linear_search_3.linear_search, L, v)
-
-    print("{0}\t{1:.2f}\t{2:.2f}\t{3:.2f}\t{4:.2f}".format(
-            v, while_time, for_time, sentinel_time, index_time))
-
-L = list(range(10000001))  # A list with just over ten million values
-
-print_times(10, L)  # How fast is it to search near the beginning?
-print_times(5000000, L)  # How fast is it to search near the middle?
-print_times(10000000, L)  # How fast is it to search near the end?
-
-``` 
-
-```python 
-
-
-def merge(L1: list, L2: list) -> list:
-    """Merge sorted lists L1 and L2 into a new list and return that new list.
-    >>> merge([1, 3, 4, 6], [1, 2, 5, 7])
-    [1, 1, 2, 3, 4, 5, 6, 7]
-    """
-
-    newL = []
-    i1 = 0
-    i2 = 0
-
-    # For each pair of items L1[i1] and L2[i2], copy the smaller into newL.
-    while i1 != len(L1) and i2 != len(L2):
-        if L1[i1] <= L2[i2]:
-            newL.append(L1[i1])
-            i1 += 1
-        else:
-            newL.append(L2[i2])
-            i2 += 1
-
-    # Gather any leftover items from the two sections.
-    # Note that one of them will be empty because of the loop condition.
-    newL.extend(L1[i1:])
-    newL.extend(L2[i2:])
-    return newL
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
 
 ``` 
 
@@ -474,48 +907,6 @@ if __name__ == '__main__':
 
 ``` 
 
-```python 
-def mergesort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> mergesort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    # Make a list of 1-item lists so that we can start merging.
-    workspace = []
-    for i in range(len(L)):
-        workspace.append([L[i]])
-
-    # The next two lists to merge are workspace[i] and workspace[i + 1].
-    i = 0
-    # As long as there are at least two more lists to merge, merge them.
-    while i < len(workspace) - 1:
-        L1 = workspace[i]
-        L2 = workspace[i + 1]
-        newL = merge(L1, L2)
-        workspace.append(newL)
-        i += 2
-
-    # Copy the result back into L.
-    if len(workspace) != 0:
-        L[:] = workspace[-1][:]
-
-``` 
-
-```python 
-def mergesort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-	
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> mergesort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-``` 
 
 ```python 
 # Make a list of 1-item lists so that we can start merging.
@@ -673,106 +1064,6 @@ if __name__ == '__main__':
 
 ``` 
 
-```python 
-def find_largest(n: int, L: list) -> list:
-    """Return the n largest values in L in order from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> find_largest(3, L)
-    [4, 5, 7]
-    """
-
-    copy = sorted(L)
-    return copy[-n:]
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
-``` 
-
-```python 
-def selection_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> selection_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        # Find the index of the smallest item in L[i:]
-        # Swap that smallest item with L[i]
-        i = i + 1
-
-``` 
-
-```python 
-def selection_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> selection_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        # Find the index of the smallest item in L[i:]
-        L[i], L[smallest] = L[smallest], L[i]
-        i = i + 1
-
-``` 
-
-```python 
-
-
-def find_min(L: list, b: int) -> int:
-    """Precondition: L[b:] is not empty.
-    Return the index of the smallest value in L[b:].
-
-    >>> find_min([3, -1, 7, 5], 0)
-    1
-    >>> find_min([3, -1, 7, 5], 1)
-    1
-    >>> find_min([3, -1, 7, 5], 2)
-    3
-    """
-
-    smallest = b  # The index of the smallest so far.
-    i = b + 1
-    while i != len(L):
-        if L[i] < L[smallest]:
-            # We found a smaller item at L[i].
-            smallest = i
-
-        i = i + 1
-
-    return smallest
-
-def selection_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> selection_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        smallest = find_min(L, i)
-        L[i], L[smallest] = L[smallest], L[i]
-        i = i + 1
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
-``` 
 
 ```python 
 
@@ -801,52 +1092,10 @@ def find_min(L: list, b: int) -> int:
 
     return smallest
 
-
-def selection_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> selection_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    >>> L = []
-    >>> selection_sort(L)
-    >>> L
-    []
-    >>> L = [1]
-    >>> selection_sort(L)
-    >>> L
-    [1]
-    >>> L = [2, 1]
-    >>> selection_sort(L)
-    >>> L
-    [1, 2]
-    >>> L = [1, 2]
-    >>> selection_sort(L)
-    >>> L
-    [1, 2]
-    >>> L = [3, 3, 3]
-    >>> selection_sort(L)
-    >>> L
-    [3, 3, 3]
-    >>> L = [-5, 3, 0, 3, -6, 2, 1, 1]
-    >>> selection_sort(L)
-    >>> L
-    [-6, -5, 0, 1, 1, 2, 3, 3]
-    """
-
-    i = 0
-
-    while i != len(L):
-        smallest = find_min(L, i)
-        L[i], L[smallest] = L[smallest], L[i]
-        i = i + 1
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
+```
 
 
+```
 # from sort4 import selection_sort
 # import unittest
 
@@ -918,71 +1167,6 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     unittest.main()
-
-``` 
-
-```python 
-def insertion_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> insertion_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        # Insert L[i] where it belongs in L[0:i+1].
-        i = i + 1
-
-``` 
-
-```python 
-
-
-def insert(L: list, b: int) -> None:
-    """Precondition: L[0:b] is already sorted.
-    Insert L[b] where it belongs in L[0:b + 1].
-
-    >>> L = [3, 4, -1, 7, 2, 5]
-    >>> insert(L, 2)
-    >>> L
-    [-1, 3, 4, 7, 2, 5]
-    >>> insert(L, 4)
-    >>> L
-    [-1, 2, 3, 4, 7, 5]
-    """
-
-    # Find where to insert L[b] by searching backwards from L[b]
-    # for a smaller item.
-    i = b
-    while i != 0 and L[i - 1] >= L[b]:
-        i = i - 1
-
-    # Move L[b] to index i, shifting the following values to the right.
-    value = L[b]
-    del L[b]
-    L.insert(i, value)
-
-def insertion_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> insertion_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-
-    while i != len(L):
-        insert(L, i)
-        i = i + 1
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
 
 ``` 
 
@@ -1131,84 +1315,3 @@ if __name__ == '__main__':
     doctest.testmod()
 
 ``` 
-
-```python 
-import time
-import random
-from sorts import selection_sort
-from sorts import insertion_sort
-
-def built_in(L: list) -> None:
-    """Call list.sort --- we need our own function to do this so that we can
-    treat it as we treat our own sorts.
-    """
-
-    L.sort()
-
-def print_times(L: list) -> None:
-    """Print the number of milliseconds it takes for selection sort, insertion
-    sort, and list.sort to run.
-    """
-
-    print(len(L), end='\t')
-    for func in (selection_sort, insertion_sort, built_in):
-        if func in (selection_sort, insertion_sort) and len(L) > 10000:
-            continue
-
-        L_copy = L[:]
-        t1 = time.perf_counter()
-        func(L_copy)
-        t2 = time.perf_counter()
-        print("{0:7.1f}".format((t2 - t1) * 1000.), end='\t')
-
-    print()  # Print a newline.
-
-for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
-    L = list(range(list_size))
-    random.shuffle(L)
-    print_times(L)
-
-``` 
-
-```python 
-import time
-import random
-from sorts import selection_sort
-from sorts import insertion_sort
-from sorts import mergesort
-
-
-def built_in(L):
-    """ (list) -> NoneType
-    Call list.sort --- we need our own function to do this so that we can
-    treat it as we treat our own sorts."""
-
-    L.sort()
-
-
-def print_times(L):
-    """ (list) -> NoneType
-
-    Print the number of milliseconds it takes for selection sort, insertion
-    sort, and list.sort to run.
-    """
-
-    print(len(L), end='\t')
-    for func in (selection_sort, insertion_sort, mergesort, built_in):
-        if func in (selection_sort, insertion_sort) and len(L) > 10000:
-            continue
-
-        L_copy = L[:]
-        t1 = time.perf_counter()
-        func(L_copy)
-        t2 = time.perf_counter()
-        print("{0:7.1f}".format((t2 - t1) * 1000.), end='\t')
-    print()  # Print a newline.
-
-for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
-    L = list(range(list_size))
-    random.shuffle(L)
-    print_times(L)
-
-``` 
-
