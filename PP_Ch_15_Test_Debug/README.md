@@ -362,6 +362,8 @@ OK
 ## Additional Code Snippets
 
 
+### Exercise 1
+
 
 ```python 
 from typing import List
@@ -386,6 +388,9 @@ def double_preceding(values: List[float]) -> None:
 
 ``` 
 
+
+### Exercise 5
+
 ```python 
 def find_min_max(values: list):
     """Print the minimum and maximum value from values.
@@ -405,12 +410,8 @@ def find_min_max(values: list):
 ``` 
 
 
-```python 
->>> import test_average
->>> test_average.average([None, 30, 20])
-16.666666666666668
+### Exercise 6
 
-``` 
 
 ```python 
 from typing import List
@@ -438,5 +439,14 @@ def average(values: List[float]) -> float:
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+``` 
+
+
+
+```python 
+>>> import test_average
+>>> test_average.average([None, 30, 20])
+16.666666666666668
 
 ``` 
