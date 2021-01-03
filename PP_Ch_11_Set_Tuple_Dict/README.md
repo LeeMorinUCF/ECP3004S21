@@ -1,28 +1,181 @@
 # PP_Ch_11_Set_Tuple_Dict
 
+# Storing Data Using Other Collection Types
+
+## Storing Data Using Sets
 
 
 ```python 
->>> bird_to_observations['canada goose']
-3
->>> bird_to_observations['long-tailed jaeger']
+>>> vowels = {'a', 'e', 'i', 'o', 'u'}
+>>> vowels
+{'a', 'u', 'o', 'i', 'e'}
+
+``` 
+
+```python 
+>>> vowels = {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
+>>> vowels
+{'u', 'o', 'i', 'e', 'a'}
+
+``` 
+
+
+```python 
+>>> {'a', 'e', 'i', 'o', 'u'} == {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
+True
+
+``` 
+
+
+
+
+
+
+
+
+
+```python 
+>>> type(vowels)
+<class 'set'>
+>>> type({1, 2, 3})
+<class 'set'>
+>>> type({})
+<class 'dict'>
+>>> set()
+set()
+>>> type(set())
+<class 'set'>
+
+``` 
+
+```python 
+>>> set()
+set()
+``` 
+
+
+```python 
+>>> set([2, 3, 2, 5])
+{2, 3, 5}
+``` 
+
+
+```python 
+>>> set(2, 3, 5)
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-KeyError: 'long-tailed jaeger'
+TypeError: set expected at most 1 arguments, got 3
+
+``` 
+
+
+
+```python 
+>>> set([3, 5, 2])
+{2, 3, 5}
+>>> set([2, 3, 5, 5, 2, 3])    
+{2, 3, 5}
+``` 
+
+```python 
+>>> vowels = {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
+>>> vowels
+{'i', 'a', 'u', 'e', 'o'}
+>>> set(vowels)
+{'i', 'a', 'u', 'e', 'o'}
+>>> set({5, 3, 1})
+{1, 3, 5}
+
+``` 
+
+
+```python 
+>>> set(range(5))
+{0, 1, 2, 3, 4}
+``` 
+
+
+### Set Operations
+
+
+
+
+```python 
+>>> vowels = {'a', 'e', 'i', 'o', 'u'}
+>>> vowels
+{'o', 'u', 'a', 'e', 'i'}
+>>> vowels.add('y')
+>>> vowels
+{'u', 'y', 'e', 'a', 'o', 'i'}
+
+``` 
+
+
+
+
+```python 
+>>> ten = set(range(10))
+>>> lows = {0, 1, 2, 3, 4}
+>>> odds = {1, 3, 5, 7, 9}
+>>> lows.add(9)
+>>> lows
+{0, 1, 2, 3, 4, 9}
+>>> lows.difference(odds)
+{0, 2, 4}
+>>> lows.intersection(odds)
+{1, 3, 9}
+>>> lows.issubset(ten)
+True
+>>> lows.issuperset(odds)
+False
+>>> lows.remove(0)
+>>> lows
+{1, 2, 3, 4, 9}
+>>> lows.symmetric_difference(odds)
+{2, 4, 5, 7}
+>>> lows.union(odds)
+{1, 2, 3, 4, 5, 7, 9}
+>>> lows.clear()
+>>> lows
+set()
 
 ``` 
 
 ```python 
->>> observations_file = open('observations.txt')
->>> birds_observed = set()
->>> for line in observations_file:              
-...     bird = line.strip()                     
-...     birds_observed.add(bird)                
-... 
->>> birds_observed
-{'long-tailed jaeger', 'canada goose', 'northern fulmar', 'snow goose'}
+>>> lows = set([0, 1, 2, 3, 4])
+>>> odds = set([1, 3, 5, 7, 9])
+>>> lows - odds            # Equivalent to lows.difference(odds)
+{0, 2, 4}
+>>> lows & odds            # Equivalent to lows.intersection(odds)
+{1, 3}
+>>> lows <= odds           # Equivalent to lows.issubset(odds)
+False
+>>> lows >= odds           # Equivalent to lows.issuperset(odds)
+False
+>>> lows | odds            # Equivalent to lows.union(odds)
+{0, 1, 2, 3, 4, 5, 7, 9}
+>>> lows ^ odds            # Equivalent to lows.symmetric_difference(odds)
+{0, 2, 4, 5, 7, 9}
 
 ``` 
+
+### Set Example: Arctic Birds
+
+
+
+```python 
+canada goose
+canada goose
+long-tailed jaeger
+canada goose
+snow goose
+canada goose
+long-tailed jaeger
+canada goose
+northern fulmar
+
+``` 
+
 
 ```python 
 from typing import Set, TextIO
@@ -56,6 +209,7 @@ if __name__ == '__main__':
 
 ``` 
 
+
 ```python 
 >>> for species in birds_observed:
 ...     print(species)
@@ -66,140 +220,158 @@ northern fulmar
 snow goose
 ``` 
 
+### Set Contents Must Be Immutable
+
+
 ```python 
->>> observations_file = open('observations.txt')
->>> bird_to_observations = {}
->>> for line in observations_file:
-...     bird = line.strip()
-...     if bird in bird_to_observations:
-...         bird_to_observations[bird] = bird_to_observations[bird] + 1
-...     else:
-...         bird_to_observations[bird] = 1
-... 
->>> observations_file.close()
->>> 
->>> # Print each bird and the number of times it was seen.
-... for bird, observations in bird_to_observations.items():
-...     print(bird, observations)
-... 
-snow goose 1
-long-tailed jaeger 2
-canada goose 5
-northern fulmar 1
+>>> S = set()
+>>> L = [1, 2, 3]
+>>> S.add(L)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'set'
 
 ``` 
 
-```python 
->>> observations_file = open('observations.txt')
->>> bird_to_observations = {}
->>> for line in observations_file:
-...     bird = line.strip()
-...     bird_to_observations[bird] = bird_to_observations.get(bird, 0) + 1
-... 
->>> observations_file.close()
-``` 
+
+## Storing Data Using Tuples
+
 
 ```python 
->>> sorted_birds = sorted(bird_to_observations.keys())
->>> for bird in sorted_birds:
-...     print(bird, bird_to_observations[bird])
+>>> rock = 'anthracite'
+>>> rock[9]
+'e'
+>>> rock[0:3]
+'ant'
+>>> rock[-5:]
+'acite'
+>>> for character in rock[:5]:
+...     print(character)
 ...
-canada goose 5
-long-tailed jaeger 2
-northern fulmar 1
-snow goose 1
+
+a
+n
+t
+h
+r
 
 ``` 
 
 ```python 
->>> bird_to_observations
-{'canada goose': 5, 'northern fulmar': 1, 'long-tailed jaeger': 2, 
-'snow goose': 1}
->>>
->>> # Invert the dictionary
->>> observations_to_birds_list = {}
->>> for bird, observations in bird_to_observations.items():
-...     if observations in observations_to_birds_list:
-...         observations_to_birds_list[observations].append(bird)
-...     else:
-...         observations_to_birds_list[observations] = [bird]
+>>> bases = ('A', 'C', 'G', 'T')
+>>> for base in bases:
+...     print(base)
 ... 
->>> observations_to_birds_list
-{1: ['northern fulmar', 'snow goose'], 2: ['long-tailed jaeger'], 
-5: ['canada goose']}
+A
+C
+G
+T
 ``` 
 
+
 ```python 
->>> # Print the inverted dictionary
-... observations_sorted = sorted(observations_to_birds_list.keys())
->>> for observations in observations_sorted:
-...     print(observations, ':', end=" ")
-...     for bird in observations_to_birds_list[observations]:
-...         print(' ', bird, end=" ")
-...     print()
-...
-1 :   northern fulmar   snow goose
-2 :   long-tailed jaeger
-5 :   canada goose
+>>> (8)   
+8
+>>> type((8))
+<class 'int'>
+>>> (8,)
+(8,)
+>>> type((8,))
+<class 'tuple'>
+>>> (5 + 3)
+8
+>>> (5 + 3,)
+(8,)
 
 ``` 
 
+
+
+
 ```python 
-from typing import TextIO, Dict
-from io import StringIO
-
-def count_birds(observations_file: TextIO) -> Dict[str, int]:
-    """Return a set of the bird species listed in observations_file, which has
-    one bird species per line.
-
-    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
-    >>> count_birds(infile)
-    {'bird 1': 2, 'bird 2': 1}
-    """
-    bird_to_observations = {}
-    for line in observations_file:
-        bird = line.strip()
-        if bird in bird_to_observations:
-            bird_to_observations[bird] = bird_to_observations[bird] + 1
-        else:
-            bird_to_observations[bird] = 1
-
-    return bird_to_observations
-
-if __name__ == '__main__':
-    with open('observations.txt') as observations_file:
-        bird_to_observations = count_birds(observations_file)
-        for bird, observations in bird_to_observations.items():
-            print(bird, observations)
+>>> life = (['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
+>>> life[0] = life[1]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in ?
+TypeError: object does not support item assignment
 
 ``` 
 
 ```python 
-from typing import TextIO, Dict
-from io import StringIO
-
-def count_birds(observations_file: TextIO) -> Dict[str, int]:
-    """Return a set of the bird species listed in observations_file, which has
-    one bird species per line.
-
-    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
-    >>> count_birds(infile)
-    {'bird 1': 2, 'bird 2': 1}
-    """
-    bird_to_observations = {}
-    for line in observations_file:
-        bird = line.strip()
-        bird_to_observations[bird] = bird_to_observations.get(bird, 0) + 1
-
-    return bird_to_observations
-
-if __name__ == '__main__':
-    with open('observations.txt') as observations_file:
-        bird_to_observations = count_birds(observations_file)
-        for bird, observations in bird_to_observations.items():
-            print(bird, observations)
+>>> life = (['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
+>>> life[0][1] = 80.0
+>>> life
+(['Canada', 80.0], ['United States', 75.5], ['Mexico', 72.0])
 
 ``` 
+
+
+```python 
+>>> canada = ['Canada', 76.5]
+>>> usa = ['United States', 75.5]
+>>> mexico = ['Mexico', 72.0]
+>>> life = (canada, usa, mexico)
+>>> mexico = ['Mexico', 72.5]
+>>> life
+(['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
+>>> life[0][1] = 80.0
+>>> canada
+['Canada', 80.0]
+
+``` 
+
+
+### Assigning to Multiple Values Using Tuples
+
+
+```python 
+>>> (x, y) = (10, 20)
+>>> x
+10
+>>> y
+20
+>>> 10, 20
+(10, 20)
+>>> x, y = 10, 20
+>>> x
+10
+>>> y
+20
+>>> [[w, x], [[y], z]] = [{10, 20}, [(30,), 40]]
+>>> w
+10
+>>> x
+20
+>>> y
+30
+>>> z
+40
+>>> s1 = 'first'
+>>> s2 = 'second'
+>>> s1, s2 = s2, s1
+>>> s1
+'second'
+>>> s2
+'first'
+
+``` 
+
+
+## Storing Data Using Dictionaries
+
+```python 
+canada goose
+canada goose
+long-tailed jaeger
+canada goose
+snow goose
+canada goose
+long-tailed jaeger
+canada goose
+northern fulmar
+
+``` 
+
 
 ```python 
 from typing import TextIO, List, Any
@@ -245,6 +417,65 @@ northern fulmar 1
 
 ``` 
 
+
+
+
+```python 
+>>> bird_to_observations = {'canada goose': 3, 'northern fulmar': 1}
+>>> bird_to_observations
+{'northern fulmar': 1, 'canada goose': 3}
+```
+
+```
+>>> bird_to_observations['northern fulmar']
+1
+
+``` 
+
+
+```python 
+>>> bird_to_observations['canada goose']
+3
+>>> bird_to_observations['long-tailed jaeger']
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'long-tailed jaeger'
+
+``` 
+
+
+
+```python 
+>>> dict1 = {'canada goose': 3, 'northern fulmar': 1}
+>>> dict2 = {'northern fulmar': 1, 'canada goose': 3}
+>>> dict1 == dict2
+True
+
+``` 
+
+### Updating and Checking Membership
+
+
+
+```python 
+>>> bird_to_observations = {}
+>>>
+>>> # Add a new key/value pair, 'snow goose': 33.
+>>> bird_to_observations['snow goose'] = 33
+>>>
+>>> # Add a new key/value pair, 'eagle': 999.
+>>> bird_to_observations['eagle'] = 999 
+>>> bird_to_observations
+{'eagle': 999, 'snow goose': 33}
+>>>
+>>> # Change the value associated with key 'eagle' to 9.
+>>> bird_to_observations['eagle'] = 9   
+>>> bird_to_observations
+{'eagle': 9, 'snow goose': 33}
+
+``` 
+
+
 ```python 
 >>> bird_to_observations = {'snow goose': 33, 'eagle': 9}
 >>> del bird_to_observations['snow goose']
@@ -275,6 +506,26 @@ False
 
 ``` 
 
+### Looping Over Dictionaries
+
+
+```python 
+>>> bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
+... 'snow goose': 63, 'northern fulmar': 1}
+>>> for bird in bird_to_observations:
+...     print(bird, bird_to_observations[bird])
+...
+canada goose 183
+long-tailed jaeger 71
+snow goose 63
+northern fulmar 1
+
+``` 
+
+
+### Dictionary Operations
+
+
 ```python 
 >>> scientist_to_birthdate = {'Newton' : 1642, 'Darwin' : 1809,
 ...                           'Turing' : 1912}
@@ -304,51 +555,8 @@ dict_items([('Darwin', 1809), ('Newton', 1642), ('Turing', 1912)])
 
 ``` 
 
-```python 
-keys: dict_keys(['Turing', 'Newton', 'Darwin'])
-values: dict_values([1912, 1642, 1809])
-items: dict_items([('Turing', 1912), ('Newton', 1642), ('Darwin', 1809)])
-get: 1867
-after update: {'Curie': 1867, 'Darwin': 1809, 'Franklin': 1920,
-'Turing': 1912, 'Newton': 1642, 'Hopper': 1906}
-after clear: {}
-``` 
 
-```python 
->>> bird_to_observations = {}
->>>
->>> # Add a new key/value pair, 'snow goose': 33.
->>> bird_to_observations['snow goose'] = 33
->>>
->>> # Add a new key/value pair, 'eagle': 999.
->>> bird_to_observations['eagle'] = 999 
->>> bird_to_observations
-{'eagle': 999, 'snow goose': 33}
->>>
->>> # Change the value associated with key 'eagle' to 9.
->>> bird_to_observations['eagle'] = 9   
->>> bird_to_observations
-{'eagle': 9, 'snow goose': 33}
 
-``` 
-
-```python 
->>> dict1 = {'canada goose': 3, 'northern fulmar': 1}
->>> dict2 = {'northern fulmar': 1, 'canada goose': 3}
->>> dict1 == dict2
-True
-
-``` 
-
-```python 
->>> bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
-...     'snow goose': 63, 'northern fulmar': 1}
->>> 'snow goose' in bird_to_observations
-True
->>> 183 in bird_to_observations
-False
-
-``` 
 
 ```python 
 >>> scientist_to_birthdate = {'Newton' : 1642, 'Darwin' : 1809,
@@ -362,182 +570,173 @@ Newton was born in 1642
 
 ``` 
 
+#### Dictionaries, Key Order, and Versions of Python
+
+
 ```python 
-{
-  'jgoodall'  : {'surname'  : 'Goodall',
-                 'forename' : 'Jane',
-                 'born'     : 1934,
-                 'died'     : None,
-                 'notes'    : 'primate researcher',
-                 'author'   : ['In the Shadow of Man',
-                               'The Chimpanzees of Gombe']},				 
-  'rfranklin' : {'surname'  : 'Franklin',
-                 'forename' : 'Rosalind',
-                 'born'     : 1920,
-                 'died'     : 1957,
-                 'notes'    : 'contributed to discovery of DNA'},
-	
-	
-   'rcarson'  : {'surname'  : 'Carson',
-                 'forename' : 'Rachel',
-                 'born'     : 1907,
-                 'died'     : 1964,
-                 'notes'    : 'raised awareness of effects of DDT',
-                 'author'   : ['Silent Spring']}
-}
+items = {'first': 1, 'second': 2, 'third': 3}
+for key, value in items.items():
+    print(key, value)
 
 ``` 
 
 ```python 
->>> set()
-set()
-``` 
-
-```python 
->>> set([3, 5, 2])
-{2, 3, 5}
->>> set([2, 3, 5, 5, 2, 3])    
-{2, 3, 5}
-``` 
-
-```python 
->>> set([2, 3, 2, 5])
-{2, 3, 5}
-``` 
-
-```python 
->>> help(hash)
-Help on built-in function hash in module builtins:
-
-hash(...)
-    hash(object) -> integer
-
-    Return a hash value for the object.  Two objects with the same
-    value have the same hash value.  The reverse is not necessarily
-    true, but likely.
-
->>> hash(123)
-123
->>> hash('123') # a string
-163512108404620371
+first 1
+third 3
+second 2
 
 ``` 
 
 ```python 
->>> hash(29.45)    
-107370935
->>> hash(True) 
-1
->>> hash([1, 2, 3])
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: unhashable type: 'list'
-``` 
-
-```python 
->>> life = (['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
->>> life[0] = life[1]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in ?
-TypeError: object does not support item assignment
+second 2
+third 3
+first 1
 
 ``` 
 
 ```python 
->>> life = (['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
->>> life[0][1] = 80.0
->>> life
-(['Canada', 80.0], ['United States', 75.5], ['Mexico', 72.0])
+third 3
+first 1
+second 2
 
 ``` 
 
+
+
+### Dictionary Example
+
+
 ```python 
->>> observations_file = open('observations.txt')
->>> bird_counts = []                            
->>> for line in observations_file:              
-...     bird = line.strip()                     
-...     found = False
-...     # Find bird in the list of bird counts.
-...     for entry in bird_counts:
-...         if entry[0] == bird:
-...             entry[1] = entry[1] + 1
-...             found = True
-...     if not found:
-...         bird_counts.append([bird, 1])
+from typing import TextIO, Dict
+from io import StringIO
+
+def count_birds(observations_file: TextIO) -> Dict[str, int]:
+    """Return a set of the bird species listed in observations_file, which has
+    one bird species per line.
+
+    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
+    >>> count_birds(infile)
+    {'bird 1': 2, 'bird 2': 1}
+    """
+    bird_to_observations = {}
+    for line in observations_file:
+        bird = line.strip()
+        if bird in bird_to_observations:
+            bird_to_observations[bird] = bird_to_observations[bird] + 1
+        else:
+            bird_to_observations[bird] = 1
+
+    return bird_to_observations
+
+if __name__ == '__main__':
+    with open('observations.txt') as observations_file:
+        bird_to_observations = count_birds(observations_file)
+        for bird, observations in bird_to_observations.items():
+            print(bird, observations)
+
+``` 
+
+
+```python 
+from typing import TextIO, Dict
+from io import StringIO
+
+def count_birds(observations_file: TextIO) -> Dict[str, int]:
+    """Return a set of the bird species listed in observations_file, which has
+    one bird species per line.
+
+    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
+    >>> count_birds(infile)
+    {'bird 1': 2, 'bird 2': 1}
+    """
+    bird_to_observations = {}
+    for line in observations_file:
+        bird = line.strip()
+        bird_to_observations[bird] = bird_to_observations.get(bird, 0) + 1
+
+    return bird_to_observations
+
+if __name__ == '__main__':
+    with open('observations.txt') as observations_file:
+        bird_to_observations = count_birds(observations_file)
+        for bird, observations in bird_to_observations.items():
+            print(bird, observations)
+
+``` 
+
+
+### Inverting a Dictionary
+
+
+```python 
+>>> bird_to_observations
+{'canada goose': 5, 'northern fulmar': 1, 'long-tailed jaeger': 2, 
+'snow goose': 1}
+>>>
+>>> # Invert the dictionary
+>>> observations_to_birds_list = {}
+>>> for bird, observations in bird_to_observations.items():
+...     if observations in observations_to_birds_list:
+...         observations_to_birds_list[observations].append(bird)
+...     else:
+...         observations_to_birds_list[observations] = [bird]
 ... 
->>> observations_file.close()
->>> for entry in bird_counts:
-...     print(entry[0], entry[1])
-... 
-canada goose 5
-long-tailed jaeger 2
-snow goose 1
-northern fulmar 1
+>>> observations_to_birds_list
+{1: ['northern fulmar', 'snow goose'], 2: ['long-tailed jaeger'], 
+5: ['canada goose']}
+``` 
+
+```python 
+>>> # Print the inverted dictionary
+... observations_sorted = sorted(observations_to_birds_list.keys())
+>>> for observations in observations_sorted:
+...     print(observations, ':', end=" ")
+...     for bird in observations_to_birds_list[observations]:
+...         print(' ', bird, end=" ")
+...     print()
+...
+1 :   northern fulmar   snow goose
+2 :   long-tailed jaeger
+5 :   canada goose
 
 ``` 
+
+
+## Using the ```in``` Operator on Tuples, Sets, and Dictionaries
+
+
+
+```python 
+>>> odds = set([1, 3, 5, 7, 9])
+>>> 9 in odds
+True
+>>> 8 in odds
+False
+>>> '9' in odds
+False
+>>> evens = (0, 2, 4, 6, 8)
+>>> 4 in evens
+True
+>>> 11 in evens
+False
+
+``` 
+
+
 
 ```python 
 >>> bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
-... 'snow goose': 63, 'northern fulmar': 1}
->>> for bird in bird_to_observations:
-...     print(bird, bird_to_observations[bird])
-...
-canada goose 183
-long-tailed jaeger 71
-snow goose 63
-northern fulmar 1
+...     'snow goose': 63, 'northern fulmar': 1}
+>>> 'snow goose' in bird_to_observations
+True
+>>> 183 in bird_to_observations
+False
 
 ``` 
 
-```python 
->>> (x, y) = (10, 20)
->>> x
-10
->>> y
-20
->>> 10, 20
-(10, 20)
->>> x, y = 10, 20
->>> x
-10
->>> y
-20
->>> [[w, x], [[y], z]] = [{10, 20}, [(30,), 40]]
->>> w
-10
->>> x
-20
->>> y
-30
->>> z
-40
->>> s1 = 'first'
->>> s2 = 'second'
->>> s1, s2 = s2, s1
->>> s1
-'second'
->>> s2
-'first'
+## Creating New Type Annotations
 
-``` 
 
-```python 
-COMPND      AMMONIA
-ATOM      1  N  0.257  -0.363   0.000
-ATOM      2  H  0.257   0.727   0.000
-ATOM      3  H  0.771  -0.727   0.890
-ATOM      4  H  0.771  -0.727  -0.890
-END
-COMPND      METHANOL
-ATOM      1  C  -0.748  -0.015   0.024
-ATOM      2  O  0.558   0.420  -0.278 
-ATOM      3  H  -1.293  -0.202  -0.901
-ATOM      4  H  -1.263   0.754   0.600
-ATOM      5  H  -0.699  -0.934   0.609
-ATOM      6  H  0.716   1.404   0.137 
-END
-
-``` 
 
 ```python 
 from typing import TextIO, Tuple, List, Dict
@@ -618,254 +817,183 @@ if __name__ == '__main__':
 
 ``` 
 
-```python 
-canada goose
-canada goose
-long-tailed jaeger
-canada goose
-snow goose
-canada goose
-long-tailed jaeger
-canada goose
-northern fulmar
 
-``` 
 
-```python 
->>> (8)   
-8
->>> type((8))
-<class 'int'>
->>> (8,)
-(8,)
->>> type((8,))
-<class 'tuple'>
->>> (5 + 3)
-8
->>> (5 + 3,)
-(8,)
 
-``` 
+
+
+
+
+## Additional Code Snippets
+
+
+
 
 ```python 
-items = {'first': 1, 'second': 2, 'third': 3}
-for key, value in items.items():
-    print(key, value)
-
-``` 
-
-```python 
-first 1
-third 3
-second 2
-
-``` 
-
-```python 
-second 2
-third 3
-first 1
-
-``` 
-
-```python 
-third 3
-first 1
-second 2
-
-``` 
-
-```python 
->>> set(range(5))
-{0, 1, 2, 3, 4}
-``` 
-
-```python 
->>> ten = set(range(10))
->>> lows = {0, 1, 2, 3, 4}
->>> odds = {1, 3, 5, 7, 9}
->>> lows.add(9)
->>> lows
-{0, 1, 2, 3, 4, 9}
->>> lows.difference(odds)
-{0, 2, 4}
->>> lows.intersection(odds)
-{1, 3, 9}
->>> lows.issubset(ten)
-True
->>> lows.issuperset(odds)
-False
->>> lows.remove(0)
->>> lows
-{1, 2, 3, 4, 9}
->>> lows.symmetric_difference(odds)
-{2, 4, 5, 7}
->>> lows.union(odds)
-{1, 2, 3, 4, 5, 7, 9}
->>> lows.clear()
->>> lows
-set()
-
-``` 
-
-```python 
->>> odds = set([1, 3, 5, 7, 9])
->>> 9 in odds
-True
->>> 8 in odds
-False
->>> '9' in odds
-False
->>> evens = (0, 2, 4, 6, 8)
->>> 4 in evens
-True
->>> 11 in evens
-False
-
-``` 
-
-```python 
->>> vowels = {'a', 'e', 'i', 'o', 'u'}
->>> vowels
-{'o', 'u', 'a', 'e', 'i'}
->>> vowels.add('y')
->>> vowels
-{'u', 'y', 'e', 'a', 'o', 'i'}
-
-``` 
-
-```python 
->>> {'a', 'e', 'i', 'o', 'u'} == {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
-True
-
-``` 
-
-```python 
->>> vowels = {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
->>> vowels
-{'u', 'o', 'i', 'e', 'a'}
-
-``` 
-
-```python 
->>> set(2, 3, 5)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: set expected at most 1 arguments, got 3
-
-``` 
-
-```python 
->>> vowels = {'a', 'e', 'a', 'a', 'i', 'o', 'u', 'u'}
->>> vowels
-{'i', 'a', 'u', 'e', 'o'}
->>> set(vowels)
-{'i', 'a', 'u', 'e', 'o'}
->>> set({5, 3, 1})
-{1, 3, 5}
-
-``` 
-
-```python 
->>> lows = set([0, 1, 2, 3, 4])
->>> odds = set([1, 3, 5, 7, 9])
->>> lows - odds            # Equivalent to lows.difference(odds)
-{0, 2, 4}
->>> lows & odds            # Equivalent to lows.intersection(odds)
-{1, 3}
->>> lows <= odds           # Equivalent to lows.issubset(odds)
-False
->>> lows >= odds           # Equivalent to lows.issuperset(odds)
-False
->>> lows | odds            # Equivalent to lows.union(odds)
-{0, 1, 2, 3, 4, 5, 7, 9}
->>> lows ^ odds            # Equivalent to lows.symmetric_difference(odds)
-{0, 2, 4, 5, 7, 9}
-
-``` 
-
-```python 
->>> vowels = {'a', 'e', 'i', 'o', 'u'}
->>> vowels
-{'a', 'u', 'o', 'i', 'e'}
-
-``` 
-
-```python 
->>> type(vowels)
-<class 'set'>
->>> type({1, 2, 3})
-<class 'set'>
->>> type({})
-<class 'dict'>
->>> set()
-set()
->>> type(set())
-<class 'set'>
-
-``` 
-
-```python 
->>> S = set()
->>> L = [1, 2, 3]
->>> S.add(L)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: unhashable type: 'set'
-
-``` 
-
-```python 
->>> bird_to_observations = {'canada goose': 3, 'northern fulmar': 1}
->>> bird_to_observations
-{'northern fulmar': 1, 'canada goose': 3}
->>> bird_to_observations['northern fulmar']
-1
-
-``` 
-
-```python 
->>> rock = 'anthracite'
->>> rock[9]
-'e'
->>> rock[0:3]
-'ant'
->>> rock[-5:]
-'acite'
->>> for character in rock[:5]:
-...     print(character)
-...
-
-a
-n
-t
-h
-r
-
-``` 
-
-```python 
->>> bases = ('A', 'C', 'G', 'T')
->>> for base in bases:
-...     print(base)
+>>> observations_file = open('observations.txt')
+>>> birds_observed = set()
+>>> for line in observations_file:              
+...     bird = line.strip()                     
+...     birds_observed.add(bird)                
 ... 
-A
-C
-G
-T
+>>> birds_observed
+{'long-tailed jaeger', 'canada goose', 'northern fulmar', 'snow goose'}
+
+``` 
+
+
+```python 
+>>> observations_file = open('observations.txt')
+>>> bird_to_observations = {}
+>>> for line in observations_file:
+...     bird = line.strip()
+...     if bird in bird_to_observations:
+...         bird_to_observations[bird] = bird_to_observations[bird] + 1
+...     else:
+...         bird_to_observations[bird] = 1
+... 
+>>> observations_file.close()
+>>> 
+>>> # Print each bird and the number of times it was seen.
+... for bird, observations in bird_to_observations.items():
+...     print(bird, observations)
+... 
+snow goose 1
+long-tailed jaeger 2
+canada goose 5
+northern fulmar 1
+
 ``` 
 
 ```python 
->>> canada = ['Canada', 76.5]
->>> usa = ['United States', 75.5]
->>> mexico = ['Mexico', 72.0]
->>> life = (canada, usa, mexico)
->>> mexico = ['Mexico', 72.5]
->>> life
-(['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0])
->>> life[0][1] = 80.0
->>> canada
-['Canada', 80.0]
+>>> observations_file = open('observations.txt')
+>>> bird_to_observations = {}
+>>> for line in observations_file:
+...     bird = line.strip()
+...     bird_to_observations[bird] = bird_to_observations.get(bird, 0) + 1
+... 
+>>> observations_file.close()
+``` 
+
+```python 
+>>> sorted_birds = sorted(bird_to_observations.keys())
+>>> for bird in sorted_birds:
+...     print(bird, bird_to_observations[bird])
+...
+canada goose 5
+long-tailed jaeger 2
+northern fulmar 1
+snow goose 1
 
 ``` 
 
+
+```python 
+keys: dict_keys(['Turing', 'Newton', 'Darwin'])
+values: dict_values([1912, 1642, 1809])
+items: dict_items([('Turing', 1912), ('Newton', 1642), ('Darwin', 1809)])
+get: 1867
+after update: {'Curie': 1867, 'Darwin': 1809, 'Franklin': 1920,
+'Turing': 1912, 'Newton': 1642, 'Hopper': 1906}
+after clear: {}
+``` 
+
+```python 
+{
+  'jgoodall'  : {'surname'  : 'Goodall',
+                 'forename' : 'Jane',
+                 'born'     : 1934,
+                 'died'     : None,
+                 'notes'    : 'primate researcher',
+                 'author'   : ['In the Shadow of Man',
+                               'The Chimpanzees of Gombe']},				 
+  'rfranklin' : {'surname'  : 'Franklin',
+                 'forename' : 'Rosalind',
+                 'born'     : 1920,
+                 'died'     : 1957,
+                 'notes'    : 'contributed to discovery of DNA'},
+	
+	
+   'rcarson'  : {'surname'  : 'Carson',
+                 'forename' : 'Rachel',
+                 'born'     : 1907,
+                 'died'     : 1964,
+                 'notes'    : 'raised awareness of effects of DDT',
+                 'author'   : ['Silent Spring']}
+}
+
+``` 
+
+
+```python 
+>>> help(hash)
+Help on built-in function hash in module builtins:
+
+hash(...)
+    hash(object) -> integer
+
+    Return a hash value for the object.  Two objects with the same
+    value have the same hash value.  The reverse is not necessarily
+    true, but likely.
+
+>>> hash(123)
+123
+>>> hash('123') # a string
+163512108404620371
+
+``` 
+
+```python 
+>>> hash(29.45)    
+107370935
+>>> hash(True) 
+1
+>>> hash([1, 2, 3])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+``` 
+
+```python 
+>>> observations_file = open('observations.txt')
+>>> bird_counts = []                            
+>>> for line in observations_file:              
+...     bird = line.strip()                     
+...     found = False
+...     # Find bird in the list of bird counts.
+...     for entry in bird_counts:
+...         if entry[0] == bird:
+...             entry[1] = entry[1] + 1
+...             found = True
+...     if not found:
+...         bird_counts.append([bird, 1])
+... 
+>>> observations_file.close()
+>>> for entry in bird_counts:
+...     print(entry[0], entry[1])
+... 
+canada goose 5
+long-tailed jaeger 2
+snow goose 1
+northern fulmar 1
+
+``` 
+
+
+```python 
+COMPND      AMMONIA
+ATOM      1  N  0.257  -0.363   0.000
+ATOM      2  H  0.257   0.727   0.000
+ATOM      3  H  0.771  -0.727   0.890
+ATOM      4  H  0.771  -0.727  -0.890
+END
+COMPND      METHANOL
+ATOM      1  C  -0.748  -0.015   0.024
+ATOM      2  O  0.558   0.420  -0.278 
+ATOM      3  H  -1.293  -0.202  -0.901
+ATOM      4  H  -1.263   0.754   0.600
+ATOM      5  H  -0.699  -0.934   0.609
+ATOM      6  H  0.716   1.404   0.137 
+END
+
+``` 
