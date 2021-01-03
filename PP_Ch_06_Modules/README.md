@@ -536,14 +536,6 @@ def distance(x0, y0, x1, y1):
 ``` 
 
 
-```python 
->>> 'species'.endswith('a')
-False
->>> 'species'.endswith('es')
-True
-
-``` 
-
 
 ```python 
 F
@@ -720,13 +712,6 @@ pic3 = media.load_picture('pic207named.jpg')
 media.show(pic3)
 ``` 
 
-```python 
->>> 'species'.startswith('a')
-False
->>> 'species'.startswith('spe')
-True
-
-``` 
 
 ```python 
 ..
@@ -769,17 +754,7 @@ media.show(pic)
 
 ``` 
 
-```python 
->>> 'Computer Science'.swapcase()
-'cOMPUTER sCIENCE'
 
-``` 
-
-```python 
->>> 'Computer Science'.swapcase().endswith('ENCE')
-True
-
-``` 
 
 ```python 
 def to_celsius(t):                        
