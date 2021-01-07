@@ -33,7 +33,14 @@ Why go through all of this trouble? Well, first, the operating system uncouples 
 Further, the interpreter separates the instructions in your program from the particular operating system on your computer.
 With this separation, you need only write the instructions in standardized syntax and the interpreter and operating system take care of the rest.
 
-To say that python is a high-level language is to say that there are several levels of interpretation between the python script that you type and the operations that are actually run on the computer. 
+To say that python is a *high-level language* is to say that there are several levels of interpretation between the python script that you type and the operations that are actually run on the computer. 
 This form of computing is often slower to run but faster to code. 
-In comparison, languages such as C++ or Fortran are low-level languages that are slower to code and compile, instead of interpret, but run much faster. 
+In comparison, languages such as C++ or Fortran are low-level languages that are slower to code, must be compiled before running, instead of interpreted as they run, but run much faster. 
+Python is known to have a flatter learning curve that these low-level languages but, as a general-purpose language, the learning curve is steeper than that for languages such as R, which are designed for specific purposes. 
+
+
+
+
+
+
 
