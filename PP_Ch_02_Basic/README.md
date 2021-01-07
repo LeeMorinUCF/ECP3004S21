@@ -492,7 +492,7 @@ to perform intermediate calculations separately.
 
 ``` 
 
-Coders differ interms of their preferred style. 
+Coders differ in terms of their preferred style. 
 Some like to play *code golf* by performing a calculation in 
 the minimum number of lines. 
 That's fine, for an expert, but a beginner should separate 
