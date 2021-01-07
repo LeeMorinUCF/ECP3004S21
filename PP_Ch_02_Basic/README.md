@@ -386,7 +386,7 @@ You can repeat these operations to create a sequence of values
 
 ## How Python Tells You Something Went Wrong
 
-Troubleshooting, called *debugging* is a big part of programming. 
+Troubleshooting, called *debugging*, is a big part of programming. 
 Over time, you will gain experience deciphering error messages
 and finding *bugs*. 
 Some are self explanatory: 
