@@ -1,7 +1,8 @@
-# PP_Ch_3_Functions
+# Chapter 3, Part A: Using Functions
 
 ## Functions That Python Provides
 
+Some functions are *built-in*
 
 ```python 
 >>> abs(-9)
@@ -9,6 +10,11 @@
 >>> abs(3.3)
 3.3
 ``` 
+
+A *function call* is of the form
+```function_name(argument_1, argument_2, argument_3, ./..)```.
+Arguments can be any value stored in memory. 
+
 
 ```python 
 >>> day_temperature = 10
@@ -21,7 +27,8 @@
 7
 
 ``` 
-
+You can combine the outputs of functions as operands in
+arithmetic operators: 
 ```python 
 >>> abs(-7) + abs(3.3)
 10.3
@@ -33,7 +40,7 @@
 5.5
 
 ``` 
-
+or as arguments in other operators
 
 ```python 
 >>> pow(abs(-2), round(4.3))
@@ -41,7 +48,7 @@
 
 ``` 
 
-
+Some functions convert from one type to another
 
 ```python 
 >>> int(34.6)
@@ -52,7 +59,7 @@
 21.0
 
 ``` 
-
+The ```help``` function will show documentation for a function.
 
 ```python 
 >>> help(abs)
@@ -62,7 +69,8 @@ abs(x, /)
     Return the absolute value of the argument.
 
 ``` 
-
+The ```round``` function also converts a floating-point number 
+into an integer:
 
 ```python 
 >>> round(3.8)
@@ -77,6 +85,7 @@ abs(x, /)
 -4
 
 ``` 
+but it can also be used to convert to a float with fewer significant digits.
 
 ```python 
 >>> round(3.141592653, 2)
@@ -97,7 +106,7 @@ round(...)
     same type as the number. ndigits may be negative.
 
 ``` 
-
+There is more than one way to calculate exponents. 
 
 ```python 
 >>> help(pow)
@@ -110,12 +119,13 @@ pow(x, y, z=None, /)
     invoked using the three argument form.
 
 ``` 
+If you pass only two arguments, it takes the empty value ```None``` by default.
 
 ```python 
 >>> pow(2, 4)
 16
 ``` 
-
+If the third argument is provided, it performs the additional calculation. 
 
 ```python 
 >>> pow(2, 4, 3)
@@ -125,6 +135,8 @@ pow(x, y, z=None, /)
 
 ## Memory Addresses: How Python Keeps Track of Values
 
+The name of each variable corresponds to a location in memory.
+The ```id``` function returns an integer that identifies that location in memory.
 
 ```python 
 >>> help(id)
@@ -138,12 +150,17 @@ id(obj, /)
 
 ``` 
 
+Some values are laready stored in memory.
 
 ```python 
 >>> id(-9)
 4301189552
 >>> id(23.1)
 4298223160
+```
+
+Other variables that you create are immediately assiggned to locations in memory.
+```python
 >>> shoe_size = 8.5
 >>> id(shoe_size)
 4298223112
@@ -152,7 +169,7 @@ id(obj, /)
 4298223064
 
 ``` 
-
+Even functions are objects in memory and are assiggned to locations in memory. 
 ```python 
 >>> id(abs)
 4297868712
@@ -163,7 +180,8 @@ id(obj, /)
 
 ### Python Remembers and Reuses Some Objects
 
-
+Python stores some very common numbers in special places in memory
+and reuses these locations as needed. 
 ```python 
 >>> i = 3
 >>> j = 3
@@ -176,7 +194,7 @@ id(obj, /)
 4296861792
 
 ``` 
-
+This is not the case for larger integers or floats. 
 ```python 
 >>> i = 30000000000
 >>> j = 30000000000
@@ -197,6 +215,9 @@ id(obj, /)
 
 ## Defining Our Own Functions
 
+You might want to have a function that can convert temperature from
+Fahrenheit to Celsius.
+It should work as follows.
 
 ```python 
 >>> convert_to_celsius(212)
@@ -207,7 +228,8 @@ id(obj, /)
 -12.0
 
 ``` 
-
+But if you run those function calls before the function is defined, 
+Python throws an error:
 
 ```python 
 >>> convert_to_celsius(212)
@@ -216,7 +238,8 @@ Traceback (most recent call last):
 NameError: name 'convert_to_celsius' is not defined
 
 ``` 
-
+So, you have to define the function. 
+Function definitions take the following format:
 
 ```python 
 >>> def convert_to_celsius(fahrenheit):
@@ -224,6 +247,8 @@ NameError: name 'convert_to_celsius' is not defined
 ...
 
 ``` 
+The indenting is important because that is how Python
+knows when the function definition is complete. 
 
 ```python 
 >>> def convert_to_celsius(fahrenheit):
@@ -234,7 +259,8 @@ NameError: name 'convert_to_celsius' is not defined
 IndentationError: expected an indented block
 
 ``` 
-
+After the function is defined, you can use it
+just as you would for built-in functions. 
 
 ```python 
 >>> def convert_to_celsius(fahrenheit):
@@ -244,6 +270,9 @@ IndentationError: expected an indented block
 26.666666666666668
 
 ``` 
+When you use a function to calculate its output from the arguments, 
+it is called *calling* the function.
+Test it with a few values.
 
 ```python 
 def convert_to_celsius(fahrenheit):
@@ -255,7 +284,7 @@ convert_to_celsius(10.4)
 
 ``` 
 
-
+Look for some documentation, just as you would for built-in finctions.
 
 ```python 
 >>> help(convert_to_celsius)
@@ -265,7 +294,11 @@ convert_to_celsius(fahrenheit)
 
 ``` 
 
-
+There is no documentation. 
+*You* made the function, *you* provide the documentation. 
+You do that by including a docstring, a description
+enclosed in triple quotes, which includes a written 
+description and some examples. 
 
 ```python 
 def convert_to_celsius(fahrenheit: float) -> float:
@@ -285,14 +318,14 @@ convert_to_celsius(10.4)
 
 ``` 
 
-
+Now try the ```help``` function again. 
 
 
 
 ### Keywords Are Words That Are Special to Python
 
-
-
+Because the ```def``` keyword was used to define a function, 
+it cannot be used as a variable. 
 
 ```python 
 >>> def = 3
@@ -300,6 +333,10 @@ convert_to_celsius(10.4)
     def = 3
         ^
 SyntaxError: invalid syntax
+```
+The same applies to built-in function names that are already defined. 
+
+```python
 >>> def return(x):
   File "<stdin>", line 1
     def return(x):
@@ -308,7 +345,19 @@ SyntaxError: invalid syntax
 
 ``` 
 
+But be careful: this does not apply to functions that *you* define. 
+When you overwrite your own function, the original definition 
+is discarded and replaced with the new function. 
+
+
+
+
 ## Using Local Variables for Temporary Storage
+
+It often helps make code more clear when you use separate 
+local variables for intermediate calculations. 
+These are called *local* variables because they are only 
+defined in the memory allocated within the function. 
 
 ```python 
 >>> def quadratic(a, b, c, x):
@@ -324,7 +373,8 @@ SyntaxError: invalid syntax
 
 ``` 
 
-
+After you run the function, these variables 
+no longer exist outside of the function. 
 
 ```python 
 >>> quadratic(2, 3, 4, 1.3)
@@ -335,6 +385,7 @@ Traceback (most recent call last):
 NameError: name 'first' is not defined
 ```
 
+Even the arguments are only defined within the function. 
 ```python
 >>> a
 Traceback (most recent call last):
@@ -343,6 +394,8 @@ NameError: name 'a' is not defined
 
 ``` 
 
+These arguments, without a default value, must be provided, 
+even if you assigned them a value in a previous function call. 
 ```python 
 >>> quadratic(1, 2, 3)
 Traceback (most recent call last):
@@ -350,10 +403,12 @@ Traceback (most recent call last):
 TypeError: quadratic() takes exactly 4 arguments (3 given)
 
 ``` 
-
+The more errors you see, the easier it will be for you to 
+identify what the problem is and how to fix it. 
 
 ## Tracing Function Calls in the Memory Model
 
+What do you think this function does?
 
 ```python 
 >>> def f(x):
@@ -362,74 +417,13 @@ TypeError: quadratic() takes exactly 4 arguments (3 given)
 ...
 >>> x = 1
 >>> x = f(x + 1) + f(x + 2)
-
-
 ``` 
 
-```python 
->>> def f(x):
-...     x = 2 * x
-...     return x
-...
->>> x = 1
->>> x = f(x + 1) + f(x + 2)
+Python keeps track of all the intermediate calculations
+in separate places in memory, one for each of the different ```x```'s above.
 
+See the explanation in *Practical Programming* on pages 40-46.
 
-``` 
-
-```python 
->>> def f(x):
-...     x = 2 * x
-...     return x
-...
->>> x = 1
->>> x = f(x + 1) + f(x + 2)
-
-
-``` 
-
-```python 
->>> def f(x):
-...     x = 2 * x
-...     return x
-...
->>> x = 1
->>> x = f(x + 1) + f(x + 2)
-
-
-``` 
-
-```python 
->>> def f(x):
-...     x = 2 * x
-...     return x
-...
->>> x = 1
->>> x = f(x + 1) + f(x + 2)
-
-``` 
-
-
-```python 
->>> def f(x):
-...     x = 2 * x
-...     return x
-...
->>> x = 1
->>> x = f(x + 1) + f(x + 2)
-
-``` 
-
-```python 
-def f(x):
-    x = 2 * x
-    return x
-
-x = 1
-x = f(x + 1) + f(x + 2)
-print(x)
-
-``` 
 
 
 
