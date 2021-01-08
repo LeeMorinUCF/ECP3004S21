@@ -150,7 +150,7 @@ id(obj, /)
 
 ``` 
 
-Some values are laready stored in memory.
+Some values are already stored in memory.
 
 ```python 
 >>> id(-9)
