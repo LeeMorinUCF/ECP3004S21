@@ -1,17 +1,13 @@
-# PP_Ch_8_Lists
-
-# Storing Collections of Data Using Lists
+# Chapter 8: Storing Collections of Data Using Lists
 
 
 ## Storing and Accessing Data in Lists
 
+A list is an ordered collection of zero or more objects. 
 
-```python 
->>> # Number of whales seen per day
->>> [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
-
-``` 
-
+For example, this is a list of the number of whales seen per day
+near the Coal Oil Point Natural Reserve in the two
+weeks starting on February 24, 2008.
 
 ```python 
 >>> whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
@@ -19,6 +15,8 @@
 [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 
 ``` 
+
+You can select a particular element of the list using square brackets. 
 
 
 ```python 
@@ -33,6 +31,10 @@
 3
 
 ``` 
+Notice the relationship between the index numbers 0 to 13
+and the corresponding values from the list. 
+
+You can't select a value out of range...
 
 ```python 
 >>> whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
@@ -42,7 +44,7 @@ Traceback (most recent call last):
 IndexError: list index out of range
 
 ``` 
-
+...unless you reach in the negative direction...
 ```python 
 >>> whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 >>> whales[-1]
@@ -51,13 +53,17 @@ IndexError: list index out of range
 1
 >>> whales[-14]
 5
+```
+...but don't go too far backwards, either: 
+```python 
 >>> whales[-15]
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 IndexError: list index out of range
 
 ``` 
-
+Like any other variable, you can assign individual elements to 
+other variables. 
 ```python 
 >>> whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 >>> third = whales[2]
@@ -69,11 +75,12 @@ Third day: 7
 
 ### The Empty List
 
+Like the empty string, the empty list contains no elements, 
+
 ```python 
 >>> whales = []
-
-
 ``` 
+so all index numbers are out of range. 
 
 ```python 
 >>> whales[0]
@@ -89,6 +96,8 @@ IndexError: list index out of range
 
 ### Lists Are Heterogeneous
 
+A list does not have to contain the same type of variables. 
+
 ```python 
 >>> krypton = ['Krypton', 'Kr', -157.2, -153.4]
 >>> krypton[1]
@@ -97,11 +106,15 @@ IndexError: list index out of range
 -157.2
 
 ``` 
+For some programmers with experience in other languages, 
+this is a strange possibility. 
+The user has to be careful to rememeber or check for the types of elements
+to avoid errors. 
 
 
 ## Type Annotations for Lists
 
-
+In type contracts for functions, you can specify that the argument is a ```list```.
 
 ```python 
 >>> def average(L: list) -> float:
@@ -112,6 +125,9 @@ IndexError: list index out of range
 ...     """
 
 ``` 
+
+You can also explicitly state that the argument is a list *of floats*, 
+using the *capital-L* ```List from the ```typing``` module.
 
 ```python 
 >>> from typing import List
@@ -127,11 +143,39 @@ IndexError: list index out of range
 
 ## Modifying Lists
 
+You cange the values of lists. That is, lists are *mutable*. 
 
 ```python 
 >>> nobles = ['helium', 'none', 'argon', 'krypton', 'xenon', 'radon']
 
 ``` 
+Notice that ```'neon'``` is spelled incorrectly. 
+You can change it by assigning a new value to that element. 
+
+
+```python 
+>>> nobles[1] = 'neon'
+>>> nobles
+['helium', 'neon', 'argon', 'krypton', 'xenon', 'radon']
+
+``` 
+
+The fact that you can do this illustrates that each element is assigned 
+its own location in memory. 
+
+Compare this to numbers and strings, which are *immutable*. 
+
+
+```python 
+>>> name = 'darwin'
+>>> name[0] = 'D'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'str' object does not support item assignment
+```
+
+
+Methods that appear to change strings, actually create new ones. 
 
 
 ```python 
@@ -143,11 +187,14 @@ DARWIN
 Darwin
 
 ``` 
+Methods are similar to functions but are related to a cetain data type. 
+We will loop back to them in Chapter 7. 
 
 
 ## Operations on Lists
 
-
+Some operations, such as ```len``` apply to many data types.
+Here are some others that apply to lists. 
 
 ```python 
 >>> half_lives = [887.7, 24100.0, 6563.0, 14, 373300.0]
@@ -165,7 +212,7 @@ Darwin
 [887.7, 24100.0, 6563.0, 14, 373300.0]
 
 ``` 
-
+Some operators can be applied to lists:
 
 ```python 
 >>> original = ['H', 'He', 'Li']
@@ -174,7 +221,8 @@ Darwin
 ['H', 'He', 'Li', 'Be']
 
 ``` 
-
+Notice that the binary operator ```+``` only works when the operands are of the same type.
+A single string is not the same as a list with one element that is a single string.
 
 
 ```python 
@@ -184,7 +232,7 @@ Traceback (most recent call last):
 TypeError: can only concatenate list (not "str") to list
 
 ``` 
-
+The ```*``` operator works similarly, when compared to strings. 
 
 ```python 
 >>> metals = ['Fe', 'Ni']
@@ -193,6 +241,8 @@ TypeError: can only concatenate list (not "str") to list
 
 ``` 
 
+You can use the ```del``` operator to *delete*
+an element from a list. 
 
 ```python 
 >>> metals = ['Fe', 'Ni']
@@ -205,6 +255,9 @@ TypeError: can only concatenate list (not "str") to list
 
 
 ### The ```in``` Operator on Lists
+
+The ```in``` operator checks whether an object is an element of the list.
+It returns a Boolean variable that can be used to execute conditional staements. 
 
 ```python 
 >>> nobles = ['helium', 'neon', 'argon', 'krypton', 'xenon', 'radon']
@@ -221,19 +274,26 @@ Enter a gas: nitrogen
 ...
 >>>
 ``` 
-
+It only chaeck for a single item. For example,
 
 ```python 
 >>> [1, 2] in [0, 1, 2, 3]
 False
 
 ``` 
+but
 
+```python 
+>>> [1, 2] in [0, [1, 2], 3]
+True
+```
+in which the smaller list ```[1, 2]``` is an element of the full list.
 
 
 ## Slicing Lists
 
-
+Some geneticists study types of worm, C. elegans, and refer to 
+them with 3-letter abbreviations. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
@@ -241,11 +301,14 @@ False
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 
 ``` 
+We can take a *slice* of the list to retain selected values in a smaller list. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 >>> useful_markers = celegans_phenotypes[0:4]
 ``` 
+If you leave out the leading or trailing index number, 
+it will slice either from the beginning or to the end of the list. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
@@ -255,6 +318,7 @@ False
 ['Dpy', 'Sma']
 
 ``` 
+Leaving both limits blank slices the entire list. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
@@ -266,13 +330,18 @@ False
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 
 ``` 
-
+Notice that the command ```celegans_phenotypes[5] = 'Lvl'``` command
+did not change ```celegans_copy```, which is a *clone* of the list. 
+Since there is a copy, Python changes the location in memory 
+for ```celegans_phenotypes[5] once it is changed. 
+Meanwhile, ```celegans_phenotypes[5]``` still refers to the original location in memory. 
 
 
 
 ## Aliasing: What's in a Name?
 
-
+Instead of slicing, you can create an *alias*, which is an alternative name for something. 
+the outcome is different than above. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
@@ -282,16 +351,20 @@ False
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
 >>> celegans_alias
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
-
 ``` 
 
+Note that we dropped the slice ```[:]``` when we assigned the alias ```celegans_alias```. 
+As a result, changes made to the original list are also made to the alias.
+The index numbers of the alias still point to the same places in memory as the 
+elements of the original list. 
 
 
 
 ### Mutable Parameters
 
 
-
+Consider this example:
+a function that returns a list after removing the last element. 
 
 ```python 
 >>> def remove_last_item(L: list) -> list:
@@ -306,8 +379,9 @@ False
 ...     return L
 ...
 >>>
-
 ``` 
+
+Now use it with the following list. 
 
 ```python 
 >>> celegans_markers = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
@@ -316,7 +390,12 @@ False
 >>> celegans_markers
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy']
 ``` 
+Notice that the original list was altered:
+the modifications applied to the same places in memory. 
 
+In fact, for this function, you don't need the return statement to create the
+alias. 
+The function will change the list by accessing the memory locations directly. 
 
 ```python 
 >>> def remove_last_item(L: list) -> None:
@@ -334,7 +413,10 @@ False
 ['Emb', 'Him', 'Unc', 'Lon', 'Dpy']
 
 ``` 
-
+If we want to restrict the type of the list, we could use the 
+```typing``` module to specify the type as, say, ```float```. 
+Since this function will work the same for lists of any type, 
+we can explicity state that it applies to lists of ```Any``` type.
 
 ```python 
 >>> from typing import List, Any
@@ -353,6 +435,9 @@ False
 ## List Methods
 
 
+Methods are like functions that operate on specific kinds of objects. 
+Here are some examples (see Chapter 6).
+
 ```python 
 >>> colors = ['red', 'orange', 'green']                 
 >>> colors.extend(['black', 'blue'])
@@ -369,16 +454,20 @@ False
 ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 
 ``` 
+notice that these methods modify the list, instead of creating new lists. 
+See the list on page 142 for a menu of methods to choose from. 
+
 
 ## Working in a List of Lists
 
+An element of a list can be...another list. 
 
 ```python 
 >>> life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 
 ``` 
 
-
+Notice that each single element of the full list is a list in its own right. 
 
 
 ```python 
@@ -391,7 +480,8 @@ False
 ['Mexico', 72.0]
 
 ``` 
-
+To select elements of the individual lists within the full list, 
+use a second pair of square brackets. 
 
 
 ```python 
@@ -402,10 +492,9 @@ False
 'United States'
 >>> life[1][1]
 75.5
-
 ``` 
 
-
+Each of the sublists can be assigned to new variables. 
 
 ```python 
 >>> life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
@@ -418,6 +507,8 @@ False
 76.5
 
 ``` 
+As for a single list, this creates an alias for that list, 
+unless you take a slice with ```[:]```.
 
 ```python 
 >>> life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
@@ -430,15 +521,10 @@ False
 
 ``` 
 
+### Where Did My List Go?
 
-
-## Exercises
-
-
-
-
-
-
+It is easy to forget that many list methods return ```None```
+rather than creating and returning a new list. 
 
 ```python 
 >>> colors = 'red orange yellow green blue purple'.split()
@@ -451,6 +537,20 @@ None
 ['blue', 'green', 'orange', 'purple', 'red', 'yellow']
 
 ``` 
+The new variable ```sorted_colors``` contains only the value ```None```, 
+returned by the list method ```sort```. 
+The ```sort``` operation is performed on the original list, 
+on which the method is applied. 
+
+
+
+
+## Exercises
+
+
+
+
+
 
 
 
@@ -513,12 +613,6 @@ def is_longer(L1: list, L2: list) -> bool:
 
 
 
-```python 
->>> nobles[1] = 'neon'
->>> nobles
-['helium', 'neon', 'argon', 'krypton', 'xenon', 'radon']
-
-``` 
 
 ```python 
 >>> x = None
