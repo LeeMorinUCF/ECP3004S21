@@ -223,7 +223,7 @@ Otherwise, you can use triple double-quotes to span multiple lines.
 ... three'''
 'one\ntwo\nthree'
 ``` 
-Notice th ```\n``` escape sequence for *newline*. 
+Notice the ```\n``` escape sequence for *newline*. 
 
 
 
