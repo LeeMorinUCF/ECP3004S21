@@ -592,16 +592,6 @@ else:
 
 
 
-## Remembering Results of a Boolean Expression Evaluation
-
-
-
-```python 
->>> x = 15 > 5
-
-
-``` 
-
 
 
 
@@ -620,6 +610,14 @@ else:
 2 is acidic.
 ``` 
 
+
+What happens when ```ph = 6.4```?
+
+What happens when ```ph = 3.6```?
+
+Is this the intended result? If not, how could you fix it? 
+
+
 ### Exercise 10
 
 ```python 
@@ -630,3 +628,11 @@ elif ph < 4.0:
     print("It's a strong acid!")
 ``` 
 
+What happens when ```ph = 6.4```?
+
+What happens when ```ph = 3.6```?
+
+Is this the intended result? If not, how could you fix it? 
+Consider a different approach from the example above. 
+
+What change would you make to print both messages when they are true?
