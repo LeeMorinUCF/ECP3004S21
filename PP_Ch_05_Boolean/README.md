@@ -368,6 +368,7 @@ Enter the pH level: 6.0
 
 ``` 
 
+If the condition is not true, nothing happens.
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -380,7 +381,8 @@ Enter the pH level: 8.0
 ``` 
 
 
-
+Just as with the ```def``` keyword, the block of statements
+must be indented.
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -393,6 +395,8 @@ Enter the pH level: 6
 IndentationError: expected an indented block
 ``` 
 
+If the condition is ```True```, the entire block will
+be executed. 
 
 
 ```python 
@@ -407,6 +411,10 @@ You should be careful with that!
 
 ``` 
 
+Any statements that are not indented after the block 
+will be executed regardless of the condition for the 
+indented block. 
+
 ```python 
 >>> ph = float(input('Enter the pH level: '))
 Enter the pH level: 8.0
@@ -416,6 +424,9 @@ Enter the pH level: 8.0
 >>> print("You should be careful with that!")
 You should be careful with that!
 ``` 
+
+The commands following the block of commands in the ```if``` statements
+must be separated by a blank line to signal the end of the ```if``` statement: 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -429,6 +440,7 @@ Enter the pH level: 8.0
 SyntaxError: invalid syntax
 ``` 
 
+This is not a problem when the ```if``` condition is ```False```. 
 
 ```python 
 ph = 8.0
@@ -438,8 +450,8 @@ print("You should be careful with that!")
 
 ``` 
 
-
-
+Another ```if``` statement can follow right after
+the previous one, regardless of the outcome of the first. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -452,10 +464,10 @@ Enter the pH level: 8.5
 ...
 8.5 is basic.
 >>>
-
 ``` 
 
-
+We can merge these cases by following the block with an ```elif```, 
+which stands for "else if". 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -467,9 +479,10 @@ Enter the pH level: 8.5
 ...
 8.5 is basic.
 >>>
-
 ``` 
 
+Notice that the sequence of ```if``` and ```elif``` statements
+may not cover all possibilities. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -480,10 +493,12 @@ Enter the pH level: 7.0
 ...     print(ph, "is basic.")
 ...
 >>>
-
 ``` 
 
-
+The ```elif``` statement accomplished the same thing as the 
+```if``` statement. 
+This is not always the case, particularly if the first block
+changes the value of the variables. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -495,6 +510,13 @@ Enter the pH level: 6.0
 ...     print(ph, "is acidic.")
 ...
 8.0 is acidic.
+```
+
+The first block changed the value of the ```ph``` variable, 
+changing the outcome in the second block. 
+This is not the case when the blocks are connected with an ```elif``` statement. 
+
+```python 
 >>> ph = float(input('Enter the pH level: '))
 Enter the pH level: 6.0
 >>> if ph < 7.0:
@@ -503,13 +525,12 @@ Enter the pH level: 6.0
 ...     print(ph, "is acidic.")
 ...
 >>>
-
 ``` 
 
+In this case, the ```elif``` block is skipped. 
 
 
-
-
+You can chain multiple ```elif``` statements to test a sequence of conditions. 
 
 ```python 
 >>> compound = input('Enter the compound: ')
@@ -523,8 +544,13 @@ Enter the compound: CH4
 ...
 Methane
 >>>
-
 ``` 
+
+
+
+If none of the conditions are satisfied, nothing is executed, 
+which may not be what you want. 
+The ```else``` statement is executed in this case. 
 
 ```python 
 >>> compound = input('Enter the compound: ')
@@ -540,13 +566,14 @@ Enter the compound: H2SO4
 ...
 Unknown compound
 >>>
-
 ``` 
 
 
 ## Nested ```if``` Statements
 
-
+An ```if``` statement block can contain any kind of Python
+statement, including another ```if``` statement. 
+The inner ```if``` statement is called a *nested if statement*. 
 
 ```python 
 value = input('Enter the pH level: ')
@@ -581,16 +608,7 @@ else:
 ## Exercises
 
 
-
-
-```python 
-ph = float(input("Enter the ph level: "))
-if ph < 7.0:
-    print("It's acidic!")
-elif ph < 4.0:
-    print("It's a strong acid!")
-``` 
-
+### Exercise 9
 
 ```python 
 >>> ph = 2
@@ -602,4 +620,13 @@ elif ph < 4.0:
 2 is acidic.
 ``` 
 
+### Exercise 10
+
+```python 
+ph = float(input("Enter the ph level: "))
+if ph < 7.0:
+    print("It's acidic!")
+elif ph < 4.0:
+    print("It's a strong acid!")
+``` 
 
