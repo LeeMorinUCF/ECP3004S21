@@ -14,13 +14,12 @@
 # 
 ##################################################
 #
-# Demo for Chapter 3: Hello, Python
+# Demo for Chapter 4: Working with Text
 # Part A: Using Functions
 #
 ##################################################
 """
 
-# Chapter 4: Working with Text
 
 ##################################################
 ## Creating Strings of Characters
