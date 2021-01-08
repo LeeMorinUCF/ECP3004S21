@@ -1,17 +1,26 @@
-# PP_Ch_5_Boolean
+# Chapter 5: Making Choices (Boolean Variables)
 
 ## A Boolean Type
 
+Named after George Boole (1815-1864), a boolean variable, 
+of type ```bool``` takes on one of two values: 
+```True``` or ```False```.
+
 ### Boolean Operators
 
+The negation ```not``` is a unary operator on type ```bool```
 
 ```python 
 >>> not True
 False
 >>> not False
 True
-
 ``` 
+It negates, or reverses, the Boolean variable, 
+from ```False``` to ```True``` or vice versa. 
+
+The binary operator ```and``` returns ```True``` only if both
+operands are ```True```.
 
 ```python 
 >>> True and True
@@ -24,6 +33,8 @@ False
 False
 
 ``` 
+The binary operator ```or``` returns ```True``` if either
+one of the operands are ```True```.
 
 ```python 
 >>> True or True
@@ -37,6 +48,7 @@ True
 
 ``` 
 
+As with any other value, you can store these as variables. 
 ```python 
 >>> cold = True
 >>> windy = False
@@ -44,13 +56,17 @@ True
 False
 >>> not (cold and windy)
 True
-
 ``` 
 
 
 
 #### Building an Exclusive ```or``` Expression
 
+The *exclusive or* operand returns ```True``` if only one
+of the operands is ```True```. 
+
+If you want an exclusive ```or```, you can construct it from 
+multiple Boolean operators. 
 
 ```python 
 >>> b1 = False
@@ -72,9 +88,13 @@ False
 
 ``` 
 
+We will see an easier way to do this after introducing more operators.
+
 
 ### Relational Operators
 
+Relational operators compare operands to produce a Boolean variable.
+Inequality signs are a primary example.
 
 ```python 
 >>> 45 > 34
@@ -86,7 +106,8 @@ True
 >>> 45 < 34
 False
 ``` 
-
+The default is strict inequality but the "equal"" case
+is specified by adding an equal sign. 
 ```python 
 >>> 23.1 >= 23
 True
@@ -99,6 +120,9 @@ False
 
 ``` 
 
+
+A double equal sign ```==``` denotes a test for equality
+of the opearands and returns ```True``` if they are equal. 
 ```python 
 >>> 67.3 == 87
 False
@@ -106,12 +130,23 @@ False
 False
 >>> 67.0 == 67
 True
+```
+
+The exclamation mark ```!``` denotes negation, 
+so the combined operator ```!=``` tests for inequality, 
+returning ```True``` only if the operands are not equal. 
+```python
 >>> 67.0 != 67
 False
 >>> 67.0 != 23
 True
 ``` 
 
+
+The examples above show how the operators work but 
+these operators are more interesting and useful when 
+the operands are variables, as in the ```is_positive``` function, 
+which is another way to evaluate Boolean variables. 
 ```python 
 >>> def is_positive(x: float) -> bool:
 ...     """Return True iff x is positive.
@@ -132,9 +167,26 @@ False
 
 ``` 
 
+Now we can revisit the example with exclusive ```or``` operator, 
+applied to two variables of type ```bool```. 
+
+```python
+b1 != b2
+```
+This expression returns ```True``` only if exactly one of them is ```True```. 
+Consider all the possible combinations of ```True``` and ```False``` for each variable, if you need to convince yourself.
+
 
 ### Combining Comparisons
 
+You can pass other expressions as the operands in relational operators. 
+Just as with numbers, there is an order of operations with type ```bool```.
+
+1. Arithmetic operators are evaluated first: 
+you have to know the values you are comparing first. 
+1. Relational operators all have the same precedence, after arithmetic operators. 1. Boolean opearators like ```and```, ```or``` and ```not``` are evaluated last: again, you have to know the values you are comparing first. 
+
+Once you know these rules, you can avoid typing parentheses. 
 
 ```python 
 >>> x = 2
@@ -144,6 +196,7 @@ False
 True
 
 ``` 
+This returns the same:
 
 ```python 
 >>> x = 5
@@ -154,6 +207,7 @@ True
 
 ``` 
 
+These examples determine whether a number lies within an interval. 
 ```python 
 >>> x = 3
 >>> (1 < x) and (x <= 5)
@@ -164,6 +218,8 @@ False
 
 ``` 
 
+You can also write it the way it would be written on paper, 
+by *chaining* the comparisons. 
 
 ```python 
 >>> x = 3
@@ -171,6 +227,7 @@ False
 True
 
 ``` 
+Most cases wor as you expect but there are sometimes surprises:
 
 ```python 
 >>> 3 < 5 != True
@@ -180,7 +237,13 @@ True
 
 ``` 
 
+Recall the order of operations: the relational operator
+is evaluated first and ```5``` is neither ```True``` nor ```False```. 
+
+
 #### Using Numbers and Strings with Boolean Operators
+
+A zero is ```False``` and all other numbers return ```True```.
 
 ```python 
 >>> not 0
@@ -193,6 +256,8 @@ False
 False
 
 ``` 
+Similarly for strings, the empty string```''``` returns ```False```
+and all other strings return ```True```. 
 
 ```python 
 >>> not ''
@@ -206,6 +271,15 @@ False
 
 ### Short Circuit Evaluation
 
+When evaluating a Boolean expression, once Python
+has enough information to know that a condition is 
+```True``` or ```False```, it stops evaluating. 
+This is called *short circuit evaluation*. 
+
+For example, in an ```or``` expression, once one operand is ```True```, 
+the full expression returns ```True```.
+
+We can illustrate this with an opearand that throws an error. 
 
 ```python 
 >>> 1 / 0
@@ -214,6 +288,7 @@ Traceback (most recent call last):
 ZeroDivisionError: division by zero
 
 ``` 
+Now try this in an ```or``` expression: 
 
 ```python 
 >>> (2 < 3) or (1 / 0)
@@ -221,17 +296,26 @@ True
 
 ``` 
 
-
+What happened? Python didn't bother evaluating the second operator, 
+avoiding the error. 
 
 
 ### Comparing Strings
 
+Python compares strings by the corresponding binary values in an
+ASCII table. 
+In this ordering, the capital letters come first. 
 
 ```python 
 >>> 'A' < 'a'
 True
 >>> 'A' > 'z'
 False
+```
+
+If a shorter string runs out of letters, it is less than the other. 
+
+```python 
 >>> 'abc' < 'abd'
 True
 >>> 'abc' < 'abcd'
@@ -239,6 +323,7 @@ True
 
 ``` 
 
+The ```in``` operator checks whether a string is contained within another string. 
 ```python 
 >>> 'Jan' in '01 Jan 1838'
 True
@@ -268,6 +353,10 @@ True
 
 ## Choosing Which Statements to Execute
 
+The primary purpose of Boolean variables is for the Python to
+follow different instructions under different conditions.
+An ```if``` statement evaluates conditions in a code block 
+if the condition is ```True```. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
