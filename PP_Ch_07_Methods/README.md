@@ -1,8 +1,12 @@
-# PP_Ch_7_Methods
+# Chapter 7: Using Methods
 
-# Using Methods
+A *method* is kind of function that is attached to a particular type
+of object called a ```class```. 
 
 ## Modules, Classes, and Methods
+
+In the ```help``` function call for the ```str``` function, 
+it shows that ```str``` in a ```class```. 
 
 ```python 
 >>> help(str)
@@ -58,6 +62,8 @@ class str(object)
 
 ``` 
 
+Near the top line is the following:
+
 ```python 
  |  str(object[, encoding[, errors]]) -> str
  |
@@ -65,13 +71,16 @@ class str(object)
 
 ``` 
 
+It says that we can use the ```str``` function to produce a ```string```. 
 
+The "```str```" ```class``` includes the ```method``` "```capitalize```".
 
 ```python 
 >>> str.capitalize('browning')
 'Browning'
 
 ``` 
+Other methods can center a string within a string of a certain length. 
 
 ```python 
 >>> str.center('Sonnet 43', 26)
@@ -80,12 +89,17 @@ class str(object)
 2
 
 ``` 
-
+or ```count``` the number of times that the string ```'the'``` appears in
+the first string. 
 
 
 ## Calling Methods the Object-Oriented Way
 
-
+Every method in class ```str``` takes a string as the first argument. 
+Another way to use these methods is to list the object first, then call the string method after a dot, in the form
+```name_of_string.name_of_string_method(arguments)```.
+Instead of assigning the string to a variable, you can place 
+the actual string before the method. 
 
 ```python 
 >>> 'browning'.capitalize()
@@ -97,7 +111,7 @@ class str(object)
 
 ``` 
 
-
+The hep documentation for methods uses this form. 
 
 ```python 
 >>> help(str.lower)
@@ -110,7 +124,8 @@ lower(...)
 
 ``` 
 
-
+Compare this with the doumentation for the ```sqrt``` function
+in the ```math``` module. 
 
 ```python 
 >>> import math
@@ -123,9 +138,11 @@ sqrt(...)
     Return the square root of x.
 
 ``` 
+Notice that there is no prefix before the function name ```sqrt```, 
+where the ```S.lower``` function has the prefix ```S.```, 
+to represent the particular string. 
 
-
-
+A string method can be called with an expression that evaluates to a string:
 
 ```python 
 >>> ('TTA' + 'G' * 3).count('T')
@@ -136,7 +153,7 @@ sqrt(...)
 
 ## Exploring String Methods
 
-
+Here are some examples of string methods from Table 8 on page 119--20. 
 
 
 ```python 
@@ -154,7 +171,8 @@ False
 True
 
 ``` 
-
+Those methods are self explanatory. 
+The method ```lstrip``` strips the whiespace on the left of a string. 
 
 ```python 
 >>> compound = '     \n  Methyl \n butanol   \n'
@@ -167,14 +185,15 @@ True
 
 ``` 
 
-
+The ```swapcase``` method exchanges upper case for lower case
+characters, and vice versa.
 
 ```python 
 >>> 'Computer Science'.swapcase()
 'cOMPUTER sCIENCE'
 
 ``` 
-
+The ```format``` method substitutes a series of strings into another string. 
 
 ```python 
 >>> '"{0}" is derived from "{1}"'.format('none', 'no one')
@@ -186,7 +205,8 @@ True
 '"December" is derived from the Latin "decem"'
 
 ``` 
-
+Instead of just the index number in the curly braces, 
+you can also indicate the format of the numbers. 
 
 ```python 
 >>> my_pi = 3.14159                                         
@@ -195,19 +215,26 @@ True
 >>> 'Pi rounded to {0} decimal places is {1:.3f}.'.format(3, my_pi)
 'Pi rounded to 3 decimal places is 3.142.'
 ``` 
-
+If the index numbers are omitted, the strings are passed
+in order from left to right. 
 
 ```python 
 >>> 'Pi rounded to {} decimal places is {:.3f}.'.format(3, my_pi)
 'Pi rounded to 3 decimal places is 3.142.'
 ``` 
-
+You can chain method calls, as long as the previous methods in the chain
+also return strings. 
 
 ```python 
 >>> 'Computer Science'.swapcase().endswith('ENCE')
 True
 
 ``` 
+
+The numeric types ```int``` and ```float``` are also classes. 
+You can access the help by calling help on the name of the type, 
+as in ```help(int)``` or by calling ```help``` on a member of 
+the class: 
 
 ```python 
 >>> help(0)
@@ -245,7 +272,9 @@ class int(object)
 
 ## What Are Those Underscores?
 
-
+Any method bordered by two pairs of underscores is special.
+For example, the string method ```__add__``` is called whenever
+anything is added to a string. 
 
 ```python 
 >>> 'TTA' + 'GGG'
@@ -254,6 +283,11 @@ class int(object)
 'TTAGGG'
 
 ``` 
+
+Python programmers almost *never* call these special methods directly
+but it helps to understand how Python works.
+
+Here are some methods for class ```int```:
 
 ```python 
 Help on class int in module builtins:
@@ -273,7 +307,8 @@ class int(object)
 
 ``` 
 
-
+Here are several versions of calculating the absolute value of a number, 
+along with a number of other calcualtions. 
 
 ```python 
 >>> abs(-3)
@@ -301,6 +336,10 @@ True
 
 ``` 
 
+Notice the space after 3 between the dot in ```3 .``` when we want to call
+an ```int``` method on the integer 3. 
+If the dot were immediately after the 3, Python would mistakenly
+identify ```3.``` as the ```float ```3.0```, instead of the ```int``` 3.  
 
 ```python 
 >>> import math
@@ -308,6 +347,7 @@ True
 'sqrt(x)\n\nReturn the square root of x.'
 ```
 
+The documentation for functions is stored in a variable called ```__doc```. 
 
 ```python
 >>> print(math.sqrt.__doc__)
