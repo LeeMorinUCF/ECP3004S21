@@ -1,20 +1,29 @@
-# PP_Ch_6_Modules
+# Chapter 6: A Modular Approach to Program Organization
 
-# A Modular Approach to Program Organization
+You can often solve problems by using programs 
+and functions designed by others, rather than solving these 
+problems on your own. 
+A great advantage of Python is that there is a large community 
+of programmers who contribute their own functions.
+The typical unit for a set of functions and programs is a *module*. 
+
 
 ## Importing Modules
 
+To gain access to the functions in a module, you *import* it.
 
 ```python 
 import math
 ```
+The ```math``` module contains a set of mathematical operations. 
 
-
+A module has type ```module```.
 ```python 
 >>> type(math)
 <class 'module'>
 ``` 
-
+You can acces the help for all the functions in a module just as you
+would for a single function, with the ```help``` function. 
 
 ```python 
 >>> help(math)
@@ -49,6 +58,9 @@ FUNCTIONS
 
 ``` 
 
+Many common functions--many functions that you might expect would come 
+standard with Python--are not available unless you import them
+in a module,
 
 ```python 
 >>> sqrt(9)
@@ -57,13 +69,16 @@ Traceback (most recent call last):
 NameError: name 'sqrt' is not defined
 
 ``` 
+After the ```import math``` statement, these functions are available
+using the prefix ```math```. 
 
 ```python 
 >>> math.sqrt(9)
 3.0
 
 ``` 
-
+Even the number ```pi``` requires the ```math``` module, 
+along with other constants. 
 
 ```python 
 >>> import math
@@ -75,6 +90,8 @@ area is 78.53981633974483
 
 ``` 
 
+You *could* overwrite these values, since they are variables 
+like any other, but that is a bad idea, since users would not expect this. 
 
 
 ```python 
@@ -85,7 +102,10 @@ area is 78.53981633974483
 area is 75
 
 ``` 
-
+You don't need to import the entire module. 
+You could import only the particular functions and constants that you need. 
+When you use the ```from``` statement, it pulls certain elements
+by name. 
 
 ```python 
 >>> from math import sqrt, pi
@@ -96,8 +116,9 @@ area is 75
 circumference is 31.41592653589793
 
 ``` 
-
-
+Now these can be referenced as they are named. 
+Since they have different names, there are no functions under the
+usual name that would be assigned if the entire module were imported. 
 
 ```python 
 >>> from math import sqrt, pi
@@ -111,7 +132,10 @@ NameError: name 'math' is not defined
 ``` 
 
 
-
+A good practice is to select only the functions you need. 
+Otherwise, if you select all the functions (using the *wildcard* ```*```)
+many functions will be imported into the namespace, 
+which could cause conflicts with other variables. 
 
 
 ```python 
@@ -123,6 +147,10 @@ NameError: name 'math' is not defined
 
 
 #### Module ```__builtins__```
+
+Many functions are built into Python. 
+These are collected within the ```__builtins__``` module. 
+You might recognize some of the functions that we have used already. 
 
 ```python 
 >>> dir(__builtins__)
@@ -157,10 +185,19 @@ NameError: name 'math' is not defined
 
 ``` 
 
+You should avoid naming any variable using the names of functions in 
+the ```__builtins__``` module. 
+
+
+
+
+
+
 
 
 ## Defining Your Own Modules
 
+In Chapter 3, we defined this function. 
 
 ```python 
 >>> def convert_to_celsius(fahrenheit: float) -> float:
@@ -175,33 +212,8 @@ NameError: name 'math' is not defined
 
 ``` 
 
-```python 
-def convert_to_celsius(fahrenheit: float) -> float:
-    """Return the number of Celsius degrees equivalent to fahrenheit
-    degrees.
-
-    >>> convert_to_celsius(75)
-    23.88888888888889
-    """
-    return (fahrenheit - 32.0) * 5.0 / 9.0
-
-``` 
-
-```python 
-def convert_to_celsius(fahrenheit):
-    """ (number) -> float
-
-    Return the number of Celsius degrees equivalent to fahrenheit degrees.
-
-    >>> convert_to_celsius(75)
-    23.88888888888889
-    """
-                        
-    return fahrenheit - 32.0 * 5.0 / 9.0
-
-``` 
-
-
+If you save this function definition into a file names
+```temperature.py```, you can import it as a module. 
 
 ```python 
 >>> import temperature
@@ -212,20 +224,30 @@ True
 ``` 
 
 
+
 ### What Happens During Import
 
+Let's try an experiment: save the following command in a file 
+called ```experiment.py```. 
 
 ```python 
 print("The panda's scientific name is 'Ailuropoda melanoleuca'")
 
 ``` 
 
+Then ```import``` it as a module and see what happens:
+
+
 ```python 
 >>> import experiment
 The panda's scientific name is 'Ailuropoda melanoleuca'
 
 ``` 
+It executed the ```print``` statement in the file. 
+This shows that Python *executes the commands in a module*
+when it imports. 
 
+Now try to import it a second time in the same script.
 
 ```python 
 >>> import experiment
@@ -235,11 +257,28 @@ The panda's scientific name is 'Ailuropoda melanoleuca'
 
 ``` 
 
+The message wasn't printed the second time. 
+Python keeps track of modules that have already been loaded
+and does not execute the scripts twice. 
+This saves time if you import modules that import other modules.
+Sometimes several modules would otherwise import the same module
+multiple times. 
+
+If you need to edit the commands in a module, the changes would not be updated
+automatically. 
+You can use the ```imp``` module to ```reload``` the module with your changes. 
+
+
+In between the next set of commands, change the ```print``` command
+to tehe following (switching pandas for koalas).
 
 ```python 
 print("The koala's scientific name is 'Phascolarctos cinereus'")
 
 ``` 
+
+Afterward, ```reload``` the module with this change.
+
 
 ```python 
 >>> import experiment
@@ -250,11 +289,13 @@ The panda's scientific name is 'Ailuropoda melanoleuca'
 The koala's scientific name is 'Phascolarctos cinereus'
 <module 'experiment' from '/Users/campbell/Documents/experiment.py'>
 ``` 
-
+Notice the new version is effective after the ```reload``` command. 
 
 
 #### Restoring a Module
 
+If you want to reload a module, you could restart Python but the 
+```importlib``` module avoids restarting. 
 
 ```python 
 >>> import example
@@ -269,6 +310,8 @@ The koala's scientific name is 'Phascolarctos cinereus'
 2
 ``` 
 
+This doesn't work, however, for systems modules, like ```math```. 
+
 ```python 
 >>> import math
 >>> math.pi
@@ -281,28 +324,36 @@ The koala's scientific name is 'Phascolarctos cinereus'
 3
 ``` 
 
+It's better to simply avoid overwriting functions or values in modules. 
+
 
 ### Selecting Which Code Gets Run on Import: ```__main__```
 
+Sometimes you want some commands to run only when the module 
+is run directly but not when it is imported. 
+Python defines a special variable named ```__name__``` to help
+us figure this out. 
+
+Place this command in the file ```echo.py```:
 
 ```python 
 print("__name__ is", __name__)
 
 ``` 
-
+If we run this file it outputs this: 
 ```python 
 __name__ is __main__
 
 ``` 
 
-
+When we import the script as a module, the following output is produced. 
 
 ```python 
 >>> import echo
 __name__ is echo
 
 ``` 
-
+Now follow this with an additional command:
 ```python 
 import echo
 
@@ -318,7 +369,15 @@ After import, __name__ is __main__ and echo.__name__ is echo
 
 ``` 
 
+When Python imports this module, the ```__name__``` variable
+stores the special string ```__main__``` but the variable within the module, 
+```echo.__name__``` stores the name of the module.
 
+
+
+This means that a module can tell whether it is being run by the main program. 
+
+Now create another file called ```main_example.py``` with the following code. 
 
 ```python 
 if __name__ == "__main__":
@@ -328,17 +387,11 @@ else:
 
 ``` 
 
+Try running this script by running the script and by importing the module. 
 
 
-
-
-```python 
-print "echo: __name__ is", __name__
-
-``` 
-
-
-
+Some modules contain only function modules but others contain programs. 
+The file ```temperature_program.py``` contains the following. 
 
 ```python 
 def convert_to_celsius(fahrenheit: float) -> float:
@@ -370,6 +423,11 @@ else:
     print('It is below freezing.')
 
 ``` 
+When this module is run, it runs the block of code at the bottom and
+asks the user for input. 
+
+Now create another module, ```baking.py``` that imports the 
+above ```temperature_program``` module. 
 
 
 ```python 
@@ -393,10 +451,40 @@ print(get_preheating_instructions(fahr))
 
 ``` 
 
+When ```baking.py``` is run, it imports the code at the bottom of
+the ```temperature_program.py``` script. 
+If we don't care about running that block of code, then we can place it 
+within an ```if``` statement of the form 
+```if __name__ == '__main__':```.
+
+```python 
+
+<function definitions copied from above>
+
+if __name__ == '__main__':
+  fahrenheit = float(input('Enter the temperature in degrees Fahrenheit: '))
+  celsius = convert_to_celsius(fahrenheit)
+  if above_freezing(celsius):
+      print('It is above freezing.')
+  else:
+      print('It is below freezing.')
+
+``` 
+
+
+
+
+
 
 
 ## Testing Your Code Semiautomatically
 
+The last step after designing the functions in your module is to test them. 
+
+
+
+The ```doctest``` module allows us to run the tests that are included 
+in the function docstrings. 
 
 
 ```python 
@@ -405,9 +493,32 @@ print(get_preheating_instructions(fahr))
 TestResults(failed=0, attempted=3)
 ``` 
 
+This message tells us that three tests were attempted and none failed. 
+
+As an experiment, suppose that we had made an error in our calculation.
+Suppose that instead of ```(fahrenheit - 32.0) * 5.0 / 9.0``` we 
+calculate ```fahrenheit - 32.0 * 5.0 / 9.0```. 
+That is, we forgot to include the parentheses.
+
+To test this, replace the definition of the ```convert_to_celsius```
+function with this:
+
+```python 
+def convert_to_celsius(fahrenheit):
+    """ (number) -> float
+
+    Return the number of Celsius degrees equivalent to fahrenheit degrees.
+
+    >>> convert_to_celsius(75)
+    23.88888888888889
+    """
+                        
+    return fahrenheit - 32.0 * 5.0 / 9.0
+
+``` 
 
 
-
+Then, when we run ```doctest``` on that module.
 
 
 ```python 
@@ -427,6 +538,20 @@ Got:
 ***Test Failed*** 1 failures.
 TestResults(failed=1, attempted=3)
 ``` 
+
+This test failed. That is finds that the calculation returned an error.
+When calculating ```convert_to_celsius(75)```, 
+the expected answer is ```23.88888888888889``` 
+but instead the calculation returns ```57.22222222222222```. 
+
+
+
+
+
+
+## Extra Code Snippets
+
+
 
 
 
@@ -454,10 +579,6 @@ def above_freezing(celsius: float) -> bool:
 ``` 
 
 
-
-
-
-## Extra Code Snippets
 
 
 
