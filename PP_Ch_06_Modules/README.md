@@ -270,7 +270,7 @@ You can use the ```imp``` module to ```reload``` the module with your changes.
 
 
 In between the next set of commands, change the ```print``` command
-to tehe following (switching pandas for koalas).
+to the following (switching pandas for koalas).
 
 ```python 
 print("The koala's scientific name is 'Phascolarctos cinereus'")
