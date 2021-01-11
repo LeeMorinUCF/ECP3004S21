@@ -28,11 +28,11 @@ The true requirement, however, is a quantitative mindset. Computer programming i
 
 ## Required Textbooks
 
-<img src="Images/Practical_Programming_Book_Cover.png" width="50"/>
+<img src="Images/Practical_Programming_Book_Cover.png" width="200"/>
 
 *Practical Programming: An Introduction to Computer Science Using Python 3.6, 3rd Edition* by Paul Gries, Jennifer Campbell, Jason Montojo. The Pragmatic Bookshelf: Raleigh, NC, 2017 (ISBN-13: 978-1680502688, ISBN-10: 1680502689).
 
-<img src="Images/Business_DS_Book_Cover.png" width="50"/>
+<img src="Images/Business_DS_Book_Cover.png" width="200"/>
 
 *Business Data Science: Combining Machine Learning and Economics to Optimize, Automate, and Accelerate Business Decisions, 1st Edition* by Matt Taddy. McGraw-Hill: New York, NY, 2019 (ISBN-13: 978-1260452778 ISBN-10: 1260452778)
 
@@ -51,7 +51,7 @@ The primary tool for this course is software of the following kinds.
 programming language. It is free, open-source software that can be downloaded from the Internet. We will use Python version 3.6. Note that Python versions 2.X will not be compatible with all of the course activities.
 
 
-<img src="Images/Spyder_logo.png" width="50"/>
+<img src="Images/Spyder_logo.png" width="200"/>
 
 *An Interactive Development Environment (IDE):* This is software for writing and running commands and scripts in the Python programming language. We will use [Spyder](https://www.spyder-ide.org/), 
 which is available with the
@@ -59,7 +59,7 @@ which is available with the
 distribution of Python. 
 
 
-<img src="Images/Octocat.png" width="50"/>
+<img src="Images/Octocat.png" width="200"/>
 
 
 *Version control software:* We will use the 
