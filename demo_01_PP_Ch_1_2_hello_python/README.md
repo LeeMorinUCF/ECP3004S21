@@ -39,6 +39,56 @@ In comparison, languages such as C++ or Fortran are low-level languages that are
 Python is known to have a flatter learning curve that these low-level languages but, as a general-purpose language, the learning curve is steeper than that for languages such as R, which are designed for specific purposes. 
 
 
+## How do *you* run programs on computers?
+
+### Programming *Languages*
+
+Computer programming languages are, literally, languages. 
+It is not a metaphor to call tem languages.
+In Google, a language is defined as "the method of human communication, either spoken or written, consisting of the use of words in a structured and conventional way."
+A computer programming language is a written method of communication to communicate instructions to a computer. 
+Like other languages, programming languages have parts of speech, syntax and punctuation. 
+
+
+### Nouns: The Objects You Can Work With
+
+The nouns of programming languages are the variables or objects that take on particular values in memory. 
+Variables are stored in various *types* or *classes*. 
+Data types are often numeric, such as integers or real numbers. 
+Depending on the particular language, these types are sometimes called "float" or "long" or "double", depending on the degree of precision, as in the number of decimal places or significant digits.  
+There are also data types for holding non-numeric data, such as letters of the alphabet, in variables called *strings* or *character* vectors. 
+
+
+Examples of *types* of data are as follows: 
+
+<img src="Images/Rvariablesdata.jpg" width="500"/>
+
+A variable can have a single element (i.e. atomic) or be a vector or array of values. 
+Typically, vectors and arrays comprise elements of the same data type. 
+For statistical programming, languages such as ```R``` and ```Python``` also allow for the collection of data into data frames, in which each column can be of a separate data type. 
+
+
+We have many objects to work with. 
+Now, what can we do with them?
+
+
+### Verbs: The Actions You Can Perform
+
+The action words of programming are sorted into several categories. 
+
+
+
+### Arithmetic operators
+
+These are the operators that are most familiar to you. 
+These operators work much like they do with pencil and paper, following the order of operations. 
+
+In ```python``` these operators are used
+
+<img src="Images/ArithmeticOperatorsPython.jpg" width="500"/>
+
+These operators can be combined with brackets for calculations performed following the usual order of operations in arithmetic. 
+Although useful on their own, these operators are often combined to perform a specific calculation within a function. 
 
 
 
@@ -46,9 +96,7 @@ Python is known to have a flatter learning curve that these low-level languages 
 
 
 
-
-
-# Chapter 2: Hello, Python
+# *Practical Programming*, Chapter 2: ```"Hello, Python"```
 
 ## Expressions and Values: Arithmetic in Python
 

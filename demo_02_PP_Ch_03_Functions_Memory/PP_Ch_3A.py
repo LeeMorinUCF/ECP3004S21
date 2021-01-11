@@ -10,11 +10,11 @@
 # College of Business 
 # University of Central Florida
 #
-# January, 7, 2021
+# January 7, 2021
 # 
 ##################################################
 #
-# Demo for Chapter 3: Hello, Python
+# Demo for Chapter 3: Functions
 # Part A: Using Functions
 #
 ##################################################
