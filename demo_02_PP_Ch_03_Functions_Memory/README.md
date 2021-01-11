@@ -426,7 +426,7 @@ See the explanation in *Practical Programming* on pages 40-46.
 
 
 
-# The Register Machine
+## The Register Machine
 
 A *register machine* is one of the simplest forms of computers.
 It is useful to model the use of memory locations in performing calculations

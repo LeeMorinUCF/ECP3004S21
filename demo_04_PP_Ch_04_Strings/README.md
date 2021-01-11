@@ -1,5 +1,21 @@
 # Chapter 4: Working with Text
 
+## Characters
+
+In a language like Python, values are represented in binary digits, or "bits".
+
+For each individual character or element of a ```string``` of characters, the values are actually stored in a sequence of, for example, 8 adjacent locations in memory. 
+Characters are stored with 8 bits to generate the integers 0 to 127, which correspond to the characters in the following ASCII table:
+
+<img src="Images/ASCII-Table.png" width="500"/>
+
+These numbers 0-127 are represented in memory by an 8-bit binary sequence. 
+In binary, numbers are represented as the sum of (either 1 or 0 times) 2 raised to the exponent in the positions 0-7. 
+For example, the binary number 65, corresponding to the ASCII character "A" is ```10000010```. 
+Note that the eight bits can generate numbers from 0-255. 
+A larger character set is called UTF-8 contains all the ASCII characters plus another 128. 
+
+
 ## Creating Strings of Characters
 
 In Python, text is represented as a string when a sequence

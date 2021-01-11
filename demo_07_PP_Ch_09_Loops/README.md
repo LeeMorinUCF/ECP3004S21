@@ -1,4 +1,35 @@
+
+
+
+
+
 # Chapter 9: Repeating Code Using Loops
+
+
+## Repetition
+
+Repetition is used to perform a fixed sequence of operations a number of times by iterating over a block of code. 
+There are two main kinds of repetion that differ in the way the user specifies the sequence and number of executions.
+
+#### ```for``` loops
+
+For loops are useful when you have to repeat a calculation for a 
+predetermined number of inputs. 
+These calculation follow this flow chart:
+
+<img src="Images/for_loop_C.jpg" width="500"/>
+
+After an *iteration* is performed, the interpreter automatically *increments* the *iterator* 
+to the next value to repeat the calculation, until all iterations are performed.  
+The syntax is:
+
+```python
+for iterator in list_of_iterators:
+    # Execute statements for each object in the list of iterators.
+    # ...
+
+```
+
 
 ## Processing Items in a List
 
@@ -442,6 +473,35 @@ so the times in the next day are listed on the next line.
 With a ```for``` loop, you need to know the list of iterators beforehand. 
 Sometimes, you know only a condition under which the calculation should be stopped. 
 The ```while``` loop executes the block of code until the condition is no longer satisfied. 
+
+
+
+#### ```while``` loops
+
+Sometimes these loops are useful when you don't know in advance
+how many times the calculation must be performed because the condition
+depends on the previous steps. 
+Alternatively, your calculation might be continued until some level of *tolerance* is achieved. 
+
+A ```while``` loop has the following flow chart:
+
+<img src="Images/while_loop_C.jpg" width="500"/>
+
+The commands follow a sequence of commands like this:
+
+```python
+
+while <condition>:
+    # Execute statements when condition is TRUE.
+    # ...
+    # condition may change during an iteration.
+    # ...
+    # At end of block, evaluate condition and determine whether
+    # to execute the code block again. 
+
+```
+
+Consider this simple example:
 
 ```python 
 >>> rabbits = 3

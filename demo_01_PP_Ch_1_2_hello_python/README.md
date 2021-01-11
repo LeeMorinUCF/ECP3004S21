@@ -1,4 +1,4 @@
-# Hello, Python
+# ```"Hello, Python"```
 
 
 <img src="Images/python_logo.png" width="500"/>
@@ -75,13 +75,13 @@ Now, what can we do with them?
 ### Verbs: The Actions You Can Perform
 
 The action words of programming are sorted into several categories. 
-
+The first we will consider should be familiar to you. 
 
 
 ### Arithmetic operators
 
 These are the operators that are most familiar to you. 
-These operators work much like they do with pencil and paper, following the order of operations. 
+
 
 In ```python``` these operators are used
 

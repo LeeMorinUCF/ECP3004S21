@@ -6,6 +6,22 @@ Named after George Boole (1815-1864), a boolean variable,
 of type ```bool``` takes on one of two values: 
 ```True``` or ```False```.
 
+
+Boolean variables are luring in the background behind all kinds of objects. 
+Recall the ASCII table from the last demo, in which binary variables are mapped 
+to the ASCII character set. 
+
+<img src="Images/ASCII-Table.png" width="500"/>
+
+A similar structure is in place behind common number formats, 
+such as the 32-bit real numbers. 
+
+<img src="Images/Binary32bitFloat.jpg" width="500"/>
+
+In Python, we can work with binary variables, or Boolean variables, 
+as objects of interest in their own right. 
+
+
 ### Boolean Operators
 
 The negation ```not``` is a unary operator on type ```bool```
@@ -94,7 +110,19 @@ We will see an easier way to do this after introducing more operators.
 ### Relational Operators
 
 Relational operators compare operands to produce a Boolean variable.
-Inequality signs are a primary example.
+
+
+
+### Relational operators
+
+These operators are used to determine whether conditions hold.
+They are commonly used for flow control, such as for ```if``` statements, discussed below.
+Some of the most common relational operators are shown in the following table.
+
+<img src="Images/RelationalOpsTrimmed.jpg" width="500"/>
+
+
+Inequality signs are a primary example of a relational operator.
 
 ```python 
 >>> 45 > 34
@@ -353,10 +381,31 @@ True
 
 ## Choosing Which Statements to Execute
 
-The primary purpose of Boolean variables is for the Python to
+The primary purpose of Boolean variables is for Python to
 follow different instructions under different conditions.
+The ```if``` statement is used to execute the commands in a block of code 
+only if certain conditions hold. 
+As shown in this flow chart, the program will skip that block of code and continue below
+when the condition is not satisfied. 
+
+
+<img src="Images/if_statement_flow_diagram_C.jpg" width="500"/>
+
+In ```Python``` the syntax for an ```if``` statement is
+
+```python
+if <condition>:
+    # Execute statements when condition is True.
+    # ...
+
+
+# Continue with remaining statements in any case.
+```
+
+
+
 An ```if``` statement evaluates conditions in a code block 
-if the condition is ```True```. 
+if the condition is ```True```, as in the following example. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
@@ -466,8 +515,31 @@ Enter the pH level: 8.5
 >>>
 ``` 
 
-We can merge these cases by following the block with an ```elif```, 
+
+Sometimes it is necessary to execute one command if a contition is ```True```
+and execute other commands when the condition is ```False``` 
+but avoid executing these other commands if the condition is ```True``
+
+<img src="Images/If_else_flow_diagram_C.jpg" width="500"/>
+
+In the flow chart above, the program executes the first block of code then skips the second block when ```<condition> == True```.
+When ```<condition>``` is ```False```, the interpreter skips the first block of code and runs only the second. 
+
+```python
+if <condition>:
+    # Execute statements when condition is TRUE.
+    # ...
+else:
+    # Execute statements when condition is FALSE.
+
+```
+
+
+
+We can merge the above examples by following the block with an ```elif```, 
 which stands for "else if". 
+This adds a second condition to be evaluated if the first condition
+is ```False```. 
 
 ```python 
 >>> ph = float(input('Enter the pH level: '))
