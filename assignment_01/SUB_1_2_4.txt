@@ -1,0 +1,7 @@
+1  DEB 4  1 2
+2  DEB 3  2 3
+3  DEB 2  4 5
+4  DEB 1  3 7
+5  DEB 1  6 7
+6  INC 4  5
+7  END
