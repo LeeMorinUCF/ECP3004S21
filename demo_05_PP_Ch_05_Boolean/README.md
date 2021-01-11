@@ -7,7 +7,7 @@ of type ```bool``` takes on one of two values:
 ```True``` or ```False```.
 
 
-Boolean variables are luring in the background behind all kinds of objects. 
+Boolean variables are lurking in the background behind all kinds of objects. 
 Recall the ASCII table from the last demo, in which binary variables are mapped 
 to the ASCII character set. 
 
@@ -520,7 +520,7 @@ Sometimes it is necessary to execute one command if a contition is ```True```
 and execute other commands when the condition is ```False``` 
 but avoid executing these other commands if the condition is ```True``
 
-<img src="Images/If_else_flow_diagram_C.jpg" width="500"/>
+<img src="Images/if_else_flow_diagram_C.jpg" width="500"/>
 
 In the flow chart above, the program executes the first block of code then skips the second block when ```<condition> == True```.
 When ```<condition>``` is ```False```, the interpreter skips the first block of code and runs only the second. 
