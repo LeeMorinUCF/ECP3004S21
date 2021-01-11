@@ -381,7 +381,7 @@ math.sqrt.__doc__
 print(math.sqrt.__doc__)
 # sqrt(x)
 
-Return the square root of x.
+# Return the square root of x.
 help(math.sqrt)
 # Help on built-in function sqrt in module math:
 

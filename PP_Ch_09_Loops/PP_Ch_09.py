@@ -591,11 +591,11 @@ while text != "quit":
 # the program will run as follows.
 
  
-Please enter a chemical formula (or 'quit' to exit): CH4
+# Please enter a chemical formula (or 'quit' to exit): CH4
 # Methane
-Please enter a chemical formula (or 'quit' to exit): H2O
+# Please enter a chemical formula (or 'quit' to exit): H2O
 # Water
-Please enter a chemical formula (or 'quit' to exit): quit
+# Please enter a chemical formula (or 'quit' to exit): quit
 # ...exiting program
 
  
@@ -793,19 +793,13 @@ def f(a, b, c):
  
 
  
-Mercury
-Venus
-Earth
-Mars
+# Mercury
+# Venus
+# Earth
+# Mars
 
  
 
- 
-count_fragments('atc', 'gttacgtggatg')
-0
-count_fragments('gtg', 'gttacgtggatg')
-
- 
 
  
 def count_fragments(fragment, dna):
@@ -835,6 +829,13 @@ count_fragments('gtg', 'gttacgtggatg')
 1
 count_fragments('gtt', 'gttacgtggatg')
 0
+
+ 
+
+ 
+count_fragments('atc', 'gttacgtggatg')
+0
+count_fragments('gtg', 'gttacgtggatg')
 
  
 
@@ -899,15 +900,15 @@ values
  
 
  
-# Pluto is only 0.002 times the mass of Earth.
-Pluto
-Mercury
-# Mars is half Earth's diameter, but only
-#   0.11 times Earth's mass.
-Mars
-Venus
-Earth
-Uranus
+# # Pluto is only 0.002 times the mass of Earth.
+# Pluto
+# Mercury
+# # Mars is half Earth's diameter, but only
+# #   0.11 times Earth's mass.
+# Mars
+# Venus
+# Earth
+# Uranus
 
 
 
@@ -968,12 +969,12 @@ print("Earth is at line {}".format(earth_line))
  
 for c in 'alpha':
     print(c)
-...
-a
-l
-p
-h
-a
+# ...
+# a
+# l
+# p
+# h
+# a
 
  
 
@@ -1070,13 +1071,13 @@ while True:
  
 
  
-Please enter a chemical formula: NH3
-Ammonia
-Please enter a chemical formula: H2O
-Water
-Please enter a chemical formula: NaCl
-Unknown compound
-...
+# Please enter a chemical formula: NH3
+# Ammonia
+# Please enter a chemical formula: H2O
+# Water
+# Please enter a chemical formula: NaCl
+# Unknown compound
+# ...
 
  
 

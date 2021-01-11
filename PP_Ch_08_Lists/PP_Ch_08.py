@@ -351,7 +351,7 @@ celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 celegans_phenotypes[:4]
 # ['Emb', 'Him', 'Unc', 'Lon']
 celegans_phenotypes[4:]
-[1'Dpy', 'Sma']
+# [1'Dpy', 'Sma']
 
  
 # Leaving both limits blank slices the entire list. 
@@ -645,71 +645,6 @@ def is_longer(L1: list, L2: list) -> bool:
 
 
 
-
-##################################################
-## Additional Code Snippets
-##################################################
-
-
-
- 
-from multiplication_table import *
-print_table()
-        1       2       3       4       5
-1       1       2       3       4       5
-2       2       4       6       8       10
-3       3       6       9       12      15
-4       4       8       12      16      20
-5       5       10      15      20      25
-
- 
-
-
-
-
-
- 
-x = None
-x
-print(x)
-None
-
- 
-
-
-
- 
-file = open("planets.txt", "w")
-
- 
-
- 
-half_lives = [87.74, 24110.0, 6537.0, 14.4, 376000.0]
-i = 2
-i < len(half_lives)
-True
-
-half_lives[i]
-6537.0
-j = 5
-j < len(half_lives)
-False
-half_lives[j]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in ?
-IndexError: list index out of range
-
- 
-
-
-
- 
-sum(['a', 'b', 'c'])
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: unsupported operand type(s) for +: 'int' and 'str'
-
- 
 ##################################################
 # End
 ##################################################
