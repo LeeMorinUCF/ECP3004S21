@@ -2,10 +2,6 @@
 
 
 
-
-
-
-
 ## Designing New Functions: A Recipe
 
 
@@ -43,89 +39,75 @@ Now type the code to perform the calculations.
 
 Consider the simple example of the function ```addTwoNumbers``` that, well, adds two numbers.
 
-```R
+```python
 # Define a function without documentation.
-addTwoNumbers <- function(first_number, second_number) {
-
-  total <- first_number + second_number
-
-  return(total)
-}
+>>> def addTwoNumbers(first_number, second_number):
+...    
+...    total = first_number + second_number
+...    
+...    return total
+...
+...
 ```
 
 The function is fine but how does the user know how it works. 
 Guessing is only reasonable if the function is simple. 
 
-```R
-addTwoNumbers(3,4)
+```python
+>>> addTwoNumbers(3,4)
+7
 ```
 
 That makes sense and it appears to work. 
 If your user wants to know for sure, they can
 search for documentation, as you would for any other function.
 
-```R
-?addTwoNumbers
+```python
+>>> help(addTwoNumbers)
+Help on function addTwoNumbers in module __main__:
+
+addTwoNumbers(first_number, second_number)
 ```
 There's nothing there yet.
 
 You could print the entire function object but that
 is not very convenient for long and complex functions.
-```R
-addTwoNumbers
+```python
+>>> addTwoNumbers
+<function __main__.addTwoNumbers(first_number, second_number)>
 ```
 
 Instead, add documentation to the function in a docstring.
 
 
-```R
-addTwoNumbers <- function(first_number, second_number) {
-
-  #' Add Two Numbers
-  #'
-  #' \code{addTwoNumbers} adds two numbers together and returns the sum.
-  #'
-  #' @param first_number a number
-  #' @param second_number another number
-  #' @return a numeric sum of two numbers
-
-  total <- first_number + second_number
-
-  return(total)
-}
+```python
+>>> def addTwoNumbers(first_number, second_number):
+...    """ Add two numbers together and return the sum.
+...    
+...    """
+...    
+...    total = first_number + second_number
+...    
+...    return total
+...
 ```
 
-To convert the docstring into a help file, you need to attach the library ```docstring```:
-
-```R
-# Install the docstring package to produce documentation for functions
-# from comments called docstrings within functions, if not already installed.
-# install.packages("docstring")
-library(docstring)
-```
-
-The docstring package does have its limitations. 
-Another option is to use the ```ehelp``` package.
-
-```R
-# install.packages("ehelp")
-library(ehelp)
-```
 
 
 Now test the documentation by calling for help:
-```R
-?addTwoNumbers
+```python
+>>> help(addTwoNumbers)
+Help on function addTwoNumbers in module __main__:
+
+addTwoNumbers(first_number, second_number)
+    Add two numbers together and return the sum.
 ```
 
-which works only with the input from ```docstring```
-while
-```R
-help(addTwoNumbers)
-```
-should display the documentation appear in the console (with ehelp) or in the "Help" window (with docstrings).
+Notice the content from the description in the docstring.
 
-
+We can improve the docstring by including examples,
+so now let's cover all of these step by following
+the *function design recipe*.
 
 
 
@@ -135,82 +117,90 @@ Now apply the function design recipe to the ```addTwoNumbers``` example.
 
 ### Examples
 
-Try to think of some examples that will test the limit of your function. 
+Try to think of some examples that will test the limit of your function.
+Note that we can run the tests only because we have already defined the
+function in the examples above.
 
-```R
-addTwoNumbers(3,4) == 7
-addTwoNumbers(0,4) == 4
-addTwoNumbers(-3,3) == 0
+```python
+>>> addTwoNumbers(3,4)
+7
+>>> addTwoNumbers(0,4)
+4
+>>> addTwoNumbers(-3,3)
+0
+
 ```
 
 Now you know that your function will have a form like this.
 
-```R
-addTwoNumbers <- function(first_number, second_number) {
-
-
-  return(total)
-}
+```python
+>>> def addTwoNumbers(first_number, second_number):
+...    
+...    
+...    
+...    return total
+...
+...
 ```
 
 
 ### Header
 
-Write a header to contain the docstring that will document your function. 
+Write a header to contain information about the
+the types of variables in your function.
 
-```R
-addTwoNumbers <- function(first_number, second_number) {
-
-  #' @param first_number a number
-  #' @param second_number another number
-  #' @return a numeric sum of two numbers
-
-
-
-  return(total)
-}
+```python
+>>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+...    
+...    
+...    
+...    return total
+...
+...
 ```
 
 ### Description
 
-Add a title and description of what your function does, in words.
+Add a description of what your function does, in words.
+Include the list of your examples.
 
-```R
-addTwoNumbers <- function(first_number, second_number) {
-
-  #' Add Two Numbers
-  #'
-  #' \code{addTwoNumbers} adds two numbers together and returns the sum.
-  #'
-  #' @param first_number a number
-  #' @param second_number another number
-  #' @return a numeric sum of two numbers
-
-
-
-  return(total)
-}
+```python
+>>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+...    """ Add two numbers together and return the sum.
+...    >>> addTwoNumbers(3,4)
+...    7
+...    >>> addTwoNumbers(0,4)
+...    4
+...    >>> addTwoNumbers(-3,3)
+...    0
+...    """
+...    
+...    
+...    return total
+...
+...
 ```
 
 ### Body
 
 In this case, the body is simple but this is often the most work. 
 
-```R
-addTwoNumbers <- function(first_number, second_number) {
-
-  #' Add Two Numbers
-  #'
-  #' \code{addTwoNumbers} adds two numbers together and returns the sum.
-  #'
-  #' @param first_number a number
-  #' @param second_number another number
-  #' @return a numeric sum of two numbers
-
-  total <- first_number + second_number
-
-  return(total)
-}
+```python
+>>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+...    """ Add two numbers together and return the sum.
+...    >>> addTwoNumbers(3,4)
+...    7
+...    >>> addTwoNumbers(0,4)
+...    4
+...    >>> addTwoNumbers(-3,3)
+...    0
+...    """
+...    
+...    total = first_number + second_number
+...    
+...    return total
+...
+...
 ```
 
 It seems like a lot of work to do to prepare to write one line of code.
@@ -224,26 +214,21 @@ you should be clear about what it is you will compute and the planning will pay 
 
 Finally, test your functions to confirm accuracy. 
 
-```R
-addTwoNumbers(3,4)
-[1] 7
-addTwoNumbers(0,4)
-[1] 4
-addTwoNumbers(-3,3)
-[1] 0
-```
-You can also test using logical values. 
+```python
+>>> addTwoNumbers(3,4)
+7
+>>> addTwoNumbers(0,4)
+4
+>>> addTwoNumbers(-3,3)
+0
 
-```R
-addTwoNumbers(3,4) == 7
-[1] TRUE
-addTwoNumbers(0,4) == 4
-[1] TRUE
-addTwoNumbers(-3,3) == 0
-[1] TRUE
 ```
 
-If all goes well, these examples should all return true.
+If all goes well, these examples should all return
+the values you expect.
+If not, be sure that your examples are correct
+or modify your function definition.
+Most of the work in coding is correcting your mistakes.
 
 
 ## Tips
@@ -270,7 +255,7 @@ into separate parts.
   * Are there any knife-edge cases when the procedure will change? 
   * Are there any obvious boundaries?
 * After making any significant changes to a partially-working function, 
-re-run all of your test cases to make sure 
+re-run all of your test cases to make sure they are still correct.
   * Did you break any of the test cases that were working before?
   * Did you fix any that were not working? 
   * Keeping score is good motivation.

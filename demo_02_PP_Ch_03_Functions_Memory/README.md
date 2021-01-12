@@ -12,8 +12,9 @@ Some functions are *built-in*
 ``` 
 
 A *function call* is of the form
-```function_name(argument_1, argument_2, argument_3, ./..)```.
+```function_name(argument_1, argument_2, argument_3, ...)```.
 Arguments can be any value stored in memory. 
+That is, any variable or value that is defined before the function call. 
 
 
 ```python 
