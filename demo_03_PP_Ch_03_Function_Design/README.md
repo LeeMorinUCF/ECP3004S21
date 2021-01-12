@@ -37,11 +37,11 @@ Now type the code to perform the calculations.
 ## Function Design Example
 
 
-Consider the simple example of the function ```addTwoNumbers``` that, well, adds two numbers.
+Consider the simple example of the function ```add_two_numbers``` that, well, adds two numbers.
 
 ```python
 # Define a function without documentation.
->>> def addTwoNumbers(first_number, second_number):
+>>> def add_two_numbers(first_number, second_number):
 ...    
 ...    total = first_number + second_number
 ...    
@@ -54,7 +54,7 @@ The function is fine but how does the user know how it works.
 Guessing is only reasonable if the function is simple. 
 
 ```python
->>> addTwoNumbers(3,4)
+>>> add_two_numbers(3,4)
 7
 ```
 
@@ -63,25 +63,25 @@ If your user wants to know for sure, they can
 search for documentation, as you would for any other function.
 
 ```python
->>> help(addTwoNumbers)
-Help on function addTwoNumbers in module __main__:
+>>> help(add_two_numbers)
+Help on function add_two_numbers in module __main__:
 
-addTwoNumbers(first_number, second_number)
+add_two_numbers(first_number, second_number)
 ```
 There's nothing there yet.
 
 You could print the entire function object but that
 is not very convenient for long and complex functions.
 ```python
->>> addTwoNumbers
-<function __main__.addTwoNumbers(first_number, second_number)>
+>>> add_two_numbers
+<function __main__.add_two_numbers(first_number, second_number)>
 ```
 
 Instead, add documentation to the function in a docstring.
 
 
 ```python
->>> def addTwoNumbers(first_number, second_number):
+>>> def add_two_numbers(first_number, second_number):
 ...    """ Add two numbers together and return the sum.
 ...    
 ...    """
@@ -96,10 +96,10 @@ Instead, add documentation to the function in a docstring.
 
 Now test the documentation by calling for help:
 ```python
->>> help(addTwoNumbers)
-Help on function addTwoNumbers in module __main__:
+>>> help(add_two_numbers)
+Help on function add_two_numbers in module __main__:
 
-addTwoNumbers(first_number, second_number)
+add_two_numbers(first_number, second_number)
     Add two numbers together and return the sum.
 ```
 
@@ -113,7 +113,7 @@ the *function design recipe*.
 
 ## Function Design Recipe
 
-Now apply the function design recipe to the ```addTwoNumbers``` example.
+Now apply the function design recipe to the ```add_two_numbers``` example.
 
 ### Examples
 
@@ -122,11 +122,11 @@ Note that we can run the tests only because we have already defined the
 function in the examples above.
 
 ```python
->>> addTwoNumbers(3,4)
+>>> add_two_numbers(3,4)
 7
->>> addTwoNumbers(0,4)
+>>> add_two_numbers(0,4)
 4
->>> addTwoNumbers(-3,3)
+>>> add_two_numbers(-3,3)
 0
 
 ```
@@ -134,7 +134,7 @@ function in the examples above.
 Now you know that your function will have a form like this.
 
 ```python
->>> def addTwoNumbers(first_number, second_number):
+>>> def add_two_numbers(first_number, second_number):
 ...    
 ...    
 ...    
@@ -150,7 +150,7 @@ Write a header to contain information about the
 the types of variables in your function.
 
 ```python
->>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+>>> def add_two_numbers(first_number: float, second_number: float) -> float:
 ...    
 ...    
 ...    
@@ -165,13 +165,13 @@ Add a description of what your function does, in words.
 Include the list of your examples.
 
 ```python
->>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+>>> def add_two_numbers(first_number: float, second_number: float) -> float:
 ...    """ Add two numbers together and return the sum.
-...    >>> addTwoNumbers(3,4)
+...    >>> add_two_numbers(3,4)
 ...    7
-...    >>> addTwoNumbers(0,4)
+...    >>> add_two_numbers(0,4)
 ...    4
-...    >>> addTwoNumbers(-3,3)
+...    >>> add_two_numbers(-3,3)
 ...    0
 ...    """
 ...    
@@ -186,13 +186,13 @@ Include the list of your examples.
 In this case, the body is simple but this is often the most work. 
 
 ```python
->>> def addTwoNumbers(first_number: float, second_number: float) -> float:
+>>> def add_two_numbers(first_number: float, second_number: float) -> float:
 ...    """ Add two numbers together and return the sum.
-...    >>> addTwoNumbers(3,4)
+...    >>> add_two_numbers(3,4)
 ...    7
-...    >>> addTwoNumbers(0,4)
+...    >>> add_two_numbers(0,4)
 ...    4
-...    >>> addTwoNumbers(-3,3)
+...    >>> add_two_numbers(-3,3)
 ...    0
 ...    """
 ...    
@@ -215,11 +215,11 @@ you should be clear about what it is you will compute and the planning will pay 
 Finally, test your functions to confirm accuracy. 
 
 ```python
->>> addTwoNumbers(3,4)
+>>> add_two_numbers(3,4)
 7
->>> addTwoNumbers(0,4)
+>>> add_two_numbers(0,4)
 4
->>> addTwoNumbers(-3,3)
+>>> add_two_numbers(-3,3)
 0
 
 ```
