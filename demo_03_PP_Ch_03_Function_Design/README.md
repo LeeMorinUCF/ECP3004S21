@@ -283,14 +283,21 @@ Choose appropriate names for your function and it's arguments.
 
 ### How Many Days Difference?
 
+The first function we'll design will calculate
+the number of days between two days, which are both in the range 
+1-365, indicating the day of the year.
+
 #### 1. **Examples**: Create example function calls and return values. 
 
+The first example is simple: the second day comes after the first. 
 
 ```python 
 >>> days_difference(200, 224)
 24
 ```
-
+The second two consider different cases: 
+the first addresses the case when both dates are the same, 
+the second allows the dates to be listed in reverse order. 
 
 ```python 
 >>> days_difference(50, 50)
@@ -298,9 +305,15 @@ Choose appropriate names for your function and it's arguments.
 >>> days_difference(100, 99)
 -1
 ```
+These examples are more useful than having several examples 
+similar to the first case. 
 
 
 #### 2. **Description**: Describe what your function does. 
+
+State the name of the function, the names of the arguments, 
+and the types of variables, for both the arguments
+and the return value. 
 
 ```python 
 >>> def days_difference(day1:int, day2:int) -> int:
@@ -309,6 +322,11 @@ Choose appropriate names for your function and it's arguments.
 
 
 #### 3. **Header**: Describe the arguments and return value. 
+
+Dscribe, in words, what the function does, 
+so that a user will understand how to use it.
+Users also include yourself, and you will benefit from 
+this explicit statement as you design the body of the function. 
 
 ```python 
 ...     """Return the number of days between day1 and day2, which are
@@ -319,6 +337,8 @@ Choose appropriate names for your function and it's arguments.
 
 
 #### 4. **Body**: Write the code to perform the calculations. 
+
+With everything mapped out, write the code that performs the calculation. 
 
 ```python 
 >>> def days_difference(day1: int, day2: int) -> int:
@@ -338,6 +358,9 @@ Choose appropriate names for your function and it's arguments.
 
 #### 5. **Test**: Verify that your function works as expected. 
 
+All programmers make mistakes. 
+The good ones find mistakes and correct them. 
+Run your examples to verify the calculations. 
 
 ```python 
 >>> days_difference(200, 224)
@@ -347,7 +370,7 @@ Choose appropriate names for your function and it's arguments.
 >>> days_difference(100, 99)
 -1
 ```
-
+It *looks good to me* (LGTM). 
 
 Now that we have a function with a docstring, 
 we can call ```help``` on that function. 
@@ -376,25 +399,36 @@ days_difference(day1:int, day2:int) -> int
 
 ### What Weekday Will It be in the Future?
 
+Now let's write a function to map the the day of the week to the numbers
+1 to 7, representing Sunday through Saturday, respectively. 
+Our aim is to represent a day that is a certain number of days after
+a day corresponding to another weekday number. 
+We will make it more clear with examples. 
+
 #### 1. **Examples**: Create example function calls and return values. 
+
+If we start on Tuesday (day 3), it should be Wednesday (day 4)
+one day later.
 
 ```python 
 >>> get_weekday(3, 1)
 4
 ``` 
-
+Likewise, Saturday (day 7) comes one day after Friday (day 6). 
 
 ```python 
 >>> get_weekday(6, 1)
 7
 ``` 
 
+Starting from Saturday (day 7), moving one day forward brings us to Sunday (day 1). 
 
 ```python 
 >>> get_weekday(7, 1)
 1
 ``` 
-
+Moving zero days forward keeps the number on the same day.
+Moving seven days ahead will also result in the same weekday. 
 
 ```python 
 >>> get_weekday(1, 0)
@@ -402,7 +436,10 @@ days_difference(day1:int, day2:int) -> int
 >>> get_weekday(4, 7)
 4
 ``` 
-
+Also, moving any multiple of the seven days, such as ten weeks (70 days), 
+should bring us to the same weekday. 
+After 72 days, we will move from Saturday to another Saturday, ten weeks later,
+and another two days to the next Monday (day 2).
 
 ```python 
 >>> get_weekday(7, 72)
@@ -413,6 +450,8 @@ days_difference(day1:int, day2:int) -> int
 
 #### 2. **Description**: Describe what your function does. 
 
+This function takes day numbers as integers and 
+returns an integer from 1 to 7. 
 
 ```python 
 >>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
@@ -420,6 +459,7 @@ days_difference(day1:int, day2:int) -> int
 
 #### 3. **Header**: Describe the arguments and return value. 
 
+Now we can put this into words. 
 
 ```python 
 ...     """Return which day of the week it will be days_ahead days
@@ -436,6 +476,9 @@ days_difference(day1:int, day2:int) -> int
 
 #### 4. **Body**: Write the code to perform the calculations. 
 
+Next, we fill in the body of the function. 
+We use the modulud ```%``` to evaluate the day number as 
+the remainder after division by 7. 
 
 ```python 
 >>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
@@ -467,6 +510,7 @@ days_difference(day1:int, day2:int) -> int
 
 #### 5. **Test**: Verify that your function works as expected. 
 
+Now run the tests. 
 
 ```python 
 >>> get_weekday(3, 1)
@@ -476,7 +520,10 @@ days_difference(day1:int, day2:int) -> int
 >>> get_weekday(7, 1)
 8
 ```
+Wait a minute! Day 8 is one day out of range. 
+This should be a 1, instead, to represent Sunday. 
 
+Let's look back at the function to make some changes. 
 
 
 ```python 
@@ -506,7 +553,68 @@ days_difference(day1:int, day2:int) -> int
 ...     return (current_weekday + days_ahead) % 7
 ``` 
 
+In the first version, we forgot the parentheses ```()```, 
+so that the modulus operated on ```days_ahead``` first, 
+an then added ```current_weekday```. 
+In the corrected version, we perform the addition first
+and then convert the final day to a weekday number. 
 
+With that adjustment in place, let's test the function again. 
+
+```python 
+>>> get_weekday(3, 1)
+4
+>>> get_weekday(6, 1)
+0
+>>> get_weekday(7, 1)
+1
+```
+
+The third case is fixed, returning a 1 for Sunday, 
+but now the second case fails, with a zero instead of 
+a weekday from 1 to 7. 
+
+Now we have to diagnose this problem. 
+Whenever the sum of ```days_ahead``` and ```current_weekday```
+evaluate to a multiple of 7, the calculation 
+```(current_weekday + days_ahead) % 7``` returns zero. 
+
+How do we fix this? 
+One solution is to subtract one first, then calculate the
+remainder, and then add one back. 
+This change produces the following function. 
+
+
+```python 
+>>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
+...     """Return which day of the week it will be days_ahead days
+...     from current_weekday.
+...
+...     current_weekday is the current day of the week and is in
+...     the range 1-7, indicating whether today is Sunday (1),
+...     Monday (2), ..., Saturday (7).
+...
+...     days_ahead is the number of days after today.
+...
+...     >>> get_weekday(3, 1)
+...     4
+...     >>> get_weekday(6, 1)
+...     7
+...     >>> get_weekday(7, 1)
+...     1
+...     >>> get_weekday(1, 0)
+...     1
+...     >>> get_weekday(4, 7)
+...     4
+...     >>> get_weekday(7, 72)
+...     2
+...     """ 
+...     return (current_weekday + days_ahead - 1) % 7 + 1
+``` 
+
+
+
+With *that* adjustment in place, let's test the function *again*. 
 
 ```python 
 >>> get_weekday(3, 1)
@@ -523,9 +631,21 @@ days_difference(day1:int, day2:int) -> int
 2
 ``` 
 
+Now all of the test cases return the result we expect. 
+We are done (unless, of course, 
+the function fails in a way that we haven't thought of).
+Let's move on for now. 
+We will learn more about testing later. 
 
 
 ### What Day Is My Birthday On?
+
+now that we have those two functions, we can design a third that
+uses these functions for intermediate calculations. 
+We can figure out what day of the week a birthday falls on, 
+given what day of the week it is today, what the current day of the year is, 
+and what day of the year the birthday falls on. 
+
 
 #### 1. **Examples**: Create example function calls and return values. 
 
