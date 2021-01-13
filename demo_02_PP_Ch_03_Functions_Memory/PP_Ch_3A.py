@@ -28,9 +28,9 @@
 
 
 abs(-9)
-# 9
+
 abs(3.3)
-# 3.3
+
  
 
 # A *function call* is of the form
@@ -42,31 +42,31 @@ abs(3.3)
 day_temperature = 10
 night_temperature = 3
 abs(day_temperature - night_temperature)
-# 7
+
 day_temperature = 3
 night_temperature = 10
 abs(day_temperature - night_temperature)
-# 7
+
 
  
 # You can combine the outputs of functions as operands in
 # arithmetic operators: 
 
 abs(-7) + abs(3.3)
-# 10.3
+
  
 
 
 
 3 + 5 / abs(-2)
-# 5.5
+
 
  
 # or as arguments in other operators
 
 
 pow(abs(-2), round(4.3))
-# 16
+
 
  
 
@@ -74,68 +74,53 @@ pow(abs(-2), round(4.3))
 
 
 int(34.6)
-# 34
+
 int(-4.3)
-# -4
+
 float(21)
-# 21.0
+
 
  
 # The help function will show documentation for a function.
 
 
 help(abs)
-# Help on built-in function abs in module builtins:
-
-# abs(x, /)
-#     Return the absolute value of the argument.
 
  
 # The round function also converts a floating-point number 
 # into an integer:
 
 
-# round(3.8)
-# 4
-# round(3.3)
-# 3
-# round(3.5)
-# 4
-# round(-3.3)
-# -3
-# round(-3.5)
-# -4
+round(3.8)
+
+round(3.3)
+
+round(3.5)
+
+round(-3.3)
+
+round(-3.5)
+
 
  
 # but it can also be used to convert to a float with fewer significant digits.
 
 
 round(3.141592653, 2)
-# 3.14
+
 
  
 
 
 
 help(round)
-# Help on built-in function round in module builtins:
-
-# round(...)
-#     round(number[, ndigits]) -> number
-
-#     Round a number to a given precision in decimal digits (default 0 digits).
-#     This returns an int when called with one argument, otherwise the
-#     same type as the number. ndigits may be negative.
 
  
 # There is more than one way to calculate exponents. 
 
 
 help(pow)
-# Help on built-in function pow in module builtins:
 
-# pow(x, y, z=None, /)
-#     Equivalent to x**y (with two arguments) or x**y % z (with three arguments)
 
 #     Some types, such as ints, are able to use a more efficient algorithm when
 #     invoked using the three argument form.
@@ -145,13 +130,13 @@ help(pow)
 
 
 pow(2, 4)
-# 16
+
  
 # If the third argument is provided, it performs the additional calculation. 
 
 
 pow(2, 4, 3)
-# 1
+
  
 
 ##################################################
@@ -163,41 +148,33 @@ pow(2, 4, 3)
 
 
 help(id)
-# Help on built-in function id in module builtins:
-
-# id(obj, /)
-#     Return the identity of an object.
-
-#     This is guaranteed to be unique among simultaneously existing objects.
-#     (CPython uses the object's memory address.)
-
  
 
 # Some values are already stored in memory.
 
 
 id(-9)
-# 4301189552
+
 id(23.1)
-# 4298223160
+
 
 
 # Other variables that you create are immediately assiggned to locations in memory.
 
 shoe_size = 8.5
 id(shoe_size)
-# 4298223112
+
 fahrenheit = 77.7
 id(fahrenheit)
-# 4298223064
+
 
  
 # Even functions are objects in memory and are assiggned to locations in memory. 
 
 id(abs)
-# 4297868712
+
 id(round)
-# 4297871160
+
 
  
 
@@ -212,11 +189,11 @@ i = 3
 j = 3
 k = 4 - 1
 id(i)
-# 4296861792
+
 id(j)
-# 4296861792
+
 id(k)
-# 4296861792
+
 
  
 # This is not the case for larger integers or floats. 
@@ -224,15 +201,15 @@ id(k)
 i = 30000000000
 j = 30000000000
 id(i)
-# 4301190928
+
 id(j)
-# 4302234864
+
 f = 0.0
 g = 0.0
 id(f)
-# 4298223040
+
 id(g)
-# 4298223016
+
 
  
 
@@ -246,11 +223,11 @@ id(g)
 # It should work as follows.
 
 
-convert_to_celsius(212)
+# convert_to_celsius(212)
 # 100.0
-convert_to_celsius(78.8)
+# convert_to_celsius(78.8)
 # 26.0
-convert_to_celsius(10.4)
+# convert_to_celsius(10.4)
 # -12.0
 
  
@@ -259,9 +236,7 @@ convert_to_celsius(10.4)
 
 
 convert_to_celsius(212)
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# NameError: name 'convert_to_celsius' is not defined
+
 
  
 # So, you have to define the function. 
@@ -279,10 +254,7 @@ def convert_to_celsius(fahrenheit):
 
 def convert_to_celsius(fahrenheit):
 return (fahrenheit - 32) * 5 / 9
-#   File "<stdin>", line 2
-#     return (fahrenheit - 32) * 5 / 9
-#          ^
-# IndentationError: expected an indented block
+
 
  
 # After the function is defined, you can use it
@@ -293,7 +265,7 @@ def convert_to_celsius(fahrenheit):
     return (fahrenheit - 32) * 5 / 9
 
 convert_to_celsius(80)
-# 26.666666666666668
+
 
  
 # When you use a function to calculate its output from the arguments, 
@@ -314,9 +286,7 @@ convert_to_celsius(10.4)
 
 
 help(convert_to_celsius)
-# Help on function convert_to_celsius in module __main__:
 
-# convert_to_celsius(fahrenheit)
 
  
 
@@ -356,20 +326,14 @@ convert_to_celsius(10.4)
 
 
 def = 3
-#   File "<stdin>", line 1
-#     def = 3
-#         ^
-# SyntaxError: invalid syntax
+
 
 # The same applies to built-in function names that are already defined. 
 
 
 def return(x):
-#   File "<stdin>", line 1
-#     def return(x):
-#              ^
-# SyntaxError: invalid syntax
 
+    
  
 
 # But be careful: this does not apply to functions that *you* define. 
@@ -396,9 +360,9 @@ def quadratic(a, b, c, x):
     return first + second + third
 
 quadratic(2, 3, 4, 0.5)
-# 6.0
+
 quadratic(2, 3, 4, 1.5)
-# 13.0
+
 
  
 
@@ -407,20 +371,15 @@ quadratic(2, 3, 4, 1.5)
 
 
 quadratic(2, 3, 4, 1.3)
-# 11.280000000000001
+
 first
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# NameError: name 'first' is not defined
+
 
 
 # Even the arguments are only defined within the function. 
 
 
 a
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# NameError: name 'a' is not defined
 
  
 
@@ -428,9 +387,7 @@ a
 # even if you assigned them a value in a previous function call. 
 
 quadratic(1, 2, 3)
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# TypeError: quadratic() takes exactly 4 arguments (3 given)
+
 
  
 # The more errors you see, the easier it will be for you to 
