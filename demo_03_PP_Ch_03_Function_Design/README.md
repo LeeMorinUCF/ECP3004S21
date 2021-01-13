@@ -283,18 +283,74 @@ Choose appropriate names for your function and it's arguments.
 
 ### How Many Days Difference?
 
-#### 1. **Examples** Type example calls and what you expect it to return.
-Choose appropriate names for your function and it's arguments. 
-#### 2. **Description** 
-Write a short description to describe what your function does. 
-#### 3. **Header** 
-Type some documentation to describe the arguments and return value. 
-#### 4. **Body** 
-Type the code to perform the calculations. 
-#### 5. **Test** 
-Run the examples to verify that your function works as expected. 
+#### 1. **Examples**: Create example function calls and return values. 
 
 
+```python 
+>>> days_difference(200, 224)
+24
+```
+
+
+```python 
+>>> days_difference(50, 50)
+0
+>>> days_difference(100, 99)
+-1
+```
+
+
+#### 2. **Description**: Describe what your function does. 
+
+```python 
+>>> def days_difference(day1:int, day2:int) -> int:
+```
+
+
+
+#### 3. **Header**: Describe the arguments and return value. 
+
+```python 
+...     """Return the number of days between day1 and day2, which are
+...     both in the range 1-365 (thus indicating the day of the
+...     year).
+...     """
+```
+
+
+#### 4. **Body**: Write the code to perform the calculations. 
+
+```python 
+>>> def days_difference(day1: int, day2: int) -> int:
+...     """Return the number of days between day1 and day2, which are
+...     both in the range 1-365 (thus indicating the day of the
+...     year).
+...
+...     >>> days_difference(200, 224)
+...     24
+...     >>> days_difference(50, 50)
+...     0
+...     >>> days_difference(100, 99)
+...     -1
+...     """
+...     return day2 - day1
+```
+
+#### 5. **Test**: Verify that your function works as expected. 
+
+
+```python 
+>>> days_difference(200, 224)
+24
+>>> days_difference(50, 50)
+0
+>>> days_difference(100, 99)
+-1
+```
+
+
+Now that we have a function with a docstring, 
+we can call ```help``` on that function. 
 
 
 ```python 
@@ -315,133 +371,70 @@ days_difference(day1:int, day2:int) -> int
 ``` 
 
 
-```python 
->>> days_difference(200, 224)
-24
->>> days_difference(50, 50)
-0
->>> days_difference(100, 99)
--1
-
-``` 
-
 
 
 
 ### What Weekday Will It be in the Future?
 
-#### 1. **Examples** 
-Type example calls and what you expect it to return.
-Choose appropriate names for your function and it's arguments. 
-#### 2. **Description** 
-Write a short description to describe what your function does. 
-#### 3. **Header** 
-Type some documentation to describe the arguments and return value. 
-#### 4. **Body** 
-Type the code to perform the calculations. 
-#### 5. **Test** 
-Run the examples to verify that your function works as expected. 
-
-
+#### 1. **Examples**: Create example function calls and return values. 
 
 ```python 
 >>> get_weekday(3, 1)
 4
+``` 
+
+
+```python 
 >>> get_weekday(6, 1)
 7
+``` 
+
+
+```python 
 >>> get_weekday(7, 1)
 1
+``` 
+
+
+```python 
 >>> get_weekday(1, 0)
 1
 >>> get_weekday(4, 7)
 4
+``` 
+
+
+```python 
 >>> get_weekday(7, 72)
 2
-
 ``` 
 
+
+
+#### 2. **Description**: Describe what your function does. 
 
 
 ```python 
->>> get_weekday(3, 1)
-4
->>> get_weekday(6, 1)
-7
->>> get_weekday(7, 1)
-8
-
+>>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
 ``` 
 
-```python 
->>> get_weekday(3, 1)
-4
->>> get_weekday(6, 1)
-0
->>> get_weekday(7, 1)
-1
-
-``` 
-
-
-
-### What Day Is My Birthday On?
-
-#### 1. **Examples** 
-Type example calls and what you expect it to return.
-Choose appropriate names for your function and it's arguments. 
-#### 2. **Description** 
-Write a short description to describe what your function does. 
-#### 3. **Header** 
-Type some documentation to describe the arguments and return value. 
-#### 4. **Body** 
-Type the code to perform the calculations. 
-#### 5. **Test** 
-Run the examples to verify that your function works as expected. 
-
-
+#### 3. **Header**: Describe the arguments and return value. 
 
 
 ```python 
->>> get_birthday_weekday(5, 3, 4)
-6
->>> get_birthday_weekday(5, 3, 116)
-6
->>> get_birthday_weekday(6, 116, 3)
-5
-
+...     """Return which day of the week it will be days_ahead days
+...     from current_weekday.
+...
+...     current_weekday is the current day of the week and is in
+...     the range 1-7, indicating whether today is Sunday (1),
+...     Monday (2), ..., Saturday (7).
+...
+...     days_ahead is the number of days after today.
+...     """
 ``` 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-```python 
-def weeks_elapsed(day1, day2):
-    """ (int, int) -> int
-
-    day1 and day2 are days in the same year. Return the number of full weeks
-    that have elapsed between the two days.
-
-    >>> weeks_elapsed(3, 20)
-    2
-    >>> weeks_elapsed(20, 3)
-    2
-    >>> weeks_elapsed(8, 5)
-
-    >>> weeks_elapsed(40, 61)
-
-    """
-
-``` 
+#### 4. **Body**: Write the code to perform the calculations. 
 
 
 ```python 
@@ -468,30 +461,125 @@ def weeks_elapsed(day1, day2):
 ...     >>> get_weekday(7, 72)
 ...     2
 ...     """
+...     return current_weekday + days_ahead % 7
+...
+``` 
+
+#### 5. **Test**: Verify that your function works as expected. 
+
+
+```python 
+>>> get_weekday(3, 1)
+4
+>>> get_weekday(6, 1)
+7
+>>> get_weekday(7, 1)
+8
+```
+
+
+
+```python 
+>>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
+...     """Return which day of the week it will be days_ahead days
+...     from current_weekday.
+...
+...     current_weekday is the current day of the week and is in
+...     the range 1-7, indicating whether today is Sunday (1),
+...     Monday (2), ..., Saturday (7).
+...
+...     days_ahead is the number of days after today.
+...
+...     >>> get_weekday(3, 1)
+...     4
+...     >>> get_weekday(6, 1)
+...     7
+...     >>> get_weekday(7, 1)
+...     1
+...     >>> get_weekday(1, 0)
+...     1
+...     >>> get_weekday(4, 7)
+...     4
+...     >>> get_weekday(7, 72)
+...     2
+...     """ 
 ...     return (current_weekday + days_ahead) % 7
-...
+``` 
 
->>> def days_difference(day1: int, day2: int) -> int:
-...     """Return the number of days between day1 and day2, which are
-...     both in the range 1-365 (thus indicating the day of the
-...     year).
+
+
+```python 
+>>> get_weekday(3, 1)
+4
+>>> get_weekday(6, 1)
+7
+>>> get_weekday(7, 1)
+1
+>>> get_weekday(1, 0)
+1
+>>> get_weekday(4, 7)
+4
+>>> get_weekday(7, 72)
+2
+``` 
+
+
+
+### What Day Is My Birthday On?
+
+#### 1. **Examples**: Create example function calls and return values. 
+
+
+```python 
+>>> get_birthday_weekday(5, 3, 4)
+6
+``` 
+
+
+```python 
+>>> get_birthday_weekday(5, 3, 116)
+6
+``` 
+
+
+```python 
+>>> get_birthday_weekday(6, 116, 3)
+5
+
+``` 
+
+
+
+#### 2. **Description**: Describe what your function does. 
+
+
+```python 
+>>> def get_birthday_weekday(current_weekday: int, current_day: int,
+...                          birthday_day: int) -> int:
+``` 
+
+
+
+#### 3. **Header**: Describe the arguments and return value. 
+
+```python 
+...     """Return the day of the week it will be on birthday_day,
+...     given that the day of the week is current_weekday and the
+...     day of the year is current_day.
 ...
-...     >>> days_difference(200, 224)
-...     24
-...     >>> days_difference(50, 50)
-...     0
-...     >>> days_difference(100, 99)
-...     -1
+...     current_weekday is the current day of the week and is in
+...     the range 1-7, indicating whether today is Sunday (1),
+...     Monday (2), ..., Saturday (7).
+...
+...     current_day and birthday_day are both in the range 1-365.
 ...     """
-...     return day2 - day1
-...
->>> days_difference(200, 224)
-24
->>> days_difference(50, 50)
-0
->>> days_difference(100, 99)
--1
+``` 
 
+
+
+#### 4. **Body**: Write the code to perform the calculations. 
+
+```python 
 >>> def get_birthday_weekday(current_weekday: int, current_day: int,
 ...                          birthday_day: int) -> int:
 ...     """Return the day of the week it will be on birthday_day,
@@ -514,342 +602,53 @@ def weeks_elapsed(day1, day2):
 ...     days_diff = days_difference(current_day, birthday_day)
 ...     return get_weekday(current_weekday, days_diff)
 ...
-
 ``` 
+
+
+
+#### 5. **Test**: Verify that your function works as expected. 
+
+
 
 ```python 
-def get_weekday(current_weekday: int, days_ahead: int) -> int:
-    """Return which day of the week it will be days_ahead days from
-    current_weekday.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    days_ahead is the number of days after today.
-
-    >>> get_weekday(3, 1)
-    4
-    >>> get_weekday(6, 1)
-    7
-    >>> get_weekday(7, 1)
-    1
-    >>> get_weekday(1, 0)
-    1
-    >>> get_weekday(4, 7)
-    4
-    >>> get_weekday(7, 72)
-    2
-    """
-
-    return (current_weekday + days_ahead) % 7
-
-def days_difference(day1: int, day2: int) -> int:
-    """Return the number of days between day1 and day2, which are both
-    in the range 1-365 (thus indicating the day of the year).
-
-    >>> days_difference(200, 224)
-    24
-    >>> days_difference(50, 50)
-    0
-    >>> days_difference(100, 99)
-    -1
-    """
-
-    return day2 - day1
-
-
-def get_birthday_weekday(current_weekday: int, current_day: int, birthday_day: int):
-    """Return the day of the week it will be on birthday_day, given that
-    the day of the week is current_weekday and the day of the year is
-    current_day.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    current_day and birthday_day are both in the range 1-365.
-
-    >>> get_birthday_weekday(5, 3, 4)
-    6
-    >>> get_birthday_weekday(5, 3, 116)
-    6
-    >>> get_birthday_weekday(6, 116, 3)
-    5
-    """
-
-    days_diff = days_difference(current_day, birthday_day)
-    return get_weekday(current_weekday, days_diff)
-
+>>> get_birthday_weekday(5, 3, 4)
+6
+>>> get_birthday_weekday(5, 3, 116)
+6
+>>> get_birthday_weekday(6, 116, 3)
+5
 ``` 
+
+
+
+## Writing and Running a Program
+
+This is a program saved in the file ```temperature.py```. 
+
 
 ```python 
->>> def get_weekday(current_weekday: int, days_ahead: int) -> int:
-...     """Return which day of the week it will be days_ahead days from
-...     current_weekday.
-...
-...     current_weekday is the current day of the week and is in the
-...     range 1-7, indicating whether today is Sunday (1), Monday (2),
-...     ..., Saturday (7).
-...
-...     days_ahead is the number of days after today.
-...
-...     >>> get_weekday(3, 1)
-...     4
-...     >>> get_weekday(6, 1)
-...     7
-...     >>> get_weekday(7, 1)
-...     1
-...     >>> get_weekday(1, 0)
-...     1
-...     >>> get_weekday(4, 7)
-...     4
-...     >>> get_weekday(7, 72)
-...     2
-...     """
-...     return current_weekday + days_ahead % 7
-...
+def convert_to_celsius(fahrenheit: float) -> float:
+    """Return the number of Celsius degrees equivalent to fahrenheit
+    degrees.
 
->>> def days_difference(day1: int, day2: int) -> int:
-...     """Return the number of days between day1 and day2, which are both
-...     in the range 1-365 (thus indicating the day of the year).
-...
-...     >>> days_difference(200, 224)
-...     24
-...     >>> days_difference(50, 50)
-...     0
-...     >>> days_difference(100, 99)
-...     -1
-...     """
-...     return day2 - day1
-...
+    >>> convert_to_celsius(75)
+    23.88888888888889
+    """
+
+    return (fahrenheit - 32.0) * 5.0 / 9.0
 
 
->>> def get_birthday_weekday(current_weekday: int, current_day: int,
-...                          birthday_day: int) -> int:
-...     """Return the day of the week it will be on birthday_day, given that
-...     the day of the week is current_weekday and the day of the year is
-...     current_day.
-...
-...     current_weekday is the current day of the week and is in the range 1-7,
-...     indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-...
-...     current_day and birthday_day are both in the range 1-365.
-...
-...     >>> get_birthday_weekday(5, 3, 4)
-...     6
-...     >>> get_birthday_weekday(5, 3, 116)
-...     6
-...     >>> get_birthday_weekday(6, 116, 3)
-...     5
-...     """
-...     days_diff = days_difference(current_day, birthday_day)
-...     return get_weekday(current_weekday, days_diff)
-...
+convert_to_celsius(80)
+convert_to_celsius(78.8)
+convert_to_celsius(10.4)
 
 ``` 
 
-```python 
-def get_weekday(current_weekday: int, days_ahead: int) -> int:
-    """Return which day of the week it will be days_ahead days from
-    current_weekday.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    days_ahead is the number of days after today.
-
-    >>> get_weekday(3, 1)
-    4
-    >>> get_weekday(6, 1)
-    7
-    >>> get_weekday(7, 1)
-    1
-    >>> get_weekday(1, 0)
-    1
-    >>> get_weekday(4, 7)
-    4
-    >>> get_weekday(7, 72)
-    2
-    """
-
-    return current_weekday + days_ahead % 7
-
-def days_difference(day1: int, day2: int) -> int:
-    """Return the number of days between day1 and day2, which are both
-    in the range 1-365 (thus indicating the day of the year).
-
-    >>> days_difference(200, 224)
-    24
-    >>> days_difference(50, 50)
-    0
-    >>> days_difference(100, 99)
-    -1
-    """
-
-    return day2 - day1
 
 
-def get_birthday_weekday(current_weekday: int, current_day: int,
-                         birthday_day: int) -> int:
-    """Return the day of the week it will be on birthday_day, given that
-    the day of the week is current_weekday and the day of the year is
-    current_day.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    current_day and birthday_day are both in the range 1-365.
-
-    >>> get_birthday_weekday(5, 3, 4)
-    6
-    >>> get_birthday_weekday(5, 3, 116)
-    6
-    >>> get_birthday_weekday(6, 116, 3)
-    5
-    """
-
-    days_diff = days_difference(current_day, birthday_day)
-    return get_weekday(current_weekday, days_diff)
-
-``` 
-
-```python 
-def get_weekday(current_weekday, days_ahead):
-    """ (int, int) -> int
-
-    Return which day of the week it will be days_ahead days from
-    current_weekday.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    days_ahead is the number of days after today.
-
-    >>> get_weekday(3, 1)
-    4
-    >>> get_weekday(6, 1)
-    7
-    >>> get_weekday(7, 1)
-    1
-    >>> get_weekday(1, 0)
-    1
-    >>> get_weekday(4, 7)
-    4
-    >>> get_weekday(7, 72)
-    2
-    """
-
-    return (current_weekday + days_ahead) % 7
-
-def days_difference(day1, day2):
-    """ (int, int) -> int
-
-    Return the number of days between day1 and day2, which are both
-    in the range 1-365 (thus indicating the day of the year).
-
-    >>> days_difference(200, 224)
-    24
-    >>> days_difference(50, 50)
-    0
-    >>> days_difference(100, 99)
-    -1
-    """
-
-    return day2 - day1
 
 
-def get_birthday_weekday(current_weekday, current_day, birthday_day):
-    """ (int, int, int) -> int
 
-    Return the day of the week it will be on birthday_day, given that
-    the day of the week is current_weekday and the day of the year is
-    current_day.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    current_day and birthday_day are both in the range 1-365.
-
-    >>> get_birthday_weekday(5, 3, 4)
-    6
-    >>> get_birthday_weekday(5, 3, 116)
-    6
-    >>> get_birthday_weekday(6, 116, 3)
-    5
-    """
-
-    days_diff = days_difference(current_day, birthday_day)
-    return get_weekday(current_weekday, days_diff)
-
-``` 
-
-```python 
-def get_weekday(current_weekday, days_ahead):
-    """ (int, int) -> int
-
-    Return which day of the week it will be days_ahead days from
-    current_weekday.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    days_ahead is the number of days after today.
-
-    >>> get_weekday(3, 1)
-    4
-    >>> get_weekday(6, 1)
-    7
-    >>> get_weekday(7, 1)
-    1
-    >>> get_weekday(1, 0)
-    1
-    >>> get_weekday(4, 7)
-    4
-    >>> get_weekday(7, 72)
-    2
-    """
-    return (current_weekday + days_ahead - 1) % 7 + 1
-
-def days_difference(day1, day2):
-    """ (int, int) -> int
-
-    Return the number of days between day1 and day2, which are both
-    in the range 1-365 (thus indicating the day of the year).
-
-    >>> days_difference(200, 224)
-    24
-    >>> days_difference(50, 50)
-    0
-    >>> days_difference(100, 99)
-    -1
-    """
-
-    return day2 - day1
-
-
-def get_birthday_weekday(current_weekday, current_day, birthday_day):
-    """ (int, int, int) -> int
-
-    Return the day of the week it will be on birthday_day, given that
-    the day of the week is current_weekday and the day of the year is
-    current_day.
-
-    current_weekday is the current day of the week and is in the range 1-7,
-    indicating whether today is Sunday (1), Monday (2), ..., Saturday (7).
-
-    current_day and birthday_day are both in the range 1-365.
-
-    >>> get_birthday_weekday(5, 3, 4)
-    6
-    >>> get_birthday_weekday(5, 3, 116)
-    6
-    >>> get_birthday_weekday(6, 116, 3)
-    5
-    """
-
-    days_diff = days_difference(current_day, birthday_day)
-    return get_weekday(current_weekday, days_diff)
-
-``` 
 
 
 
@@ -933,8 +732,32 @@ if __name__ == '__main__':
 
 ## Exercises
 
-### Exercise 9
 
+### Exercise 8
+
+
+```python 
+def weeks_elapsed(day1, day2):
+    """ (int, int) -> int
+
+    day1 and day2 are days in the same year. Return the number of full weeks
+    that have elapsed between the two days.
+
+    >>> weeks_elapsed(3, 20)
+    2
+    >>> weeks_elapsed(20, 3)
+    2
+    >>> weeks_elapsed(8, 5)
+
+    >>> weeks_elapsed(40, 61)
+
+    """
+
+``` 
+
+
+
+### Exercise 9
 
 
 ```python 
