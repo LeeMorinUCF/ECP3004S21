@@ -279,8 +279,11 @@ Choose appropriate names for your function and it's arguments.
 
 ## Designing Three Birthday-Related Functions
 
-#### 1. **Examples** 
-Type example calls and what you expect it to return.
+
+
+### How Many Days Difference?
+
+#### 1. **Examples** Type example calls and what you expect it to return.
 Choose appropriate names for your function and it's arguments. 
 #### 2. **Description** 
 Write a short description to describe what your function does. 
@@ -292,8 +295,6 @@ Type the code to perform the calculations.
 Run the examples to verify that your function works as expected. 
 
 
-
-### How Many Days Difference?
 
 
 ```python 
@@ -328,6 +329,19 @@ days_difference(day1:int, day2:int) -> int
 
 
 ### What Weekday Will It be in the Future?
+
+#### 1. **Examples** 
+Type example calls and what you expect it to return.
+Choose appropriate names for your function and it's arguments. 
+#### 2. **Description** 
+Write a short description to describe what your function does. 
+#### 3. **Header** 
+Type some documentation to describe the arguments and return value. 
+#### 4. **Body** 
+Type the code to perform the calculations. 
+#### 5. **Test** 
+Run the examples to verify that your function works as expected. 
+
 
 
 ```python 
@@ -371,6 +385,18 @@ days_difference(day1:int, day2:int) -> int
 
 
 ### What Day Is My Birthday On?
+
+#### 1. **Examples** 
+Type example calls and what you expect it to return.
+Choose appropriate names for your function and it's arguments. 
+#### 2. **Description** 
+Write a short description to describe what your function does. 
+#### 3. **Header** 
+Type some documentation to describe the arguments and return value. 
+#### 4. **Body** 
+Type the code to perform the calculations. 
+#### 5. **Test** 
+Run the examples to verify that your function works as expected. 
 
 
 
