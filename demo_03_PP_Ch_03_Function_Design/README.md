@@ -267,13 +267,33 @@ re-run all of your test cases to make sure they are still correct.
 
 ## Designing More Functions: Practice with the Recipe
 
+Let's run through the function design recipe with a few examples
+to practice the 5 steps:
+1. **Examples** Type example calls and what you expect it to return.
+Choose appropriate names for your function and it's arguments. 
+1. **Description** Write a short description to describe what your function does. 
+1. **Header** Type some documentation to describe the arguments and return value. 
+1. **Body** Type the code to perform the calculations. 
+1. **Test** Run the examples to verify that your function works as expected. 
+
+
+## Designing Three Birthday-Related Functions
+
+#### 1. **Examples** 
+Type example calls and what you expect it to return.
+Choose appropriate names for your function and it's arguments. 
+#### 2. **Description** 
+Write a short description to describe what your function does. 
+#### 3. **Header** 
+Type some documentation to describe the arguments and return value. 
+#### 4. **Body** 
+Type the code to perform the calculations. 
+#### 5. **Test** 
+Run the examples to verify that your function works as expected. 
 
 
 
-### Designing Three Birthday-Related Functions
-
-
-#### How Many Days Difference?
+### How Many Days Difference?
 
 
 ```python 
@@ -307,7 +327,7 @@ days_difference(day1:int, day2:int) -> int
 
 
 
-#### What Weekday Will It be in the Future?
+### What Weekday Will It be in the Future?
 
 
 ```python 
@@ -350,7 +370,7 @@ days_difference(day1:int, day2:int) -> int
 
 
 
-#### What Day Is My Birthday On?
+### What Day Is My Birthday On?
 
 
 
@@ -806,18 +826,6 @@ def get_birthday_weekday(current_weekday, current_day, birthday_day):
 ``` 
 
 
-```python 
-def square(num):
-    """ (number) -> number
-    
-    Return the square of num.
-
-    >>> square(3)
-    9
-    """
-
-``` 
-
 
 ## Omitting a Return Statement: ```None```
 
@@ -848,18 +856,7 @@ None
 ...
 >>> print(f(3))
 None
->>> def print_intro(name):
-...     """ (str) -> NoneType
-...     Print a personalized greeting using name.
-...     >>> print_intro('Jason')
-...     Hello, Jason.
-...     """
-...     print('Hello,', name, end='.\n')
-...
->>> print_intro('Jen')
-Hello, Jen.
-
-``` 
+```
 
 
 
@@ -902,6 +899,43 @@ def pie_percent(n: int) -> int:
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+``` 
+
+
+
+
+## Exercises
+
+### Exercise 9
+
+
+
+```python 
+def square(num):
+    """ (number) -> number
+    
+    Return the square of num.
+
+    >>> square(3)
+    9
+    """
+
+``` 
+
+
+
+```python
+>>> def print_intro(name):
+...     """ (str) -> NoneType
+...     Print a personalized greeting using name.
+...     >>> print_intro('Jason')
+...     Hello, Jason.
+...     """
+...     print('Hello,', name, end='.\n')
+...
+>>> print_intro('Jen')
+Hello, Jen.
 
 ``` 
 
