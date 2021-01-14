@@ -640,7 +640,7 @@ We will learn more about testing later.
 
 ### What Day Is My Birthday On?
 
-now that we have those two functions, we can design a third that
+Now that we have those two functions, we can design a third that
 uses these functions for intermediate calculations. 
 We can figure out what day of the week a birthday falls on, 
 given what day of the week it is today, what the current day of the year is, 
@@ -649,18 +649,28 @@ and what day of the year the birthday falls on.
 
 #### 1. **Examples**: Create example function calls and return values. 
 
+If today is Thursday (day 5) and today is the third day of the year, 
+what day will it be on the fourth day of the year? 
+We expect it to be Friday, day 6. 
 
 ```python 
 >>> get_birthday_weekday(5, 3, 4)
 6
 ``` 
 
+With the first two arguments the same (Thurday on the third day of the year), 
+but the birthday is on the 116th day of the year. 
+Let's look at a calendar: day number 116 would be ...
+
+... April 26th, which would also be a Friday (day 6). 
 
 ```python 
 >>> get_birthday_weekday(5, 3, 116)
 6
 ``` 
-
+What if, instead, we start at day 116, Friday, April 26 
+and the birthday we want is the 3rd day of the year? 
+That gives us Thursday, day 5, following the first example in reverse. 
 
 ```python 
 >>> get_birthday_weekday(6, 116, 3)
@@ -672,6 +682,9 @@ and what day of the year the birthday falls on.
 
 #### 2. **Description**: Describe what your function does. 
 
+We use the function names in our examples and choose
+sensible names for the arguments and specify that 
+all of them are integers. 
 
 ```python 
 >>> def get_birthday_weekday(current_weekday: int, current_day: int,
@@ -681,6 +694,8 @@ and what day of the year the birthday falls on.
 
 
 #### 3. **Header**: Describe the arguments and return value. 
+
+Now we can put this into words. 
 
 ```python 
 ...     """Return the day of the week it will be on birthday_day,
@@ -698,6 +713,23 @@ and what day of the year the birthday falls on.
 
 
 #### 4. **Body**: Write the code to perform the calculations. 
+
+Let's take stock of the programs we have already:
+- Using ```days_difference```, we can figure out how many days there are
+between two days. 
+- Using ```get_weekday```, we can figure out what day of the week it will be
+given the current day of the week and the number of days away. 
+
+This is how many days away the birthday falls:
+```python 
+days_difference(current_day, birthday_day)
+```
+Now we can call that ```days_diff``` and plug it into ```get_weekday```:
+```python 
+get_weekday(current_weekday, days_diff)
+```
+
+Putting it all together, we write the following function definition. 
 
 ```python 
 >>> def get_birthday_weekday(current_weekday: int, current_day: int,
@@ -728,7 +760,8 @@ and what day of the year the birthday falls on.
 
 #### 5. **Test**: Verify that your function works as expected. 
 
-
+Run the function definitions in the Python shell and 
+evaluate the examples. 
 
 ```python 
 >>> get_birthday_weekday(5, 3, 4)
@@ -738,12 +771,14 @@ and what day of the year the birthday falls on.
 >>> get_birthday_weekday(6, 116, 3)
 5
 ``` 
-
+Just as we expected. 
 
 
 ## Writing and Running a Program
 
-This is a program saved in the file ```temperature.py```. 
+Recall the example in which we translated temperature from degrees
+Fahrenheit to degrees Celsius. 
+We can save this program in the file ```temperature.py```. 
 
 
 ```python 
@@ -758,17 +793,23 @@ def convert_to_celsius(fahrenheit: float) -> float:
     return (fahrenheit - 32.0) * 5.0 / 9.0
 
 
-convert_to_celsius(80)
-convert_to_celsius(78.8)
-convert_to_celsius(10.4)
+print(convert_to_celsius(80))
+print(convert_to_celsius(78.8))
+print(convert_to_celsius(10.4))
 
 ``` 
+When you run it, Python will evaluate the three examples and print out those values. 
 
+```python
+26.666666666666668
+26.0
+-12.0
+```
 
-
-
-
-
+Basically, the Python shell executes all of the commands in the script, 
+including function definitions, but also any other calculations that apear. 
+In Chapter 6, we will use the birthday example in a similar way,
+except that we will exert more control over which statements are evaluated. 
 
 
 

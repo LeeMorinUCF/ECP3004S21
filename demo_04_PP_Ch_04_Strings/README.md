@@ -13,7 +13,7 @@ These numbers 0-127 are represented in memory by an 8-bit binary sequence.
 In binary, numbers are represented as the sum of (either 1 or 0 times) 2 raised to the exponent in the positions 0-7. 
 For example, the binary number 65, corresponding to the ASCII character "A" is ```10000010```. 
 Note that the eight bits can generate numbers from 0-255. 
-A larger character set is called UTF-8 contains all the ASCII characters plus another 128. 
+The character set is called UTF-8 contains all the ASCII characters plus another 128. 
 
 
 ## Creating Strings of Characters
