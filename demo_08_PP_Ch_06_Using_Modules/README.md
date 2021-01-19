@@ -190,8 +190,112 @@ the ```__builtins__``` module.
 
 
 
+## Application: Linear Algebra
 
 
+When using computers to solve a problem, one approach is to fully understand the solution before attempting to write a program to solve the problem.
+It is often very useful to conceptualize the calculation first and then use a concise specification from which to write the program.
+This approach takes advantage of the fast and reliable computation of modern computers: computers can perform calculations more quickly and reliably than humans can by hand.
 
+However, computers are capable of much more.
+The above approach is very limited in terms of the nature of problems that can be solved.
+Computers can be used to solve problems that you don't know how to solve. 
+You can use computers to help you understand a problem as you formulate a solution procedure. 
+The most important ingredient is having a precise way of stating the problem. 
+In the following we will use the ```numpy``` and ```scipy```
+modules to solve a *system of linear equations* for a vector of unknown parameters. 
+
+
+### The problem
+
+First, consider solving a *system of linear equations* for a vector of unknown parameters. 
+The objective is to find a *vector* ```x``` that, when multiplied by the *matrix* ```A``` produces the *vector* ```b```: ```x``` satisfies ```A %*% x == b```.
+It is necessary to first understand how this calculation is performed. 
+In matrix multiplication, the numbers in the resulting matrix are calculated as the *dot product* of the corresponding rows and columns of the matrices that are multiplied. 
+The calculation proceeds in the pattern shown in the following figure. 
+
+<img src="Images/Matrix_Mult_Example.png" width="500">
+
+The simplest such calculation is to solve for a single vector in the multiplication. 
+
+<img src="Images/Matrix_Vector_Example.png" width="500">
+
+Here, we are given the matrix ```A```, on the left, and the product ```b = c(29, 51, 38)``` on the right. 
+The objective is to find the (unknown) vector ```x = c(4, 7)```, using only ```A``` and ```b```. 
+The most common such problem is when the matrix ```A``` is square, 
+that is, it has the same number of rows and columns.
+
+
+### The solution
+
+An inefficient way to solve this problem is to find the *inverse* of the matrix ```A``` and multipy it against ```b```. 
+This works but it takes many more computational steps. 
+A better approach is to use row oprations to perform a form of Gaussian elimination. 
+Although this may be the approach taken for hand calculations, there are other, more efficient algorithms for finding the solution to a set of equations.
+This is a specialized area within mathematics that uses advanced theories in linear algebra to calculate solutions. 
+Fortunately, for the practitioner, most computational packages have built-in functions for solving systems of linear equations. 
+
+### Examples
+
+The matrix multiplication operator in ```R``` is the symbol ```%*%```. 
+In the first problem, it is used as follows.
+
+```
+A <- matrix(seq(6),
+            nrow = 2,
+            ncol = 3, 
+            byrow = TRUE)
+x <- matrix(c(10, 20, 30, 11, 21, 31),
+            nrow = 3,
+            ncol = 2)
+b <- A %*% x
+
+> b
+     [,1] [,2]
+[1,]  140  146
+[2,]  320  335
+```
+
+
+The conceptually simple--but computationally expensive--approach is to calculate the inverse of the matrix ```A``` and then multiply ```b``` to achieve the solution ```b```. 
+
+```
+# Create a matrix and a vector.
+A <- matrix(c(2, 2, 5, 10),
+            nrow = 2,
+            ncol = 2)
+x <- matrix(c(1, 2),
+            nrow = 2,
+            ncol = 1)
+b <- A %*% x
+
+# Calculate the inverse of A.
+A_inv <- solve(A)
+
+x_soln_inv <- A_inv %*% b
+> x_soln_inv
+     [,1]
+[1,]    1
+[2,]    2       
+```
+
+This is useful if the user needs to solve a series of equations with the same matrix ```A``` but a set of different different vectors ```b```.
+
+In general, you would simply solve the system to obtain the solution. 
+This requires fewer calculations and is all that is needed when only the solution is required. 
+
+```
+# Use the solve function to solve for x.
+x_soln <- solve(A, b)
+
+# Compare with the original x:
+x_soln_inv
+x_soln
+
+```
+
+
+In the linear regression model, the objective is to find the value of the coefficients that minimize the sum of squared errors. 
+This solution is often reduced, using calculus, to solution of a set of linear equations. 
 
 
