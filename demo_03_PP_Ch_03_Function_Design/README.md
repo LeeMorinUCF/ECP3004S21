@@ -323,7 +323,7 @@ and the return value.
 
 #### 3. **Header**: Describe the arguments and return value. 
 
-Dscribe, in words, what the function does, 
+Describe, in words, what the function does, 
 so that a user will understand how to use it.
 Users also include yourself, and you will benefit from 
 this explicit statement as you design the body of the function. 
@@ -815,6 +815,7 @@ except that we will exert more control over which statements are evaluated.
 
 ## Omitting a Return Statement: ```None```
 
+Consider this function definition without a return statement. 
 
 ```python 
 >>> def f(x):
@@ -825,6 +826,8 @@ except that we will exert more control over which statements are evaluated.
 >>>
 ```
 
+When you execute it and evaluate the result, 
+nothing is returned, i.e. it returns ```None```: 
 
 ```python
 >>> print(res)
@@ -834,6 +837,14 @@ None
 >>> type(res)
 <class 'NoneType'>
 ```
+
+This value still has a location in memory. 
+It has a special type for the empty variable None, called 'NoneType'.
+
+
+Now add a return statement.
+At least that makes the function design more transparent.
+
 
 ```python
 >>> def f(x):
@@ -848,6 +859,8 @@ None
 
 
 ## Dealing with Situations That Your Code Doesn't Handle
+
+Consider this example.
 
 ```python 
 def pie_percent(n: int) -> int:
@@ -864,6 +877,19 @@ def pie_percent(n: int) -> int:
 
     return int(100 / n)
 ```
+
+The function works...
+```python 
+>>> pie_percent(5)
+20
+```
+
+...but there is nothing to stop someone from entering a negative
+number of people.
+
+One way to avoid problems is to add a precondition:
+
+
 
 ```python
 def pie_percent(n: int) -> int:
@@ -882,11 +908,11 @@ def pie_percent(n: int) -> int:
 
     return int(100 / n)
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
 ``` 
+At least when you warn the user,
+it is not your fault:
+The user should have read the manual (RTM).
+ 
 
 
 
@@ -934,18 +960,4 @@ def square(num):
 ``` 
 
 
-
-```python
->>> def print_intro(name):
-...     """ (str) -> NoneType
-...     Print a personalized greeting using name.
-...     >>> print_intro('Jason')
-...     Hello, Jason.
-...     """
-...     print('Hello,', name, end='.\n')
-...
->>> print_intro('Jen')
-Hello, Jen.
-
-``` 
 
