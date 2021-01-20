@@ -13,7 +13,7 @@ It is called a recipe because it guides you to follow a systematic approach to d
 Every time you write a function, you need to answer the following questions:
 
 * What do you name the function? 
-* What are the argumants, and what types of information do they represent?
+* What are the arguments, and what types of information do they represent?
 * What calculations are you doing with that information?
 * What does the function return?
 * Does it work as expected?
