@@ -15,7 +15,8 @@
 # January 19, 2021
 #
 # This script shows a few examples of working with
-# strings in Python.
+# strings in Python that most commonly occur when
+# handling files.
 #
 ##################################################
 """

@@ -308,7 +308,7 @@ three
 
 ``` 
 
-The ```print``` function takes multiple arguments and ...prints them.
+The ```print``` function takes multiple arguments and ... prints them.
 ```python 
 >>> print(1, 2, 3)
 1 2 3
@@ -451,13 +451,19 @@ Python curtus
 
 ## Exercises
 
+### Exercise 6
 
+What is printed by this code?
 
 ```python 
 >>> first = 'John'
 >>> last = 'Doe'
 >>> print(last + ', ' + first)
 ``` 
+
+### Exercise 8
+
+Complete the examples in the docstring and then write the body of the following function. 
 
 ```python 
 def repeat(s: str, n: int) -> str:
@@ -474,6 +480,10 @@ def repeat(s: str, n: int) -> str:
     """
 
 ``` 
+### Exercise 9
+
+Complete the examples in the docstring and then write the body of the following function. 
+
 
 ```python 
 def total_length(s1: str, s2: str) -> int:
@@ -490,5 +500,33 @@ def total_length(s1: str, s2: str) -> int:
 ``` 
 
 
+## Application: Text Analytics
 
+Text analytics is one application of string manipulation to produce data for business analytics. 
+In the supplementary textbook *Business Data Science* by Matt Taddy, Chapter 8 outlines the use of *Text as Data*. 
+Although those examples are written in R, the explanation still applies. 
+
+I supplement this with tools in Python by working through a set of examples written by 
+Dhilip Subramanian, a Data Scientist and AI Enthusiast: 
+
+[Text Mining in Python: Steps and Examples on the KDNuggets website]
+(https://www.kdnuggets.com/2020/05/text-mining-python-steps-examples.html)
+and 
+[Text Mining in Python: Steps and Examples on Medium.com]( 
+https://medium.com/towards-artificial-intelligence/text-mining-in-python-steps-and-examples-78b3f8fd913b). 
+
+
+
+A deeper analysis is conducted by 
+Avinash Navlani on a training site called Datacamp: 
+
+[Text Analytics for Beginners using NLTK]
+(https://medium.com/towards-artificial-intelligence/text-mining-in-python-steps-and-examples-78b3f8fd913b)
+
+There are many other examples, as this the capabilities have expanded significantly over the last several years. 
+
+This form of analysis goes well beyond the toolkit we have so far. 
+We will have to learn more about list of data and reading and writing files containing the data.
+We will have to learn to use Python modules, such as the ```nltk``` module used here. 
+Then we will have to learn to use modules that conduct statistical analysis of the form you would do in a course on econometrics. 
 

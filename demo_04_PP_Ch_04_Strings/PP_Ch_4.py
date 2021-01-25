@@ -10,7 +10,7 @@
 # College of Business 
 # University of Central Florida
 #
-# January, 7, 2021
+# January 7, 2021
 # 
 ##################################################
 #
