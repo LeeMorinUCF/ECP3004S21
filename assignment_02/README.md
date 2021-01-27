@@ -23,13 +23,12 @@ If you want to keep previous versions, you might instead follow the habit of nam
 - An easy way to do this is to begin working on your assignments 
 by copying the folder ```assignment_02``` and its contents 
 from the course repository to your private repository. 
-- To grade your assignment, I will run the program called
-```my_functions.py``` in the folder ```assignment_02```.
 - A script that runs is infinitely better than a script that throws an error. 
 - A script that runs and calculates the wrong value in some cases but works in other is less-than-ideal but acceptable. 
 - A script that runs in all cases and calculates the correct values is the goal you should strive for. 
 - The best way to acieve this is to *run your script* to test it yourself. 
 - Don't assume it works just because it looks good or makes sense. 
-- Everyone makes mistakes. Good programmers test their code, find the mistakes and correctr them. 
+- Everyone makes mistakes. Good programmers test their code, find the mistakes and correct them. 
 
-
+To grade your assignment, I will run the program called
+```my_functions.py``` in the folder ```assignment_02```.
