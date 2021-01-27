@@ -83,7 +83,7 @@ register 2 is higher than the initial value in register 1.
 In that case, the program stops when we run out of values in register 1, 
 leaving the incorrect value of zero in register 4.
 
-# Correcting this failure
+### Correcting this Failure
 
 You will have to add extra lines to add back one unit to register 2
 (it subtracted one too many) and
@@ -101,14 +101,14 @@ Run it to test for yourself.
 
 
 
-## Notes on submission of assignments
+## Notes on Submission of Assignments
 
 1. As a collaborator to your repository, I can view your submissions and that is where I will look to grade your assignments.
 1. I can modify your submission to add comments or make minor corrections to improve the display.
 1. It is better if I do not have to make such adjustments. 
 You can help by following these practices:
 
-- Save your work in your own private repository.
+- Save your work in your own private repository, instead of a fork of my repository (although that was acceptable this time).
 - Save your work in a folder called (exactly!) ```assignment_0X```, 
 where ```X``` is the number of the assignment. 
 Note the underscore, the zero and the lower-case ```a```. 
@@ -116,5 +116,8 @@ This will be more important in future assignments, as I will run your programs a
 - Make sure to name your files *exactly* as specified. 
 - For example, some of you use a convention ```FINALSUBMISSION_required_name_of_file.py``` for the program that was required to be called ```required_name_of_file.py```. 
 If you want to keep previous versions, you might instead follow the habit of naming your final submission ```required_name_of_file.py``` and save any previous work as ```PRELIMINARY_VERSION_required_name_of_file.py```.
+- An easy way to do this is to begin working on your assignments 
+by copying the folder ```assignment_0X``` and its contents 
+from the course repository to your private repository. 
 
 
