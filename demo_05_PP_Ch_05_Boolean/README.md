@@ -109,13 +109,8 @@ We will see an easier way to do this after introducing more operators.
 
 ### Relational Operators
 
-Relational operators compare operands to produce a Boolean variable.
-
-
-
-### Relational operators
-
-These operators are used to determine whether conditions hold.
+Relational operators are used to determine whether certain relationships hold when comparing other variables.
+These operators compare the operands to produce a Boolean variable.
 They are commonly used for flow control, such as for ```if``` statements, discussed below.
 Some of the most common relational operators are shown in the following table.
 
@@ -134,7 +129,7 @@ True
 >>> 45 < 34
 False
 ``` 
-The default is strict inequality but the "equal"" case
+The default is strict inequality but the "equal" case
 is specified by adding an equal sign. 
 ```python 
 >>> 23.1 >= 23
@@ -150,7 +145,7 @@ False
 
 
 A double equal sign ```==``` denotes a test for equality
-of the opearands and returns ```True``` if they are equal. 
+of the operands and returns ```True``` if they are equal. 
 ```python 
 >>> 67.3 == 87
 False
@@ -173,7 +168,7 @@ True
 
 The examples above show how the operators work but 
 these operators are more interesting and useful when 
-the operands are variables, as in the ```is_positive``` function, 
+the operands are variables, such as ```x``` in the ```is_positive``` function, 
 which is another way to evaluate Boolean variables. 
 ```python 
 >>> def is_positive(x: float) -> bool:
@@ -212,7 +207,8 @@ Just as with numbers, there is an order of operations with type ```bool```.
 
 1. Arithmetic operators are evaluated first: 
 you have to know the values you are comparing first. 
-1. Relational operators all have the same precedence, after arithmetic operators. 1. Boolean opearators like ```and```, ```or``` and ```not``` are evaluated last: again, you have to know the values you are comparing first. 
+1. Relational operators all have the same precedence, after arithmetic operators. 
+1. Boolean opearators like ```and```, ```or``` and ```not``` are evaluated last: again, you have to know the values you are comparing first. 
 
 Once you know these rules, you can avoid typing parentheses. 
 
@@ -255,7 +251,7 @@ by *chaining* the comparisons.
 True
 
 ``` 
-Most cases wor as you expect but there are sometimes surprises:
+Most cases work as you expect but sometimes there are surprises:
 
 ```python 
 >>> 3 < 5 != True
