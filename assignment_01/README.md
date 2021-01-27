@@ -119,5 +119,7 @@ If you want to keep previous versions, you might instead follow the habit of nam
 - An easy way to do this is to begin working on your assignments 
 by copying the folder ```assignment_0X``` and its contents 
 from the course repository to your private repository. 
+- To grade your assignment, I will run the program called
+```required_name_of_file.py``` in the folder ```assignment_0X```.
 
 
