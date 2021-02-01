@@ -274,7 +274,7 @@ Enter a gas: nitrogen
 ...
 >>>
 ``` 
-It only chaeck for a single item. For example,
+It only checks for a single item. For example,
 
 ```python 
 >>> [1, 2] in [0, 1, 2, 3]
@@ -341,7 +341,7 @@ Meanwhile, ```celegans_phenotypes[5]``` still refers to the original location in
 ## Aliasing: What's in a Name?
 
 Instead of slicing, you can create an *alias*, which is an alternative name for something. 
-the outcome is different than above. 
+The outcome is different than above. 
 
 ```python 
 >>> celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
@@ -435,8 +435,8 @@ we can explicity state that it applies to lists of ```Any``` type.
 ## List Methods
 
 
-Methods are like functions that operate on specific kinds of objects. 
-Here are some examples (see Chapter 6).
+Methods are like functions that operate on specific kinds of objects (see Chapter 6). 
+Here are some examples.
 
 ```python 
 >>> colors = ['red', 'orange', 'green']                 

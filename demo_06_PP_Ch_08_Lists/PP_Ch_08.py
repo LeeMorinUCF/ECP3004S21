@@ -10,7 +10,7 @@
 # College of Business 
 # University of Central Florida
 #
-# January, 9, 2021
+# January 9, 2021
 # 
 ##################################################
 #
@@ -31,26 +31,20 @@
 # near the Coal Oil Point Natural Reserve in the two
 # weeks starting on February 24, 2008.
 
- 
 whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 whales
-# [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 
- 
 
 # You can select a particular element of the list using square brackets. 
-
-
  
 whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 whales[0]
-# 5
+
 whales[1]
-# 4
+
 whales[12]
-# 1
+
 whales[13]
-# 3
 
  
 # Notice the relationship between the index numbers 0 to 13
@@ -58,30 +52,23 @@ whales[13]
 
 # You can't select a value out of range...
 
- 
 whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 whales[1001]
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in ?
-# IndexError: list index out of range
 
  
 # ...unless you reach in the negative direction...
  
 whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 whales[-1]
-# 3
+
 whales[-2]
-# 1
+
 whales[-14]
-# 5
+
 
 # ...but don't go too far backwards, either: 
  
 whales[-15]
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# IndexError: list index out of range
 
  
 # Like any other variable, you can assign individual elements to 
@@ -90,9 +77,6 @@ whales[-15]
 whales = [5, 4, 7, 3, 2, 3, 2, 6, 4, 2, 1, 7, 1, 3]
 third = whales[2]
 print('Third day:', third)
-# Third day: 7
-
- 
 
 
 #-------------------------------------------------
@@ -101,21 +85,14 @@ print('Third day:', third)
 
 # Like the empty string, the empty list contains no elements, 
 
- 
 whales = []
  
 # so all index numbers are out of range. 
-
  
 whales[0]
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# IndexError: list index out of range
+
 whales[-1]
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# IndexError: list index out of range
- 
+
 
 
 #-------------------------------------------------
@@ -124,12 +101,10 @@ whales[-1]
 
 # A list does not have to contain the same type of variables. 
 
- 
 krypton = ['Krypton', 'Kr', -157.2, -153.4]
 krypton[1]
-# 'Kr'
+
 krypton[2]
-# -157.2
 
  
 # For some programmers with experience in other languages, 
@@ -143,7 +118,6 @@ krypton[2]
 ##################################################
 
 # In type contracts for functions, you can specify that the argument is a list.
-
  
 def average(L: list) -> float:
     """Return the average of the values in L.
@@ -152,11 +126,8 @@ def average(L: list) -> float:
     1.7
     """
 
- 
-
 # You can also explicitly state that the argument is a list *of floats*, 
 # using the *capital-L* List from the typing module.
-
  
 from typing import List
 def average(L: List[float]) -> float:
@@ -175,18 +146,14 @@ def average(L: List[float]) -> float:
 
 # You cange the values of lists. That is, lists are *mutable*. 
 
- 
 nobles = ['helium', 'none', 'argon', 'krypton', 'xenon', 'radon']
 
  
 # Notice that 'neon' is spelled incorrectly. 
 # You can change it by assigning a new value to that element. 
 
-
- 
 nobles[1] = 'neon'
 nobles
-# ['helium', 'neon', 'argon', 'krypton', 'xenon', 'radon']
 
  
 
@@ -195,26 +162,17 @@ nobles
 
 # Compare this to numbers and strings, which are *immutable*. 
 
-
- 
 name = 'darwin'
 name[0] = 'D'
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# TypeError: 'str' object does not support item assignment
-
 
 
 # Methods that appear to change strings, actually create new ones. 
-
-
  
 name = 'Darwin'
 capitalized = name.upper()
 print(capitalized)
-# DARWIN
+
 print(name)
-# Darwin
 
  
 # Methods are similar to functions but are related to a cetain data type. 
@@ -231,58 +189,44 @@ print(name)
  
 half_lives = [887.7, 24100.0, 6563.0, 14, 373300.0]
 len(half_lives)
-# 5
+
 max(half_lives)
-# 373300.0
+
 min(half_lives)
-# 14
+
 sum(half_lives)
-# 404864.7
+
 sorted(half_lives)
-# [14, 887.7, 6563.0, 24100.0, 373300.0]
+
 half_lives
-# [887.7, 24100.0, 6563.0, 14, 373300.0]
+
 
  
 # Some operators can be applied to lists:
 
- 
 original = ['H', 'He', 'Li']
 final = original + ['Be']
 final
-# ['H', 'He', 'Li', 'Be']
 
  
 # Notice that the binary operator + only works when the operands are of the same type.
 # A single string is not the same as a list with one element that is a single string.
+# That is why the extra element was contained in square brackets.
 
-
- 
 ['H', 'He', 'Li'] + 'Be'   
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# TypeError: can only concatenate list (not "str") to list
 
  
 # The * operator works similarly, when compared to strings. 
-
  
 metals = ['Fe', 'Ni']
 metals * 3
-# ['Fe', 'Ni', 'Fe', 'Ni', 'Fe', 'Ni']
-
- 
 
 # You can use the del operator to *delete*
 # an element from a list. 
 
- 
 metals = ['Fe', 'Ni']
 del metals[0]
 metals
-# ['Ni']
- 
-
 
 
 
@@ -293,33 +237,28 @@ metals
 # The in operator checks whether an object is an element of the list.
 # It returns a Boolean variable that can be used to execute conditional staements. 
 
- 
 nobles = ['helium', 'neon', 'argon', 'krypton', 'xenon', 'radon']
+
 gas = input('Enter a gas: ')
 # Enter a gas: argon
 if gas in nobles:
     print('{} is noble.'.format(gas))
-# ...
-# argon is noble.
+
+
+
 gas = input('Enter a gas: ')
 # Enter a gas: nitrogen
 if gas in nobles:
     print('{} is noble.'.format(gas))
-# ...
-# >>>
- 
-# It only chaeck for a single item. For example,
 
- 
+# It only checks for a single item. For example,
+
 [1, 2] in [0, 1, 2, 3]
-# False
 
- 
 # but
-
  
 [1, 2] in [0, [1, 2], 3]
-# True
+
 
 # in which the smaller list [1, 2] is an element of the full list.
 
@@ -334,11 +273,9 @@ if gas in nobles:
  
 celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 celegans_phenotypes
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 
  
 # We can take a *slice* of the list to retain selected values in a smaller list. 
-
  
 celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 useful_markers = celegans_phenotypes[0:4]
@@ -349,21 +286,18 @@ useful_markers = celegans_phenotypes[0:4]
  
 celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 celegans_phenotypes[:4]
-# ['Emb', 'Him', 'Unc', 'Lon']
+
 celegans_phenotypes[4:]
-# [1'Dpy', 'Sma']
 
  
 # Leaving both limits blank slices the entire list. 
-
  
 celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 celegans_copy = celegans_phenotypes[:]
 celegans_phenotypes[5] = 'Lvl'
 celegans_phenotypes
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
+
 celegans_copy
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 
  
 # Notice that the command celegans_phenotypes[5] = 'Lvl' command
@@ -379,16 +313,15 @@ celegans_copy
 ##################################################
 
 # Instead of slicing, you can create an *alias*, which is an alternative name for something. 
-# the outcome is different than above. 
+# The outcome is different than above. 
 
  
 celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
 celegans_alias = celegans_phenotypes
 celegans_phenotypes[5] = 'Lvl'
 celegans_phenotypes
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
+
 celegans_alias
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
  
 
 # Note that we dropped the slice [:] when we assigned the alias celegans_alias. 
@@ -417,18 +350,19 @@ def remove_last_item(L: list) -> list:
     """
     del L[-1]
     return L
-# ...
-# >>>
- 
+
+
+
+
 
 # Now use it with the following list. 
 
  
 celegans_markers = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
 remove_last_item(celegans_markers)
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy']
+
 celegans_markers
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy']
+
  
 # Notice that the original list was altered:
 # the modifications applied to the same places in memory. 
@@ -446,18 +380,18 @@ def remove_last_item(L: list) -> None:
     remove_last_item([1, 3, 2, 4])
     """
     del L[-1]
-# ...
+
+
+
 celegans_markers = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Lvl']
 remove_last_item(celegans_markers)
 celegans_markers
-# ['Emb', 'Him', 'Unc', 'Lon', 'Dpy']
 
- 
+
 # If we want to restrict the type of the list, we could use the 
 # typing module to specify the type as, say, float. 
 # Since this function will work the same for lists of any type, 
 # we can explicity state that it applies to lists of Any type.
-
  
 from typing import List, Any
 def remove_last_item(L: List[Any]) -> None:
@@ -469,33 +403,31 @@ def remove_last_item(L: List[Any]) -> None:
     """
     del L[-1]
 
- 
+
 
 
 ##################################################
 ## List Methods
 ##################################################
 
-
-# Methods are like functions that operate on specific kinds of objects. 
-# Here are some examples (see Chapter 6).
-
+# Methods are like functions that operate on 
+# specific kinds of objects (see Chapter 6). 
+# Here are some examples.
  
 colors = ['red', 'orange', 'green']                 
 colors.extend(['black', 'blue'])
 colors                             
-# ['red', 'orange', 'green', 'black', 'blue']
+
 colors.append('purple')            
 colors
-# ['red', 'orange', 'green', 'black', 'blue', 'purple']
+
 colors.insert(2, 'yellow')         
 colors
-# ['red', 'orange', 'yellow', 'green', 'black', 'blue', 'purple']
+
 colors.remove('black')                              
 colors
-# ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 
- 
+
 # notice that these methods modify the list, instead of creating new lists. 
 # See the list on page 142 for a menu of methods to choose from. 
  
@@ -506,62 +438,50 @@ colors
 
 # An element of a list can be...another list. 
 
- 
 life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 
- 
-
 # Notice that each single element of the full list is a list in its own right. 
-
-
  
 life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 life[0]
-# ['Canada', 76.5]
-life[1]
-# ['United States', 75.5]
-life[2]
-# ['Mexico', 72.0]
 
- 
+life[1]
+
+life[2]
+
+
 # To select elements of the individual lists within the full list, 
 # use a second pair of square brackets. 
 
-
- 
 life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 life[1]
-# ['United States', 75.5]
+
 life[1][0]
-# 'United States'
+
 life[1][1]
-# 75.5
- 
+
 
 # Each of the sublists can be assigned to new variables. 
 
- 
 life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 canada = life[0]
 canada
-# ['Canada', 76.5]
-canada[0]
-# 'Canada'
-canada[1]
-# 76.5
 
- 
+canada[0]
+
+canada[1]
+
+
 # As for a single list, this creates an alias for that list, 
 # unless you take a slice with [:].
 
- 
 life = [['Canada', 76.5], ['United States', 75.5], ['Mexico', 72.0]]
 canada = life[0]
 canada[1] = 80.0
 canada
-# ['Canada', 80.0]
+
 life
-# [['Canada', 80.0], ['United States', 75.5], ['Mexico', 72.0]]
+
 
  
 
@@ -572,22 +492,19 @@ life
 # It is easy to forget that many list methods return None
 # rather than creating and returning a new list. 
 
- 
 colors = 'red orange yellow green blue purple'.split()
 colors
-# ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+
 sorted_colors = colors.sort()
 print(sorted_colors)
-# None
-colors
-# ['blue', 'green', 'orange', 'purple', 'red', 'yellow']
 
- 
+colors
+
+
 # The new variable sorted_colors contains only the value None, 
 # returned by the list method sort. 
 # The sort operation is performed on the original list, 
 # on which the method is applied. 
-
 
 
 
@@ -596,17 +513,9 @@ colors
 ##################################################
 
 
-
-
-
-
-
-
-
 #-------------------------------------------------
 ### Exercise 7
 #-------------------------------------------------
-
  
 def same_first_last(L: list) -> bool:
     """Precondition: len(L) >= 2
@@ -614,11 +523,11 @@ def same_first_last(L: list) -> bool:
     Return True if and only if first item of the list is the same as the
     last.
 
-    same_first_last([3, 4, 2, 8, 3])
+    >>> same_first_last([3, 4, 2, 8, 3])
     True
-    same_first_last(['apple', 'banana', 'pear'])
+    >>> same_first_last(['apple', 'banana', 'pear'])
 
-    same_first_last([4.0, 4.5])
+    >>> same_first_last([4.0, 4.5])
 
     """
 
@@ -627,21 +536,27 @@ def same_first_last(L: list) -> bool:
 #-------------------------------------------------
 ### Exercise 8
 #-------------------------------------------------
-
  
 def is_longer(L1: list, L2: list) -> bool:
     """Return True if and only if the length of L1 is longer than the length
     of L2.
 
-    is_longer([1, 2, 3], [4, 5])
+    >>> is_longer([1, 2, 3], [4, 5])
     True
-    is_longer(['abcdef'], ['ab', 'cd', 'ef'])
+    >>> is_longer(['abcdef'], ['ab', 'cd', 'ef'])
 
-    is_longer(['a', 'b', 'c'], [1, 2, 3]
+    >>> is_longer(['a', 'b', 'c'], [1, 2, 3]
 
     """
 
  
+#-------------------------------------------------
+### Exercise 10
+#-------------------------------------------------
+
+
+units = [['km', 'miles', 'league'], ['kg', 'pound', 'stone']]
+
 
 
 
