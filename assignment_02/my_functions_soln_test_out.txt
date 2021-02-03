@@ -1,0 +1,227 @@
+#--------------------------------------------------
+# Importing function definitions
+# Examples within script my_functions.py:
+#--------------------------------------------------
+#--------------------------------------------------
+Testing my Examples for Exercise 1.
+#--------------------------------------------------
+Exercise 1, Example 1:
+Evaluating average(10,20)
+Expected: 15.0
+Got: 15.0
+#--------------------------------------------------
+Exercise 1, Example 2:
+Evaluating average(2.5, 3.0)
+Expected: 2.75
+Got: 2.75
+#--------------------------------------------------
+Exercise 1, Example 3:
+Evaluating average(2.5, 3.0)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Testing my Examples for Exercise 2.
+#--------------------------------------------------
+Exercise 2, Example 1:
+Evaluating area_of_circle(0.0)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 2, Example 2:
+Evaluating area_of_circle(1.0)
+Expected: 3.141592653589793
+Got: 3.141592653589793
+#--------------------------------------------------
+Exercise 2, Example 3:
+Evaluating area_of_circle(1.0/math.sqrt(math.pi))
+Expected: 1.0
+Got: 0.9999999999999999
+#--------------------------------------------------
+Testing my Examples for Exercise 3.
+#--------------------------------------------------
+Exercise 3, Example 1:
+Evaluating volume_of_cylinder(0.0, 9.9)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 3, Example 2:
+Evaluating volume_of_cylinder(1.0, 1.0)
+Expected: 3.141592653589793
+Got: 3.141592653589793
+#--------------------------------------------------
+Exercise 3, Example 3:
+Evaluating volume_of_cylinder(1.0/math.pi, math.pi)
+Expected: 1.0
+Got: 1.0
+#--------------------------------------------------
+Testing my Examples for Exercise 4.
+#--------------------------------------------------
+Exercise 4, Example 1:
+Evaluating utility(0.0, 4.7, 0.5)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 4, Example 2:
+Evaluating utility(1.0, 1.0, 0.75)
+Expected: 1.0
+Got: 1.0
+#--------------------------------------------------
+Exercise 4, Example 3:
+Evaluating utility(4, 16, 0.5)
+Expected: 8.0
+Got: 8.0
+#--------------------------------------------------
+Testing my Examples for Exercise 5.
+#--------------------------------------------------
+Exercise 5, Example 1:
+Evaluating logit(13.7, 0.0, 0.0)
+Expected: 0.5
+Got: 0.5
+#--------------------------------------------------
+Exercise 5, Example 2:
+Evaluating logit(0.0, math.log(2), 2.0)
+Expected: 0.6666666666666666
+Got: 0.6666666666666666
+#--------------------------------------------------
+Exercise 5, Example 3:
+Evaluating logit(1.0, 0.0, math.log(5))
+Expected: 0.8333333333333334
+Got: 0.8333333333333333
+#--------------------------------------------------
+# Testing with doctest module
+#--------------------------------------------------
+**********************************************************************
+File "my_functions_soln_test.py", line 80, in __main__.area_of_circle
+Failed example:
+    area_of_circle(1.0)
+Expected:
+    math.pi
+Got:
+    3.141592653589793
+**********************************************************************
+File "my_functions_soln_test.py", line 82, in __main__.area_of_circle
+Failed example:
+    area_of_circle(1.0/math.sqrt(math.pi))
+Expected:
+    1.0
+Got:
+    0.9999999999999999
+**********************************************************************
+File "my_functions_soln_test.py", line 117, in __main__.logit
+Failed example:
+    logit(0.0, math.log(2), 2.0)
+Expected:
+    2.0/3.0
+Got:
+    0.6666666666666666
+**********************************************************************
+File "my_functions_soln_test.py", line 119, in __main__.logit
+Failed example:
+    logit(1.0, 0.0, math.log(5))
+Expected:
+    5.0/6.0
+Got:
+    0.8333333333333333
+**********************************************************************
+File "my_functions_soln_test.py", line 81, in __main__.volume_of_cylinder
+Failed example:
+    volume_of_cylinder(1.0, 1.0)
+Expected:
+    math.pi
+Got:
+    3.141592653589793
+**********************************************************************
+3 items had failures:
+   2 of   3 in __main__.area_of_circle
+   2 of   3 in __main__.logit
+   1 of   3 in __main__.volume_of_cylinder
+***Test Failed*** 5 failures.
+#--------------------------------------------------
+# Testing with examples in solutions
+#--------------------------------------------------
+#--------------------------------------------------
+Testing my Examples for Exercise 1.
+#--------------------------------------------------
+Exercise 1, Example 1:
+Evaluating average(10,20)
+Expected: 15.0
+Got: 15.0
+#--------------------------------------------------
+Exercise 1, Example 2:
+Evaluating average(2.5, 3.0)
+Expected: 2.75
+Got: 2.75
+#--------------------------------------------------
+Exercise 1, Example 3:
+Evaluating average(2.5, 3.0)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Testing my Examples for Exercise 2.
+#--------------------------------------------------
+Exercise 2, Example 1:
+Evaluating area_of_circle(0.0)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 2, Example 2:
+Evaluating area_of_circle(1.0)
+Expected: 3.141592653589793
+Got: 3.141592653589793
+#--------------------------------------------------
+Exercise 2, Example 3:
+Evaluating area_of_circle(1.0/math.sqrt(math.pi))
+Expected: 1.0
+Got: 0.9999999999999999
+#--------------------------------------------------
+Testing my Examples for Exercise 3.
+#--------------------------------------------------
+Exercise 3, Example 1:
+Evaluating volume_of_cylinder(0.0, 9.9)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 3, Example 2:
+Evaluating volume_of_cylinder(1.0, 1.0)
+Expected: 3.141592653589793
+Got: 3.141592653589793
+#--------------------------------------------------
+Exercise 3, Example 3:
+Evaluating volume_of_cylinder(1.0/math.pi, math.pi)
+Expected: 1.0
+Got: 1.0
+#--------------------------------------------------
+Testing my Examples for Exercise 4.
+#--------------------------------------------------
+Exercise 4, Example 1:
+Evaluating utility(0.0, 4.7, 0.5)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 4, Example 2:
+Evaluating utility(1.0, 1.0, 0.75)
+Expected: 1.0
+Got: 1.0
+#--------------------------------------------------
+Exercise 4, Example 3:
+Evaluating utility(4, 16, 0.5)
+Expected: 8.0
+Got: 8.0
+#--------------------------------------------------
+Testing my Examples for Exercise 5.
+#--------------------------------------------------
+Exercise 5, Example 1:
+Evaluating logit(13.7, 0.0, 0.0)
+Expected: 0.5
+Got: 0.5
+#--------------------------------------------------
+Exercise 5, Example 2:
+Evaluating logit(0.0, math.log(2), 2.0)
+Expected: 0.6666666666666666
+Got: 0.6666666666666666
+#--------------------------------------------------
+Exercise 5, Example 3:
+Evaluating logit(1.0, 0.0, math.log(5))
+Expected: 0.8333333333333334
+Got: 0.8333333333333333
+#--------------------------------------------------

@@ -32,3 +32,29 @@ from the course repository to your private repository.
 
 To grade your assignment, I will run the program called
 ```my_functions.py``` in the folder ```assignment_02```.
+
+### What Happens After I Run the Programs?
+
+I ran your programs and those from the suggested solutions 
+and these prorams output the results you see above. 
+
+- The file ```my_functions.py``` is your submission. 
+When I run it, it produces the output ```my_functions_out.txt```. 
+This shows the results of evaluating your examples. 
+
+
+- The file ```my_functions_soln.py``` is the suggested solutions. 
+When I run it, it produces the output ```my_functions_soln_out.txt```. 
+
+
+
+- The file ```my_functions_test.py``` is a script that runs examples 
+to test your submission ``my_functions.py```. 
+When I run it, it produces the output ```my_functions_test_out.txt```. 
+
+
+
+- The file ```my_functions_soln_test.py``` is a script that runs examples 
+to test the suggested solutions ``my_functions_soln.py```. 
+When I run it, it produces the output ```my_functions_soln_test_out.txt```. 
+
