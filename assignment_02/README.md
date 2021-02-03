@@ -51,7 +51,11 @@ When I run it, it produces the output ```my_functions_soln_out.txt```.
 - The file ```my_functions_test.py``` is a script that runs examples 
 to test your submission ```my_functions.py```. 
 When I run it, it produces the output ```my_functions_test_out.txt```. 
-
+This script tests your functions in several ways: 
+using the examples you provided, 
+using the examples in the suggested solutions, and
+using an automated testing procedure using the examples 
+in the docstrings of your functions (if you didn't forget them). 
 
 
 - The file ```my_functions_soln_test.py``` is a script that runs examples 
