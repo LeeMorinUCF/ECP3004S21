@@ -5,13 +5,13 @@
 ## Repetition
 
 Repetition is used to perform a fixed sequence of operations a number of times by iterating over a block of code. 
-There are two main kinds of repetion that differ in the way the user specifies the sequence and number of executions.
+There are two main kinds of repetition that differ in the way the user specifies the sequence and number of executions.
 
 #### ```for``` loops
 
 For loops are useful when you have to repeat a calculation for a 
 predetermined number of inputs. 
-These calculation follow this flow chart:
+These calculations follow this flow chart:
 
 <img src="Images/for_loop_C.jpg" width="500"/>
 
@@ -23,6 +23,7 @@ The syntax is:
 for iterator in list_of_iterators:
     # Execute statements for each object in the list of iterators.
     # ...
+    # Don't forget the indenting. 
 
 ```
 
@@ -400,7 +401,7 @@ The outer loop iterates over the sublists.
 ['F', 'Cl', 'Br']
 
 ``` 
-The inner loop iterates over the lements of the sublists. 
+The inner loop iterates over the elements of the sublists. 
 ```python 
 >>> elements = [['Li', 'Na', 'K'], ['F', 'Cl', 'Br']]
 >>> for inner_list in elements:
@@ -494,6 +495,10 @@ while <condition>:
     # ...
     # At end of block, evaluate condition and determine whether
     # to execute the code block again. 
+    
+    # Don't forget to indent consistently.
+    # The block of code ends when the last
+    # indented statements are executed. 
 
 ```
 
@@ -602,7 +607,7 @@ while text != "quit":
         print("Unknown compound")
 
 ``` 
-If the user enters the following sewquence of values, 
+If the user enters the following sequence of values, 
 the program will run as follows.
 
 ```python 
@@ -685,7 +690,7 @@ With the ```break``` statement, the loop stops when the job is done.
 
 The ```continue``` statement also alters the flow of a loop. 
 This command ends the execution within the current block of commands
-and it immediately proceeds to the next itearation and executes the loop block. 
+and it immediately proceeds to the next iteration and executes the loop block. 
 
 Without the ```continue``` statement, the execution 
 proceeds even after finding a letter (an ```alpha```betic character)
@@ -736,7 +741,8 @@ complicate the program.
 Many programmers will not notice the ```break``` and ```continue``` statements
 and will get confused after using the ```for``` and ```while```
 statement to get an idea of what the program is doing. 
-Your program might make sense to you now
+This advice is not only to help others:
+your program might make sense to you now
 but *future you* might not remember what you are doing. 
 
 
@@ -762,325 +768,4 @@ def remove_neg(num_list: List[float]) -> None:
             num_list.remove(item)
 
 ``` 
-
-
-
-## Additional Code Snippets
-
-
-```python 
-def f(a, b, c):
-  if a:
-    if b:
-      print('hi')
-    elif c:
-      print('bonjour')
-    else:
-      print('hola')
-  else:
-    print('Select a language.')
-
-``` 
-
-```python 
-def f(a, b, c):
-  if a and b:
-    print('hi')
-  elif a and c:
-    print('bonjour')
-  elif a:
-    print('hola')
-  else:
-    print('Select a language')
-
-``` 
-
-```python 
-Mercury
-Venus
-Earth
-Mars
-
-``` 
-
-```python 
->>> count_fragments('atc', 'gttacgtggatg')
-0
->>> count_fragments('gtg', 'gttacgtggatg')
-
-``` 
-
-```python 
-def count_fragments(fragment, dna):
-    """ (str, str) -> int
-    
-    Return the number of times fragment occurs in dna.
-    
-    >>> count_fragments('a', 'actg')
-    1
-    >>> count_fragments('c', 'cact')
-    2
-    """
-    
-    count = -1
-    last_match = 0
-
-    while last_match != -1:
-        count += 1
-        last_match = dna.find(fragment, last_match)
-    
-    return count
-
-``` 
-
-```python 
->>> count_fragments('gtg', 'gttacgtggatg')
-1
->>> count_fragments('gtt', 'gttacgtggatg')
-0
-
-``` 
-
-```python 
-def count_fragments(fragment, dna):
-    """ (string, string) -> int
-        
-    Return the number of times the given fragment occurs in the string, dna.
-    
-    >>> count_fragments('a', 'actg')
-    1
-    >>> count_fragments('c', 'cact')
-    2
-    """
-    
-    count = -1
-    last_match = 0
-    while last_match != -1:
-        count += 1
-        last_match = dna.find(fragment, last_match + 1)
-    return count
-
-``` 
-
-
-```python 
->>> for x in enumerate('abc'):
-...     print(x)
-...
-(0, 'a')
-(1, 'b')
-(2, 'c')
->>> for x in enumerate([10, 20, 30]):
-...     print(x)
-...
-(0, 10)
-(1, 20)
-(2, 30)
-
-``` 
-
-```python 
->>> values = [1, 2, 3]
->>> for pair in enumerate(values):
-...     i = pair[0]
-...     v = pair[1]
-...     values[i] = 2 * v
-...
->>> values
-[2, 4, 6]
-
-``` 
-
-```python 
->>> values = [1, 2, 3]
->>> for (i, v) in enumerate(values):
-...     values[i] = 2 * v
-...
->>> values
-[2, 4, 6]
-
-``` 
-
-```python 
-# Pluto is only 0.002 times the mass of Earth.
-Pluto
-Mercury
-# Mars is half Earth's diameter, but only
-#   0.11 times Earth's mass.
-Mars
-Venus
-Earth
-Uranus
-
-
-
-``` 
-
-```python 
-earth_line = 1
-file = open("data.txt", "r")
-for line in file:
-    line = line.strip()
-    if line == "Earth":
-        break
-    earth_line = earth_line + 1
-print("Earth is at line", earth_line)
-
-``` 
-
-```python 
-entry_number = 1
-file = open("planets.txt", "r")
-for line in file :
-    line = line.strip()
-    if line.startswith("#"):
-        continue
-    if line == "Earth":
-        break
-    entry_number = entry_number + 1
-print("Earth is the {}th-lightest planet.".format(entry_number))
-
-``` 
-
-```python 
-entry_number = 1
-file = open("data.txt", "r")
-for line in file :
-    line = line.strip()
-    if not line.startswith("#"):
-      if line == "Earth":
-          break
-      entry_number = entry_number + 1
-print("Earth is the {}th-lightest planet.".format(entry_number))
-
-``` 
-
-```python 
-current_line = 1
-earth_line = 0
-file = open("data.txt", "r")
-for line in file:
-    line = line.strip()
-    if line == "Earth":
-        earth_line = current_line
-    current_line = current_line + 1
-print("Earth is at line {}".format(earth_line))
-
-``` 
-
-```python 
->>> for c in 'alpha':
-...     print(c)
-...
-a
-l
-p
-h
-a
-
-``` 
-
-```python 
-import media
-lake = media.load_picture('lake.png')
-width, height = media.get_width(lake), media.get_height(lake)
-for y in range(0, height, 2): # Skip odd-numbered lines
-    for x in range(0, width):
-        p = media.get_pixel(lake, x, y)
-        media.set_color(p, media.black)
-media.show(lake)
-
-``` 
-
-```python 
-import media
-baseball = media.load_picture('baseball.png')
-lake = media.load_picture('lake.png')
-width, height = media.get_width(baseball), media.get_height(baseball)
-
-for y in range(0, height):
-    for x in range(0, width):
-        # Position the top-left of the baseball at (50, 25)
-        from_p = media.get_pixel(baseball, x, y)
-        to_p = media.get_pixel(lake, 50 + x, 25 + y)
-        media.set_color(to_p, media.get_color(from_p))
-media.show(lake)
-
-``` 
-
-```python 
->>> x, y = 1, 2
->>> x
-1
->>> y
-2
-
-``` 
-
-```python 
->>> first, second, third = [1, 2, 3]
->>> first
-1
->>> second
-2
->>> third
-3
->>> first, second, third = 'abc'
->>> first
-'a'
->>> second
-'b'
->>> third
-'c'
-
-``` 
-
-```python 
->>> values = [1, 2, 3]
->>> for i in range(len(values)):
-...     values[i] = 2 * values[i]
-...
->>> values
-[2, 4, 6]
-
-``` 
-
-```python 
->>> values = [1, 2, 3]
->>> for i in range(len(values)):
-...     values[i] *= 2
-...
->>> values
-[2, 4, 6]
-
-``` 
-
-
-
-
-```python 
-while True:
-    formula = input("Please enter a chemical formula: ")
-    if formula == "H2O":
-        print("Water")
-    elif formula == "NH3":
-        print("Ammonia")
-    elif formula == "CH4":
-        print("Methane")
-    else:
-        print("Unknown compound")
-
-``` 
-
-```python 
-Please enter a chemical formula: NH3
-Ammonia
-Please enter a chemical formula: H2O
-Water
-Please enter a chemical formula: NaCl
-Unknown compound
-...
-
-``` 
-
 
