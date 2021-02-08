@@ -299,16 +299,7 @@ The most common such problem is when the matrix ```A``` is square,
 that is, it has the same number of rows and columns.
 
 
-### The solution
-
-An inefficient way to solve this problem is to find the *inverse* of the matrix ```A``` and multipy it against ```b```. 
-This works but it takes many more computational steps. 
-A better approach is to use row oprations to perform a form of Gaussian elimination. 
-Although this may be the approach taken for hand calculations, there are other, more efficient algorithms for finding the solution to a set of equations.
-This is a specialized area within mathematics that uses advanced theories in linear algebra to calculate solutions. 
-Fortunately, for the practitioner, most computational packages have built-in functions for solving systems of linear equations. 
-
-### Working with Matrices
+### The Tools: Working with Matrices
 
 Some languages are designed for matrix algebra. 
 For example, when you use the statistical programming language ```R```,
@@ -388,8 +379,16 @@ we can use it to solve for the unknown vector or matrix
 ```x``` that produced the product ```b```.
 
 
+### The solution
 
-## Solving a System of Equations
+An inefficient way to solve this problem is to find the *inverse* of the matrix ```A``` and multipy it against ```b```. 
+This works but it takes many more computational steps. 
+A better approach is to use row oprations to perform a form of Gaussian elimination. 
+Although this may be the approach taken for hand calculations, there are other, more efficient algorithms for finding the solution to a set of equations.
+This is a specialized area within mathematics that uses advanced theories in linear algebra to calculate solutions. 
+Fortunately, for the practitioner, most computational packages have built-in functions for solving systems of linear equations. 
+
+
 
 ### Solve a linear system with the inverse matrix
 

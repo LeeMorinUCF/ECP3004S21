@@ -319,7 +319,8 @@ plt.xlabel('$x_i$')
 plt.title('Estimating a Nonlinear Model with linalg.lstsq')
 plt.show()
 
-
+# See the figure in the "Plots" tab in the 
+# upper right window of Anaconda.
 
 
 
