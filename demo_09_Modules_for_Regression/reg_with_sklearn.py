@@ -51,7 +51,6 @@ from sklearn.metrics import mean_squared_error, r2_score # For model performance
 os.getcwd()
 # Change to a new directory.
 os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\demo_09_Modules_for_Regression')
-# os.chdir('C:\Users\le279259\Documents\Teaching\QMB6358_Fall_2020\GitRepos\QMB6358F20\demo_12_linear_models_in_python')
 # Check that the change was successful.
 os.getcwd()
 
@@ -140,8 +139,10 @@ plt.plot(X_1, Y_pred_1, color = 'red')
 plt.xlabel('Income')
 plt.ylabel('House Price')
 plt.title('Regression of House Price on Income')
-# plt.show()
-plt.savefig('Reg_Example_1.pdf')
+plt.show()
+
+# You can save the figure to place within a document.
+# plt.savefig('Reg_Example_1.pdf')
 
 
 # Plot the target variable with the predictions.
@@ -215,13 +216,23 @@ Y_pred_full = reg_model_full.predict(X)
 print('Intercept: %f \n' % reg_model_full.intercept_)
 
 # The slope coefficient
-# print('Coefficients: %f \n' % reg_model_full.coef_)
+for i in range(len(reg_model_full.coef_[0])):
+    print('\nCoefficients %d: %f \n' % (i, reg_model_full.coef_[0][i]))
+
 
 # Coefficient of determination (R-squared)
-# r_sq = reg_model_full.score(X_1, Y)
-# print('Coefficient of determination:', r_sq)
+r_sq = reg_model_full.score(X, Y)
+print('Coefficient of determination:', r_sq)
 
 
+# This is a minimalist version of linear regression.
+# It avoids unnecessary computation if, for example, 
+# you were running many models in a loop. 
+# Also, sklearn can estimate many more types of models, 
+# and it is often used for machine learning. 
+
+# If you prefer more statistics printed out automatically, 
+# then use the statsmodels module.
 
 
 ##################################################

@@ -79,10 +79,12 @@ housing.dtypes
 
 # Inspect a few rows of data.
 housing.head(3)
+
 housing.tail(3)
 
 # Check the dimensions of the data.
 housing.index
+
 housing.columns
 
 
@@ -120,13 +122,11 @@ print(reg_model_full_sm.summary())
 
 
 
-# Compare with univariate approach above.
+# Compare with a bivariate model.
 reg_model_1_sm = sm.ols(formula = "house_price ~ income", data = housing).fit()
 print(reg_model_1_sm.summary())
 
 
-# Calculate sum of squared residuals. 
-print(sum(reg_model_full_sm.resid**2))
 
 
 ##################################################
