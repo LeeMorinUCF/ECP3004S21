@@ -318,7 +318,7 @@ It is used as a placeholder when the value is missing.
 There are many other functions to operate on data frames in combination with the ```pandas``` package.
 
 
-# Drop values from columns(axis=1)
+Drop values from columns(axis=1)
 ```python
 >>> print(df2)
      A          B    C  D      E    F
