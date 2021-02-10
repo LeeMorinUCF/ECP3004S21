@@ -11,7 +11,8 @@ You will make a more robust version of the function in Exercise 2.
 
 For Exercises 1 and 2, there are a few ways developing test cases:
 - choose roots ```x_1``` and ```x_2``` first 
-and multiply the terms in ```(x - x_1)*(x - x_2)``` to get the coefficients for your test case.  
+and multiply the terms in ```(x - x_1)*(x - x_2)``` (on paper) 
+to get the coefficients for your test case.  
 - plug the roots into the quadratic equation to make sure the output is close to zero. 
 
 
