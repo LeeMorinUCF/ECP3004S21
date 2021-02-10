@@ -137,16 +137,9 @@ print(df2)
 # instead of permanently removing it. 
 
 
-# Sort by labels along an axis
-df2.sort_index()
-
-
-
-
-
 # Sort by the values along an axis
 
-df.sort_values(by='Country')
+df2.sort_values(by='E')
 
 
 
