@@ -22,10 +22,8 @@ def get_preheating_instructions(fahrenheit: float) -> str:
 
 if __name__ == '__main__':
   fahrenheit = float(input('Enter the temperature in degrees Fahrenheit: '))
-  celsius = convert_to_celsius(fahrenheit)
-  if above_freezing(celsius):
+  celsius = temperature_program.convert_to_celsius(fahrenheit)
+  if temperature_program.above_freezing(celsius):
       print('It is above freezing.')
   else:
       print('It is below freezing.')
-
- 
