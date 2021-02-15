@@ -14,8 +14,8 @@
 # 
 ##################################################
 #
-# Demo for Chapter 3: Functions
-# Sample Module, version 1.0
+# Demo for Chapter 6, Part B: Testing Modules
+# Sample Script for Testing Modules
 #
 ##################################################
 """
@@ -81,7 +81,8 @@ exec(open("birthday_v1.py").read())
 # This also puts the function definitions in memory.
 
 
-
+# You can use the modules in PP_Ch_06_B.py 
+# to reload your module after making changes. 
 # import imp
 # imp.reload(birthday_v1)
 

@@ -24,32 +24,38 @@
 
 
 ##################################################
+# Set Working Directory.
+##################################################
+
+import os
+
+# Find out the current directory.
+os.getcwd()
+# Change to a new directory.
+# os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\demo_09_Modules_for_Regression')
+os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\demo_10_PP_Ch_06_Testing_Modules')
+# Check that the change was successful.
+os.getcwd()
+
+
+
+
+##################################################
 ## Defining Your Own Modules
 ##################################################
 
-# In Chapter 3, we defined this function. 
-
- 
-def convert_to_celsius(fahrenheit: float) -> float:
-    """Return the number of Celsius degrees equivalent to fahrenheit
-    degrees.
-...
-    convert_to_celsius(75)
-    23.88888888888889
-    """
-    return (fahrenheit - 32.0) * 5.0 / 9.0
-...
-
+# In Chapter 3, we defined the function convert_to_celsius. 
  
 
-# If you save this function definition into a file names
+# If you save this function definition into a file named
 # temperature.py, you can import it as a module. 
 
  
 import temperature
 celsius = temperature.convert_to_celsius(33.3)
+print(celsius)
+
 temperature.above_freezing(celsius)
-# True
 
  
 
@@ -72,7 +78,6 @@ print("The panda's scientific name is 'Ailuropoda melanoleuca'")
 
  
 import experiment
-# The panda's scientific name is 'Ailuropoda melanoleuca'
 
  
 # It executed the print statement in the file. 
@@ -82,8 +87,6 @@ import experiment
 # Now try to import it a second time in the same script.
 
  
-import experiment
-# The panda's scientific name is 'Ailuropoda melanoleuca'
 import experiment
 
  
@@ -114,11 +117,17 @@ print("The koala's scientific name is 'Phascolarctos cinereus'")
  
 import experiment
 # The panda's scientific name is 'Ailuropoda melanoleuca'
+# As above.
+
 import experiment
+# Nothing printed the second time.
+
+
 import imp
 imp.reload(experiment)
+# You should see the updated name.
 # The koala's scientific name is 'Phascolarctos cinereus'
-# <module 'experiment' from '/Users/campbell/Documents/experiment.py'>
+# <module 'experiment' from '/Users/.../.../experiment.py'>
  
 # Notice the new version is effective after the reload command. 
 
@@ -133,14 +142,14 @@ imp.reload(experiment)
  
 import example
 example.x
-# 2
+
 example.x = 7
 example.x
-# 7
+
 import importlib
 example = importlib.reload(example)
 example.x
-# 2
+
  
 
 # This doesn't work, however, for systems modules, like math. 
@@ -148,16 +157,48 @@ example.x
  
 import math
 math.pi
-# 3.141592653589793
+
+# Take a copy before breaking something.
+math_pi_copy = math.pi
+
+# Change the value of math.pi.
 math.pi = 3
 math.pi
-# 3
+
+# Try to reload math.
 math = importlib.reload(math)
 math.pi
-# 3
+
  
 
 # It's better to simply avoid overwriting functions or values in modules. 
+
+# Correct the damage.
+math.pi = math_pi_copy
+math.pi
+
+# But better not to break it in the first place. 
+
+
+# For the next tests, we will need the following. 
+
+#-------------------------------------------------
+### How to run a script within another script
+#-------------------------------------------------
+
+
+# First, we will run a command of the form 
+# exec(open("my_script.py").read()) which will
+# read the text in the contants of the script
+# and execute those commands in __main__. 
+# 
+# 1.  The open("my_script.py") initializes a connection
+#     to interact with the contents of my_script.py. 
+# 2.  The my_string.read() method reads the text 
+#     from the file my_script.py and returns a string. 
+# 3.  Finally the exec() function executes the commands 
+#     in the script.
+
 
 
 #-------------------------------------------------
@@ -174,9 +215,11 @@ math.pi
  
 print("__name__ is", __name__)
 
- 
+# Run it with this command (or at the command line, such as GitBash) 
+exec(open("echo.py").read())
+
 # If we run this file it outputs this: 
- 
+
 # __name__ is __main__
 
  
@@ -185,6 +228,7 @@ print("__name__ is", __name__)
 
  
 import echo
+# It prints
 # __name__ is echo
 
  
@@ -197,12 +241,6 @@ print("After import, __name__ is", __name__,
 
  
 
-
- 
-# __name__ is echo
-# After import, __name__ is __main__ and echo.__name__ is echo
-
- 
 
 # When Python imports this module, the __name__ variable
 # stores the special string __main__ but the variable within the module, 
@@ -225,37 +263,16 @@ else:
 # Try running this script by running the script and by importing the module. 
 
 
+exec(open("main_example.py").read())
+
+import main_example
+
+
 # Some modules contain only function modules but others contain programs. 
-# The file temperature_program.py contains the following. 
+# The file temperature_program.py contains a set of programs. 
 
  
-def convert_to_celsius(fahrenheit: float) -> float:
-    """Return the number of Celsius degrees equivalent to fahrenheit
-    degrees.
-
-    convert_to_celsius(75)
-    23.88888888888889
-    """
-    return (fahrenheit - 32.0) * 5.0 / 9.0
-
-
-def above_freezing(celsius: float) -> bool:
-    """Return True iff temperature celsius degrees is above freezing.
-
-    above_freezing(5.2)
-    True
-    above_freezing(-2)
-    False
-    """
-    return celsius > 0
-
-
-fahrenheit = float(input('Enter the temperature in degrees Fahrenheit: '))
-celsius = convert_to_celsius(fahrenheit)
-if above_freezing(celsius):
-    print('It is above freezing.')
-else:
-    print('It is below freezing.')
+exec(open("temperature_program.py").read())
 
  
 # When this module is run, it runs the block of code at the bottom and
@@ -266,24 +283,7 @@ else:
 
 
  
-import temperature_program
-
-def get_preheating_instructions(fahrenheit: float) -> str:
-    """Return instructions for preheating the oven in fahreneheit degrees and
-    Celsius degrees.
-
-    get_preheating_instructions(500)
-    'Preheat oven to 500 degrees F (260.0 degrees C).'
-    """
-
-    cels = str(temperature_program.convert_to_celsius(fahrenheit))
-    fahr = str(fahrenheit)
-    return 'Preheat oven to ' + fahr + ' degrees F ('+ cels +' degrees C).'
-
-
-fahr = float(input('Enter the baking temperature in degrees Fahrenheit: '))
-print(get_preheating_instructions(fahr))
-
+exec(open("baking.py").read())
  
 
 # When baking.py is run, it imports the code at the bottom of
@@ -292,22 +292,29 @@ print(get_preheating_instructions(fahr))
 # within an if statement of the form 
 # if __name__ == '__main__':.
 
+
+# Let's make this modification in better_baking.py.
+
+# # <function definitions copied from above>
+
+# if __name__ == '__main__':
+#   fahrenheit = float(input('Enter the temperature in degrees Fahrenheit: '))
+#   celsius = convert_to_celsius(fahrenheit)
+#   if above_freezing(celsius):
+#       print('It is above freezing.')
+#   else:
+#       print('It is below freezing.')
+
  
-
-# <function definitions copied from above>
-
-if __name__ == '__main__':
-  fahrenheit = float(input('Enter the temperature in degrees Fahrenheit: '))
-  celsius = convert_to_celsius(fahrenheit)
-  if above_freezing(celsius):
-      print('It is above freezing.')
-  else:
-      print('It is below freezing.')
-
- 
+# This is what happens when you run the script for this module:
+exec(open("better_baking.py").read())
 
 
 
+# Compare what happens when these modules are imported.
+import better_baking
+
+import baking
 
 
 
@@ -327,10 +334,7 @@ if __name__ == '__main__':
  
 import doctest
 doctest.testmod()
-# TestResults(failed=0, attempted=3)
  
-
-# This message tells us that three tests were attempted and none failed. 
 
 # As an experiment, suppose that we had made an error in our calculation.
 # Suppose that instead of (fahrenheit - 32.0) * 5.0 / 9.0 we 
@@ -341,26 +345,37 @@ doctest.testmod()
 # function with this:
 
  
-def convert_to_celsius(fahrenheit):
-    """ (number) -> float
+# def convert_to_celsius(fahrenheit):
+#     """ (number) -> float
 
-    Return the number of Celsius degrees equivalent to fahrenheit degrees.
+#     Return the number of Celsius degrees equivalent to fahrenheit degrees.
 
-    convert_to_celsius(75)
-    23.88888888888889
-    """
+#     convert_to_celsius(75)
+#     23.88888888888889
+#     """
                         
-    return fahrenheit - 32.0 * 5.0 / 9.0
+#     return fahrenheit - 32.0 * 5.0 / 9.0
 
- 
 
 
 # Then, when we run doctest on that module.
-
+# Do this by entering the following commands in the bottom of 
+# the script. 
 
  
-import testmod
+# import testmod
+# doctest.testmod()
+
+
+
+
+# Run the script with the failure to see what happens.
+exec(open("temperature_doctest_fail.py").read())
 doctest.testmod()
+
+
+
+
 # **********************************************************************
 # File "__main__", line 6, in __main__.convert_to_celsius
 # Failed example:
@@ -383,464 +398,20 @@ doctest.testmod()
 
 
 
+# Then run the fixed script to see the result.
+exec(open("temperature_doctest_pass.py").read())
+doctest.testmod()
+
+# It say that three tests were run but none failed. 
+# TestResults(failed=0, attempted=3)
 
 
 
 ##################################################
-## Extra Code Snippets
+# Exercise
 ##################################################
 
 
-
-
-
- 
-def convert_to_celsius(fahrenheit: float) -> float:
-    """Return the number of Celsius degrees equivalent to fahrenheit
-    degrees.
-
-    convert_to_celsius(75)
-    23.88888888888889
-    """
-    return (fahrenheit - 32.0) * 5.0 / 9.0
-
-
-def above_freezing(celsius: float) -> bool:
-    """Return True iff temperature celsius degrees is above freezing.
-
-    above_freezing(5.2)
-    True
-    above_freezing(-2)
-    False
-    """
-    return celsius > 0
-
- 
-
-
-
-
-
-
- 
-import nose
-from temp_with_doc import to_celsius
-
-def test_freezing():
-    '''Test freezing point.'''
-    assert to_celsius(32) == 0
-
-def test_boiling():
-    '''Test boiling point.'''
-    assert to_celsius(212) == 100
-
-def test_roundoff():
-    '''Test that roundoff works.'''
-    assert to_celsius(100) == 38 # NOT 37.777...
-
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
- 
-import nose
-from temp_with_doc import to_celsius
-def test_to_celsius():
-    '''Test function for to_celsius'''
-    assert to_celsius(100) == 37.8
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
- 
-import nose
-from temp_with_doc import to_celsius
-def test_to_celsius():
-    '''Test function for to_celsius'''
-    assert to_celsius(100) == 37.8, 'Returning an unrounded result'
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
- 
-'hogwarts'.capitalize()
-'Hogwarts'
-
- 
-
- 
-villain = 'malfoy'
-villain.capitalize()
-'Malfoy'
-villain
-'malfoy'
-
- 
-
-
-
-
-
-
- 
-import math
-
-def distance(x0, y0, x1, y1):
-    """ Calculate the distance between (x0, y0) and (x1, y1)."""
-
-    return math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
-
- 
-
-
-
- 
-F
-======================================================================
-FAIL: Test function for to_celsius
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/python25/lib/site-packages/nose/case.py", line 202, in runTest
-    self.test(*self.arg)
-  File "assert2.py", line 6, in test_to_celsius
-    assert to_celsius(100) == 37.8
-AssertionError
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-FAILED (failures=1)
-
- 
-
- 
-F
-======================================================================
-FAIL: Test function for to_celsius
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "c:\Python25\Lib\site-packages\nose\case.py", line 202, in runTest
-    self.test(*self.arg)
-  File "assert3.py", line 6, in test_to_celsius
-    assert to_celsius(100) == 37.8, 'Returning an unrounded result'
-AssertionError: Returning an unrounded result
-
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-FAILED (failures=1)
-
- 
-
- 
-def above_freezing(celsius):
-    """ (number) -> bool
-
-    Return True iff temperature celsius degrees is above freezing.
-
-    above_freezing(5.2)
-    True
-    above_freezing(-2)
-    False
-    """
-
-    return celsius > 0
-
-
- 
-
-
-
- 
-import temp_round
-help(temp_round)
-Help on module temp_round:
-
-NAME
-    temp_round
-
-FILE
-    /home/pybook/modules/temp_round.py
-
-FUNCTIONS
-    above_freezing(t)
-
-    convert_to_celsius(t)
-
- 
-
- 
-import temp_with_doc
-help(temp_with_doc)
-Help on module temp_with_doc:
-
-NAME
-    temp_with_doc - Functions for working with temperatures.
-
-FILE
-    /home/pybook/modules/temp_with_doc.py
-
-FUNCTIONS
-    above_freezing(t)
-        True if temperature in Celsius is above freezing, False otherwise.
-
-    convert_to_celsius(t)
-        Convert Fahrenheit to Celsius.
-
- 
-
-
-
-
- 
-import math
-import building
-floor(22.7)
-
- 
-
-
-
- 
-'''
-This module guesses whether something is a dinosaur or not.
-'''
-
-def is_dinosaur(name):
-    '''
-    Return True if the named creature is recognized as a dinosaur,
-    and False otherwise.
-    '''
-    return name in ['Tyrannosaurus', 'Triceratops']
-if __name__ == '__main__':
-    help(__name__)
-
- 
-
- 
-import media
-f = media.choose_file()
-pic = media.load_picture(f)
-media.show(pic)
-
- 
-
- 
-...
-----------------------------------------------------------------------
-Ran 3 tests in 0.002s
-
-OK
-
- 
-
- 
-media.crop_picture(pic, 150, 50, 450, 300)
-media.show(pic)
-media.save_as(pic, 'pic207cropped.jpg')
-
- 
-
- 
-pic.get_width()
-500
-pic.get_height()
-375
-pic.title
-'modules/pic207.jpg'
-
- 
-
- 
-media.add_text(pic, 115, 40, 'Madeleine', media.magenta)
-media.show(pic)
-
- 
-
-
-
- 
-import media
-
-pic1 = media.load_picture('pic207.jpg')
-media.show(pic1)
-pic2 = media.load_picture('pic207cropped.jpg')
-media.show(pic2)
-pic3 = media.load_picture('pic207named.jpg')
-media.show(pic3)
- 
-
-
- 
-..
-----------------------------------------------------------------------
-Ran 2 tests in 0.000s
-
-OK
-
- 
-
- 
-import nose
-import temperature
-
-def test_to_celsius():
-    '''Test function for to_celsius'''
-    pass # we'll fill this in later
-    
-def test_above_freezing():
-    '''Test function for above_freezing.'''
-    pass # we'll fill this in too
-
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
- 
-import media
-
-pic = media.load_picture('pic207.jpg')
-media.show(pic)
-for p in media.get_pixels(pic):
-    new_blue = int(0.7 * media.get_blue(p))
-    new_green = int(0.7 * media.get_green(p))
-    media.set_blue(p, new_blue)
-    media.set_green(p, new_green)
-
-media.show(pic)
-
- 
-
-
-
- 
-def to_celsius(t):                        
-    return (t - 32.0) * 5.0 / 9.0
-
-def above_freezing(t):
-    return t > 0
-
- 
-
-
- 
-def to_celsius(t):                        
-    return round((t - 32.0) * 5.0 / 9.0)
-
-def above_freezing(t):
-    return t > 0
-
- 
-
- 
-""" Functions for working with temperatures."""
-
-def to_celsius(t):
-    """ Convert Fahrenheit to Celsius."""
-    return round((t - 32.0) * 5.0 / 9.0)
-
-def above_freezing(t):
-    """ True if temperature in Celsius is above freezing, False otherwise."""
-    return t > 0
-
- 
-
- 
-import nose
-from distance import distance
-
-
-def close(left, right):
-    '''Test if two floating-point values are close enough.'''
-
-    return abs(left - right) < 1.0e-6
-
-def test_distance():
-    '''Test whether the distance function works correctly.'''
-
-    assert close(distance(1.0, 0.0, 1.0, 0.0), 0.0), 'Identical points fail.'
-    assert close(distance(0.0, 0.0, 1.0, 0.0), 1.0), 'Unit distance fails.'
-
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
- 
-.
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-OK
-
- 
-
- 
-import nose
-from temp_with_doc import above_freezing
-
-def test_above_freezing():
-    '''Test function for above_freezing.'''
-    assert above_freezing(89.4), 'A temperature above freezing.'
-    assert not above_freezing(-42), 'A temperature below freezing.'
-    assert not above_freezing(0), 'A temperature at freezing.'
-
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
-
- 
-..
-----------------------------------------------------------------------
-Ran 2 tests in 0.000s
-
-OK
-
- 
-
- 
-import nose
-import temperature
-
-def test_to_celsius():
-    '''Test function for to_celsius'''
-    pass # we'll fill this in later
-    
-def test_above_freezing():
-    '''Test function for above_freezing.'''
-    pass # we'll fill this in too
-
-if __name__ == '__main__':
-    nose.runmodule()
-
- 
-
-
-
-
-
-#-------------------------------------------------
-#### Exercise 3
-#-------------------------------------------------
-
- 
-def average(num1: float, num2: float) -> float:
-    """Return the average of num1 and num2.
-
-    average(10,20)
-    15.0
-    average(2.5, 3.0)
-    2.75
-    """
-
-    return num1 + num2 / 2
-
- 
 
 ##################################################
 # End
