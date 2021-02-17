@@ -28,7 +28,7 @@
 ##################################################
 
 # In the help function call for the str function, 
-# it shows that str in a class. 
+# it shows that str is a class. 
 
  
 help(str)
@@ -411,11 +411,11 @@ def total_occurrences(s1: str, s2: str, ch: str) -> int:
 
     Return the total number of times that ch occurs in s1 and s2.
 
-    total_occurrences('color', 'yellow', 'l')
+    >>> total_occurrences('color', 'yellow', 'l')
     3
-    total_occurrences('red', 'blue', 'l')
+    >>> total_occurrences('red', 'blue', 'l')
 
-    total_occurrences('green', 'purple', 'b')
+    >>> total_occurrences('green', 'purple', 'b')
 
     """
 

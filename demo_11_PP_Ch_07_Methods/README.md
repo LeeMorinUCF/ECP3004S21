@@ -6,7 +6,7 @@ of object called a ```class```.
 ## Modules, Classes, and Methods
 
 In the ```help``` function call for the ```str``` function, 
-it shows that ```str``` in a ```class```. 
+it shows that ```str``` is a ```class```. 
 
 ```python 
 >>> help(str)
