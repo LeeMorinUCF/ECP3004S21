@@ -1,0 +1,133 @@
+#--------------------------------------------------
+# Testing with doctest module
+#--------------------------------------------------
+**********************************************************************
+File "assignment_03/my_A3_functions_soln.py", line 111, in __main__.utility_positive
+Failed example:
+    utility_positive(0.0, -4.7, 0.5)
+Expected:
+    None
+Got:
+    Warning: y < 0. y should be non-negative.
+**********************************************************************
+1 items had failures:
+   1 of   3 in __main__.utility_positive
+***Test Failed*** 1 failures.
+#--------------------------------------------------
+Testing my Examples for Exercise 1.
+#--------------------------------------------------
+Exercise 1, Example 1:
+Evaluating quad_roots_1(1, -2, 1)
+Expected: [1.0, 1.0]
+Got: [1.0, 1.0]
+#--------------------------------------------------
+Exercise 1, Example 2:
+Evaluating quad_roots_1(1, 0, -1)
+Expected: [1.0, -1.0]
+Got: [1.0, -1.0]
+#--------------------------------------------------
+Exercise 1, Example 3:
+Evaluating quad_roots_1(2, 2, -12)
+Expected: [2.0, -3.0]
+Got: [2.0, -3.0]
+#--------------------------------------------------
+Testing my Examples for Exercise 2.
+#--------------------------------------------------
+Exercise 2, Example 1:
+Evaluating quad_roots_real(1, -2, 1)
+Expected: [1.0, 1.0]
+Got: [1.0, 1.0]
+#--------------------------------------------------
+Exercise 2, Example 2:
+Evaluating quad_roots_real(1, 0, -1)
+Expected: [1.0, -1.0]
+Got: [1.0, -1.0]
+#--------------------------------------------------
+Exercise 2, Example 3:
+Evaluating quad_roots_real(2, 2, -12)
+Expected: [2.0, -3.0]
+Got: [2.0, -3.0]
+#--------------------------------------------------
+Exercise 2, Example 4:
+Evaluating quad_roots_real(0, 0, 0)
+Expected: [247, 0.16113216826413782]
+Got: [247, 0.16113216826413782]
+#--------------------------------------------------
+Exercise 2, Example 5:
+Evaluating quad_roots_real(0, 0, 7.0)
+Expected: None
+Got: None
+#--------------------------------------------------
+Exercise 2, Example 6:
+Evaluating quad_roots_real(0, 4.0, 2.0)
+Expected: [-0.5, -0.5]
+Got: [-0.5, -0.5]
+#--------------------------------------------------
+Exercise 2, Example 7:
+Evaluating quad_roots_real(1.0, 0, 1.0)
+Expected: None
+Got: None
+#--------------------------------------------------
+Testing my Examples for Exercise 3.
+#--------------------------------------------------
+Exercise 3, Example 1:
+Evaluating utility_positive(0.0, 4.7, 0.5)
+Expected: 0.0
+Got: 0.0
+#--------------------------------------------------
+Exercise 3, Example 2:
+Evaluating utility_positive(1.0, 1.0, 0.75)
+Expected: 1.0
+Got: 1.0
+#--------------------------------------------------
+Exercise 3, Example 3:
+Evaluating utility_positive(4, 16, 0.5)
+Expected: 8.0
+Got: 8.0
+#--------------------------------------------------
+Exercise 3, Example 4:
+Evaluating utility_positive(-1.0, 1.0, 0.5)
+Expected: None
+Warning: x < 0. x should be non-negative.
+Got: None
+#--------------------------------------------------
+Exercise 3, Example 5:
+Evaluating utility_positive(1.0, -1.0, 0.5)
+Expected: None
+Warning: y < 0. y should be non-negative.
+Got: None
+#--------------------------------------------------
+Exercise 3, Example 6:
+Evaluating utility_positive(1.0, 1.0, -0.5)
+Expected: None
+Warning: alpha < 0. alpha should be non-negative.
+Got: None
+#--------------------------------------------------
+Exercise 3, Example 7:
+Evaluating utility_positive(1.0, 1.0, 1.5)
+Expected: None
+Warning: alpha > 1. alpha should be less than or equal to one.
+Got: None
+#--------------------------------------------------
+Testing my Examples for Exercise 4.
+#--------------------------------------------------
+Exercise 4, Example 1:
+Evaluating logit_like(1, 13.7, 0.0, 0.0)
+Expected: -0.6931471805599453
+Got: -0.6931471805599453
+#--------------------------------------------------
+Exercise 4, Example 2:
+Evaluating logit_like(0, 0.0, math.log(2), 2.0)
+Expected: -1.0986122886681098
+Got: -1.0986122886681096
+#--------------------------------------------------
+Exercise 4, Example 3:
+Evaluating logit_like(1, 1.0, 0.0, math.log(5))
+Expected: -0.1823215567939546
+Got: -0.1823215567939547
+#--------------------------------------------------
+Exercise 4, Example 4:
+Evaluating logit_like(7, 1.0, 0.0, math.log(5))
+Expected: None
+Warning: y is not binary. y should be either 1 or 0.
+Got: None
