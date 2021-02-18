@@ -1,6 +1,6 @@
 # Assignment 5
 
-Upload your script ```my_A5_functions.py``` to a folder with (exactly!) the same name (```assignment_05```)
+Upload your script ```my_A5_module.py``` to a folder with (exactly!) the same name (```assignment_05```)
 within your repository. 
 
 
@@ -16,7 +16,7 @@ within your repository.
 - Everyone makes mistakes. Good programmers test their code, find the mistakes and correct them. 
 
 To grade your assignment, I will run the program called
-```my_A5_functions.py``` (among others) in the folder ```assignment_05```.
+```my_A5_module.py``` (among others) in the folder ```assignment_05```.
 
 
 
