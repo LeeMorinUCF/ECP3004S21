@@ -1,10 +1,44 @@
-# PP_Ch_10_Read_Write
+# Chapter 10: Reading and Writing Files
 
+## What Kinds of Files Are There?
 
-# Reading and Writing Files
+For small projects, you might use a spreadsheet program or word processing software.
+For anything larger than a few megabytes, these file formats are cumbersome. 
+In contrast, text files are a very efficient storage medium:
+they have very little overhead. 
+
+Consider the following exercise.
+Open your favorite word processor, such as Microsoft Word, 
+and open a blank document and immediately save it with an appropriate extension, 
+such as ```empty.docx```.
+Then open a spreadsheet program and save a blank spreadsheet with a name like
+```empty.xlsx``` in the same folder.
+Now save a blank file in a text editor such as Notepad and call it ```empty.txt```. 
+Now play a game that you might call "file storage golf."
+Which one is the winner? The one with the smallest size of an empty file. 
+
+Ten out of ten times the text file comes out ahead. 
+Why? Other file formats often need to store information about
+the look of the document in a header, at the top of the file, 
+and a footer, at the bottom of the file. 
+In contrast, text files only store the contents that you see, 
+without any formatting. 
+
+This makes text files, such as csv files, the leading choice for 
+storing and processing data. 
+A text file is basically a collection of strings, 
+which python can handle efficiently. 
+This makes python a good choice for processing a large volume
+of data stored in text files. 
+
+Another type of file is a database, which we will cover in Chapter 17. 
 
 ## Opening a File
 
+First, let's create a simple file. 
+Create a folder called ```file_examples```. 
+Now create a file in a text editor with the following contents
+and save it as ```file_example.txt```.
 
 ```python 
 First line of text.
@@ -12,59 +46,133 @@ Second line of text.
 Third line of text.
 ``` 
 
+Now open Python t oread this file. 
 
 
 
-### The ```with``` Statement
 
+### Specifying Which File You Want
+
+First, you have to set the directory to the folder
+in which this file is located. 
+The ```os``` module interacts with the operating system
+to get and set the current working directory.
+
+
+```python 
+>>> import os
+>>> os.getcwd()
+'/path/to/my/current/folder'
+```
+
+Use the function ```chdir``` to change directories. 
+
+```python
+>>> os.chdir('/path/to/my/new/folder')
+>>> os.getcwd()
+'/path/to/my/new/folder'
+``` 
+
+In many versions, you have to use double backslashes instead of 
+forard-slashes, since those are special characters.
+
+
+```python
+>>> os.chdir('C:\\path\\to\\my\\new\\folder')
+>>> os.getcwd()
+'C:\\path\\to\\my\\new\\folder'
+``` 
+
+If the location ```my\\new\\folder``` contains the file 
+```file_example.txt```, you can read the contents of this file as follows.
 
 ```python 
 file = open('file_example.txt', 'r')
 contents = file.read()
 file.close()
 print(contents)
-
 ``` 
 
+This code block makes a connection to the file ```file_example.txt``` 
+and reads those contents in one string. 
+It closes the connection and prints those contents to screen. 
 
-### Specifying Which File You Want
+```python 
+First line of text.
+Second line of text.
+Third line of text.
+``` 
+
+Instead of using the ```os``` module to set the directory, 
+you can open the file with the *absolute path* and work in another location. 
+To do this, you specify the path the way you would 
+to navigate in a UNIX environemnt.
+Some examples include:
 
 
 ```python 
->>> import os
->>> os.getcwd()
-'/home/pgries'
-```
-
-```
->>> os.chdir('/home/pgries/Documents/py3book')
->>> os.getcwd()
-'/home/pgries/Documents/py3book'
-
+file_1 = open('data/data1.txt', 'r')
+file_2 = open('../data2.txt', 'r')
+file_3 = open('../../../data/data3.txt', 'r')
 ``` 
+In the first case, the file ```data1.txt``` is one folder down, 
+within the folder ```data```. 
+In the second case, the file ```data2.txt``` is one folder up: 
+the folder containing the current folder. 
+In the third case, to access the file ```data3.txt```, you have to 
+move three folder up and then move into another folder called ```data``, 
+which contains the file ```data3.txt```. 
 
 
-```python 
-open('data/data1.txt', 'r')
-open('../data1.txt', 'r')
-open('../../../data/data1.txt', 'r')
-
-``` 
 
 
-## Techniques for Reading Files
+### The ```with``` Statement
 
-### The ```read``` Technique
+The above method ```file_1 = open('data/data1.txt', 'r')``` works, 
+most of the time, but when an error occurs, the program will not execute
+the ```file.close()``` command to release the file from memory. 
+If your program throws an error between the ```open``` and ```close```
+statements, this file connection will remain in memory, 
+creating a drag on performance. 
 
-
+To avoid this problem, ust the ```with``` statement. 
 
 ```python 
 with open('file_example.txt', 'r') as file:
     contents = file.read()
 
 print(contents)
-
 ``` 
+
+This has the format of any other kind of code block, 
+in which the relevant statements are indented beyond the ```with``` keyword. 
+With this approach, if an error occurs, 
+the file connection will automatically be released from memory.
+
+
+## Techniques for Reading Files
+
+Once you have made a connection to a file, 
+there are a number of waysto read the contents. 
+
+### The ```read``` Technique
+
+With the ```read``` technique, 
+you read the entire contents of the file into a single string. 
+
+We used this method above with 
+
+```python 
+with open('file_example.txt', 'r') as file:
+    contents = file.read()
+
+print(contents)
+``` 
+
+Clearly, for very large files, this can consume a lot of memory. 
+It is often better to read the contents in smaller chunks. 
+If an integer is passed to ```read```, 
+it will read that specified number of characters. 
 
 ```python 
 with open('file_example.txt', 'r') as example_file:
@@ -73,37 +181,41 @@ with open('file_example.txt', 'r') as example_file:
 
 print("The first 10 characters:", first_ten_chars)
 print("The rest of the file:", the_rest)
-
 ``` 
+
 
 ### The ```readlines``` Technique
 
-
+Instead of reading by the character, 
+which may not be a convenient unit to work with, 
+since you might not even know how many characters you need at a time, 
+you can get the contents of the file organized 
+into separate lines with the ```readlines``` function.
 
 ```python 
 with open('file_example.txt', 'r') as example_file:
     lines = example_file.readlines()
 
 print(lines)
-
 ``` 
-
+This prints the following output. 
 
 ```python 
 ['First line of text.\n', 'Second line of text.\n', 'Third line of text.\n']
-
 ``` 
+It gives a list of strings, each one containing a newline (```\n```) escape sequence. 
 
-
+Now consider the file ```planets.txt``` that contains the following text. 
 
 ```python 
 Mercury
 Venus
 Earth
 Mars
-
 ``` 
-
+This code block reads the file, 
+prints the contents in a list and then loops through that list 
+in reverse order using the built-in function ```reversed```. 
 
 ```python 
 >>> with open('planets.txt', 'r') as planets_file:
@@ -118,9 +230,10 @@ Mars
 Earth
 Venus
 Mercury
-
 ``` 
 
+You can perform other operations on this list, 
+such as sorting the lines first. 
 
 
 ```python 
@@ -142,7 +255,10 @@ Venus
 
 ### The ```for line in file``` Technique
 
-
+Often, it is useful to process the contents of a file
+one line at a time. The ```for line in file``` technique
+lets you read a file with the functionality of a ```for``` loop
+and the efficiency of working with the contents one line at a time. 
 
 ```python 
 >>> with open('planets.txt', 'r') as data_file:
@@ -153,8 +269,9 @@ Venus
 6
 6
 5
-
 ``` 
+This allows you to perform arbitrary calculations using each line in sequence. 
+You can combine any other commands, potentially stripping away whitespace first. 
 
 ```python 
 >>> with open('planets.txt', 'r') as data_file:
@@ -165,9 +282,19 @@ Venus
 5
 5
 4
-
 ``` 
 
+### The ```readline``` Technique
+
+Sometimes you want to perform different operations 
+depending on the characteristics of the file. 
+You could use a series if ```if``` and ```elif``` statements. 
+Instead, you can instruct the python interpreter to 
+read a single line of the file , without following a pattern, 
+using the ```readline``` technique. 
+
+For example, consider the following dataset, contained in
+the file ```hopedale.txt```. 
 
 ```python 
 Coloured fox fur production, HOPEDALE, Labrador, 1834-1842
@@ -182,9 +309,14 @@ Coloured fox fur production, HOPEDALE, Labrador, 1834-1842
        8   
       83   
      166   
-
 ``` 
 
+Notice that the first line is a description. 
+The next two are preceeded by a ```#``` character
+and the data begin on the fourth line.
+The following code block reads in the data
+and skips over the description in the header. 
+The following script calculates the total number of fur pelts. 
 
 ```python 
 with open('hopedale.txt', 'r') as hopedale_file:
@@ -197,9 +329,11 @@ with open('hopedale.txt', 'r') as hopedale_file:
     data = hopedale_file.readline().strip()
     while data.startswith('#'):
         data = hopedale_file.readline().strip()
+        # Do nothing because these lines do not have data.
 
-    # Now we have the first piece of data.  Accumulate the total number of
-    # pelts.
+    # Now we have the first piece of data.  
+    # Accumulate the total number of pelts.
+    # Convert the string to an integer for the first value in the sum.
     total_pelts = int(data)
 
     # Read the rest of the data.
@@ -207,17 +341,15 @@ with open('hopedale.txt', 'r') as hopedale_file:
         total_pelts = total_pelts + int(data.strip())
 
 print("Total number of pelts:", total_pelts)
-
 ``` 
 
-
+This script produces the following output. 
 
 ```python 
 Total number of pelts: 373
-
 ``` 
 
-
+We could perform any other calculations with the lines of data, as follows.
 
 ```python 
 with open('hopedale.txt', 'r') as hopedale_file:
@@ -240,6 +372,8 @@ with open('hopedale.txt', 'r') as hopedale_file:
 
 ``` 
 
+This produces the following output. 
+
 ```python 
       22
       29
@@ -250,11 +384,21 @@ with open('hopedale.txt', 'r') as hopedale_file:
        8
       83
      166
-
 ``` 
-
+Notice the numbers are aligned
+because we stripped the whitespace only on the right side, 
+using the ```rstrip()``` function. 
 
 ## Files Over the Internet
+
+The above examples assume the file is located on our computer system. 
+You can read file located on any computer that is available on the Internet.
+
+The ```urllib``` module has tools for reading files with a given URL.
+Note that the file can be encoded in a number of ways. 
+This example shows how to read a file encoded in UTF-8. 
+This uses a function called ```decode``` to decode the file content 
+in the form of bytes to obtain legible characters using UTF-8 encoding. 
 
 
 ```python 
@@ -267,6 +411,7 @@ with urllib.request.urlopen(url) as webpage:
         print(line)
 
 ``` 
+
 
 
 ## Writing Files
