@@ -35,7 +35,7 @@ It is fine as long as your answer is accurate to several decimals.
 
 
 
-### New Files for Solutions and Grading
+## New Files for Solutions and Grading
 
 I ran your programs and those from the suggested solutions 
 and these programs output the results you see above. 
