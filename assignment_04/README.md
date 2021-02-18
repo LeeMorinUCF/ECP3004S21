@@ -22,12 +22,12 @@ It is fine as long as your answer is accurate to several decimals.
 ## Finding Good Test Cases
 
 Good test cases have two main characteristics:
-- they are easy to calculate
-- they detect potential errors
+- They are easy to calculate.
+- They detect potential errors.
 
 These are some tips to choose simple examples that find errors: 
-- a list of length three or four might be enough
-- choose values that evaluate to integers. 
+- A list of length three or four might be enough
+- Choose values that evaluate to integers. 
 For example, with your ```ssr``` functions, 
 choose numbers such that ```y - beta_0 - x*beta_1``` are all integers. 
 - For linear regression, choose one example that is perfectly linear. 
@@ -35,7 +35,8 @@ That is, choose any ```beta_0```, ```beta_1``` and ```x```
 and calculate ```y = beta_0 + x*beta_1``` so that the linear equation holds exactly.
 - Make sure to choose other examples that do not fit exactly on a line. 
 An easy type of error is symmetric has four elements ```error = [1, -1, -1, 1]```.
-Use it to calculate an example of ```y``` with ```y = beta_0 + x*beta_1 + error```.
+Use it to calculate an example with ```y``` 
+using ```y = beta_0 + x*beta_1 + error```.
 - For functions that involve the log or exponential, choose values of 
 ```beta_0```, ```beta_1``` and ```x``` such that they add up to ```math.log(z)``` for some number ```z``` because ```math.exp(math.log(z)) = z```. 
 Search online for exponentials and logarithms for a review. 
