@@ -6,14 +6,45 @@ The main reason to use python File I/O techniques in business analytics
 is to read unstructured datasets and organize them 
 in a form suitable for statistical analysis. 
 
-Although it is nice when your dat come in the form of a balanced csv file, 
+Although it is nice when your data come in the form of a balanced csv file, 
 this is often not the case: 
 many forms of data are not organized with your application in mind. 
 
 ### Skipping the Header
 
 Many data files begin with a header. 
+As shown in the last demo, some files 
+begin with a one-line description, 
+followed by a header with lines denoted by the ```#``` symbol, 
+then the data follows. 
 
+This is an algorithm we might want to follow to read this type of file:
+
+1. Skip the first line in the file.
+1. Skip over the comment lines in the file.
+1. For each of the remaining lines in the file:
+  - Read and process the data on that line. 
+
+The problem with this approach is that we cannot determine whether a line is a comment until we've read it. 
+Furthermore, we can read a line only once--
+we can't move back, other than starting again from the top. 
+We can skip processing the lines ```while``` the line 
+begins with ```#``` and process the first one that does not
+begin with ```#```. 
+
+
+This is a better algorithm that we can follow:
+
+1. Skip the first line in the file.
+1. For each of the next set of lines in the file:
+  - If the line begins with a ```#```, skip to the next line.
+  - If the line does not begin with a ```#```, end this loop.
+1. For each of the remaining lines in the file:
+  - Read and process the data on that line. 
+
+This algorithm essentially works in two stages: 
+it first skips over the "boring" lines, 
+then it processes the "interesting" lines. 
 
 ```python 
 from typing import TextIO
@@ -64,9 +95,17 @@ if __name__ == '__main__':
 
 ``` 
 
+The above file only prints out the relevant lines in the file. 
+That is a fine first step to make sure that the algorithm
+is processing the files you expect. 
 
+Now let's modify it to perform a simple task. 
+The next script finds the smallest value
+in any line in the dataset. 
+In this case, it finds the smallest number of pelts colected in any single year. 
 
-
+Note that it starts with the first line as the initial candidate:
+it needs one value to make a comparison with the remaining values. 
 
 ```python 
 from typing import TextIO
@@ -105,11 +144,28 @@ if __name__ == '__main__':
 
 ``` 
 
+Notice that the ```if``` statement can be replaced with something
+simpler. 
+That is, 
 
+```python
+>>> if value < smallest:
+...     smallest = value
+```
+
+can be replaced with
+
+```python
+>>> smallest = min(smallest, value)
+```
+The value of ```smallest``` only changes when ```value < smallest```. 
 
 
 ### Dealing with Missing Values in Data
 
+Sometimes the number you are interested in is simply not recorded. 
+That is, there may be *missing values* in your dataset. 
+The file ```hebron.txt``` contains such an example. 
 
 ```python 
 Coloured fox fur production, Hebron, Labrador, 1834-1839
@@ -125,7 +181,8 @@ Coloured fox fur production, Hebron, Labrador, 1834-1839
 
 ``` 
 
-
+If you attempt to process this file with the 
+```read_smallest.smallest_value``` function, this is what happens:
 
 ```python 
 >>> import read_smallest
@@ -137,6 +194,12 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: '-'
 
 ``` 
+Python throws a ```ValueError``` when it tries to change 
+the missing value ```'-'``` to type ```int```. 
+
+The following program corrects for this condition. 
+
+
 
 ```python 
 from typing import TextIO
@@ -175,6 +238,15 @@ if __name__ == '__main__':
 
 ### Processing Whitepace-Delimited Data
 
+So far, our files have had only one number per line. 
+Most useful files contain several numbers organized into columns. 
+Files differ in terms of the particular way that values 
+are separated within a single row. 
+Once you know the pattern, you can separate the values within each line. 
+
+Consider the following dataset ```lynx.dat```, 
+in which the values are separated by whitespace and 
+each value ends with a period. 
 
 ```python 
 Annual Number of Lynx Trapped, MacKenzie River, 1821-1934
@@ -198,7 +270,30 @@ Annual Number of Lynx Trapped, MacKenzie River, 1821-1934
   485.  662. 1000. 1590. 2657. 3396.                                            
 
 ``` 
+Let's write a program that finds the largest value in this dataset. 
 
+Our algorithm is more complicated than the one that we used to 
+read the fox pelt data, which had only one number per line. 
+This time, we need an additional loop:
+
+
+1. Skip the first line in the file.
+1. For each of the next set of lines in the file:
+  - If the line begins with a ```#```, skip to the next line.
+  - If the line does not begin with a ```#```:
+    - For each piece of data on the line:
+      - Process that piece.
+    - Break this loop.
+1. For each of the remaining lines in the file:
+  - Read the data on that line. 
+  - For each piece of data on the line:
+    - Process that piece.
+    
+Because we are performing a similar operation in two places, 
+we should write a helper function that processes each line. 
+
+To find the largest value in a dataset, 
+we can write a function that finds the largest value in a single line. 
 
 ```python 
 def find_largest(line):
@@ -226,6 +321,20 @@ def find_largest(line):
     return largest
 
 ``` 
+This fits within the following algorithm. 
+
+1. Skip the first line in the file.
+1. For each of the next set of lines in the file:
+  - If the line begins with a ```#```, skip to the next line.
+  - If the line does not begin with a ```#```:
+    - For each piece of data on the line:
+      - *Find the largest value in that line.* 
+    - Break this loop.
+1. For each of the remaining lines in the file:
+  - Read the data on that line. 
+  - *Find the largest value in that line.* 
+  - Compare it to the largest value so far and replace if it is larger. 
+
 
 ```python 
 from typing import TextIO
@@ -276,7 +385,12 @@ if __name__ == '__main__':
         print(process_file(input_file))
 
 ``` 
+With this approach, the code in the function ```process_file``` 
+is much more simple--
+and simpler functions usually mean fewer errors. 
 
+To illustrate the point, compare this to a single function
+that processes the entire file. 
 
 ```python 
 from typing import TextIO
@@ -340,8 +454,15 @@ if __name__ == '__main__':
 
 ``` 
 
+Maybe now you are convinced that the first one is simple. 
+
 
 ### Multiline Records
+
+Let's push the dimensions of the file one step further. 
+Sometimes there is too much data to fit using a single line for each measurement. 
+With *multiline records*, you can use an additional loop 
+to process related values over several lines.
 
 
 ```python 
