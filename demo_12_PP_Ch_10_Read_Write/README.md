@@ -294,7 +294,7 @@ You can combine any other commands, potentially stripping away whitespace first.
 
 Sometimes you want to perform different operations 
 depending on the characteristics of the file. 
-You could use a series if ```if``` and ```elif``` statements. 
+You could use a series of ```if``` and ```elif``` statements. 
 Instead, you can instruct the python interpreter to 
 read a single line of the file, without following a pattern, 
 using the ```readline``` technique. 
@@ -424,7 +424,7 @@ with urllib.request.urlopen(url) as webpage:
 
 ## Writing Files
 
-The ```with``` statement can also be used for reading files. 
+The ```with``` statement can also be used for writing files. 
 
 
 ```python 
@@ -433,7 +433,7 @@ with open('topics.txt', 'w') as output_file:
 ``` 
 In the above example, the file ```topics.txt``` need not exist:
 this file will be created if it does not exist
-and it will be overwritten if it does not exist. 
+and it will be overwritten if it does exist. 
 The distinction from reading files is shown by the second argument. 
 The ```'w'``` denotes *writing*, while, in the earlier examples, 
 the argument ```'r'``` indicated that the existing file
@@ -463,7 +463,7 @@ It also uses the ```typing.TextIO``` type annotation for the file.
 The acronym "IO" is short for "Input/Output"
 
 This script defines a function that reads two numbers from an ```input_file```
-and writes thos numbers, with their sum, in ```output_file```. 
+and writes those numbers, with their sum, in ```output_file```. 
 
 ```python 
 from typing import TextIO
@@ -542,7 +542,7 @@ The we read the first line as if it were read from the file.
 '1.3 3.4\n'
 ``` 
 
-We can also write tp ```StringIO``` objects as if they were files. 
+We can also write to ```StringIO``` objects as if they were files. 
 Then we can read their contents as strings using the method ```getvalue```.
 
 ```python 
