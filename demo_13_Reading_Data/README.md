@@ -23,7 +23,7 @@ This is an algorithm we might want to follow to read this type of file:
 1. Skip the first line in the file.
 1. Skip over the comment lines in the file.
 1. For each of the remaining lines in the file:
-  - Read and process the data on that line. 
+    - Read and process the data on that line. 
 
 The problem with this approach is that we cannot determine whether a line is a comment until we've read it. 
 Furthermore, we can read a line only once--
