@@ -37,10 +37,10 @@ This is a better algorithm that we can follow:
 
 1. Skip the first line in the file.
 1. For each of the next set of lines in the file:
-  - If the line begins with a ```#```, skip to the next line.
-  - If the line does not begin with a ```#```, end this loop.
+    - If the line begins with a ```#```, skip to the next line.
+    - If the line does not begin with a ```#```, end this loop.
 1. For each of the remaining lines in the file:
-  - Read and process the data on that line. 
+    - Read and process the data on that line. 
 
 This algorithm essentially works in two stages: 
 it first skips over the "boring" lines, 
@@ -279,15 +279,15 @@ This time, we need an additional loop:
 
 1. Skip the first line in the file.
 1. For each of the next set of lines in the file:
-  - If the line begins with a ```#```, skip to the next line.
-  - If the line does not begin with a ```#```:
-    - For each piece of data on the line:
-      - Process that piece.
-    - Break this loop.
+    - If the line begins with a ```#```, skip to the next line.
+    - If the line does not begin with a ```#```:
+        - For each piece of data on the line:
+        - Process that piece.
+        - Break this loop.
 1. For each of the remaining lines in the file:
-  - Read the data on that line. 
-  - For each piece of data on the line:
-    - Process that piece.
+    - Read the data on that line. 
+    - For each piece of data on the line:
+        - Process that piece.
     
 Because we are performing a similar operation in two places, 
 we should write a helper function that processes each line. 
@@ -325,15 +325,15 @@ This fits within the following algorithm.
 
 1. Skip the first line in the file.
 1. For each of the next set of lines in the file:
-  - If the line begins with a ```#```, skip to the next line.
-  - If the line does not begin with a ```#```:
-    - For each piece of data on the line:
-      - *Find the largest value in that line.* 
-    - Break this loop.
+    - If the line begins with a ```#```, skip to the next line.
+    - If the line does not begin with a ```#```:
+        - For each piece of data on the line:
+            - *Find the largest value in that line.* 
+            - Break this loop.
 1. For each of the remaining lines in the file:
-  - Read the data on that line. 
-  - *Find the largest value in that line.* 
-  - Compare it to the largest value so far and replace if it is larger. 
+    - Read the data on that line. 
+    - *Find the largest value in that line.* 
+    - Compare it to the largest value so far and replace if it is larger. 
 
 
 ```python 
@@ -667,337 +667,3 @@ def read_molecule(reader: TextIO, line: str) -> list:
 
 
 
-
-
-## Additional Code Snippets
-
-
-
-
-
-```python 
->>> file = open('planets.txt', 'r')
->>> for line in file:
-...     line = line.strip()
-...     print(len(line))
-...
-7
-5
-5
-4
-
-``` 
-
-```python 
->>> output_file = open('test.txt', 'w')
->>> type(output_file)
-<class '_io.TextIOWrapper'>
-
-``` 
-
-```python 
-def read_weather_data(r):
-    """ (Read weather data from reader r in fixed-width format.  
-    The fields are:
-         1   8   YYYYMMDD (date)
-         9  14   DDMMSS   (latitude)
-        15  20   DDMMSS   (longitude)
-        21  26   FF.FFF   (temp, deg. C)
-        27  32   FF.FFF   (humidity, %)
-        33  38   FF.FFF   (pressure, kPa)
-    The result is a list of tuples of tuples, 
-	where each tuple of tuples is of the form:
-    ((Yr, Mo, Day), (Deg, Min, Sec), (Deg, Min, Sec), (Temp, Hum, Press))
-    """
-    result = []
-    for line in r:
-        year = int(line[0:4])
-        month = int(line[4:6])
-        day = int(line[6:8])
-        lat_deg = int(line[8:10])
-        lat_min = int(line[10:12])
-        lat_sec = int(line[12:14])
-        long_deg = int(line[14:16])
-        long_min = int(line[16:18])
-        long_sec = int(line[18:20])
-        temp = float(line[20:26])
-        hum = float(line[26:32])
-        press = float(line[32:38])
-        result.append(((year, month, day),
-                       (lat_deg, lat_min, lat_sec),
-                       (long_deg, long_min, long_sec),
-                       (temp, hum, press)))
-    return result
-
-``` 
-
-```python 
-def read_weather_data(r):
-    """ (Read weather data from reader r in fixed-width format.  
-    The field widths are:
-        4,2,2   YYYYMMDD (date)
-        2,2,2   DDMMSS   (latitude)
-        2,2,2   DDMMSS   (longitude)
-        6,6,6   FF.FFF   (temp, deg. C; humidity, %; pressure, kPa)
-    The result is a list of tuples (not tuples of tuples), 
-	where each tuple is of the form:
-    (YY, MM, DD, DD, MM, SS, DD, MM, SS, Temp, Hum, Press)"""
-    fields = ((4, int), (2, int), (2, int),       # date
-              (2, int), (2, int), (2, int),       # latitude
-              (2, int), (2, int), (2, int),       # longitude
-              (6, float), (6, float), (6, float)) # data
-    result = []
-    # For each record
-    for line in r:
-        start = 0
-        record = []
-        # for each field in the record
-        for (width, target_type) in fields:
-            # convert the text
-            text = line[start:start+width]
-            field = target_type(text)
-            # add it to the record
-            record.append(field)
-            # move on
-            start += width
-        # add the completed record to the result
-        result.append(record)
-    return result
-
-``` 
-
-```python 
-   91.3   11.358  13
-   96.3   11.355  12.62
-   134.6  16.100  12.97
-   135.8  16.315  12.02
-   174.9  19.205  12.21
-   173.2  20.263  11.9
-   161.6  16.885  12.02
-   176.8  19.441  12.01
-   154.9  17.379  12.08
-   159.3  16.028  11.8
-   136    15.401  11.82
-   108.3  13.518  11.94
-   109.1  14.023  11.8
-   130    14.442  11.78
-   137.5  17.916  11.56
-   172.7  17.655  11.55
-   180.7  21.990  11.68
-   184    20.036  11.61
-   162.1  19.224  11.91
-   147.4  19.367  11.89
-   148.5  16.923  12.03
-   152.3  18.413  12.27
-   126.2  16.616  12.27
-   98.9   14.220  12.05
-
-``` 
-
-```python 
-def housing(reader):
-    """ (file open for reading) -> tuple of (float, float)
-
-    Return a tuple containing the the differences between the housing starts
-    and construction contracts in 1983 and in 1984 from reader.
-    """
-
-    # The monthly housing starts, in thousands of units.
-    starts = []
-
-    # The construction contracts, in millions of dollars.
-    contracts = []
-
-    # Read the file, populating the lists.
-    for line in reader:
-        start, contract, rate = line.split()
-        starts.append(float(start))
-        contracts.append(float(contract))
-
-    return (sum(starts[12:24]) - sum(starts[0:12]),
-            sum(contracts[12:24]) - sum(contracts[0:12]))
-
-if __name__ == "__main__":
-    with open('housing.dat', 'r') as input_file:
-        print(housing(input_file))
-
-``` 
-
-```python 
-def read_housing_data(r):
-    """ Read housing data from reader r, returning lists of starts,
-    contracts, and rates."""
-
-    starts = []
-    contracts = []
-    rates = []
-
-    for line in r:
-        start, contract, rate = line.split()
-        starts.append(float(start))
-        contracts.append(float(contract))
-        rates.append(rate)
-
-    return (starts, contracts, rates)
-
-def process_housing_data(starts, contracts):
-    """ Return the difference between the housing starts and
-    construction contracts in 1983 and in 1984."""
-
-    return (sum(starts[12:24]) - sum(starts[0:12]),
-            sum(contracts[12:24]) - sum(contracts[0:12]))
-
-if __name__ == "__main__":
-    with open('housing.dat', "r") as input_file:
-        starts, contracts, rates = read_housing_data(input_file)
-
-    print(process_housing_data(starts, contracts))
-
-``` 
-
-```python 
-inception_file = open('inception.py', 'r')
-contents = inception_file.read()
-print(contents)
-
-``` 
-
-```python 
-inception_file = open('inception_10.py', 'r')
-first_ten_chars = inception_file.read(10)
-the_rest = inception_file.read()
-print("The first 10 characters:", first_ten_chars)
-print("The rest of the file:", the_rest)
-
-``` 
-
-```python 
-inception_file = open('inception.py', 'r')
-inception_contents = inception_file.read()
-print(inception_contents)
-
-``` 
-
-```python 
-import os
-tmp = open('tmp.py', 'r')
-print os.path.realpath(tmp.name)
-
-``` 
-
-
-```python 
->>> file = open("planets.txt", "r")
-
-``` 
-
-```python 
-1.3 3.4 4.7
-2 4.2 6.2
--1 1 0.0
-
-``` 
-
-
-```python 
-input_file = open("hopedale.txt", "r")
-
-# Skip the first line.
-input_file.readline()
-
-# Skip the comments.
-line = input_file.readline()
-while line.startswith('#'):
-	line = input_file.readline()
-
-# Now we want to process the rest of the lines.
-for line in input_file:
-    line = line.strip()
-    print line
-input_file.close()
-
-``` 
-
-```python 
-input_file = open('hopedale.txt', 'r')
-for line in input_file:
-    line = line.strip()
-    print line
-input_file.close()
-
-``` 
-
-```python 
-def process_file(filename):
-    """ Open, read, and print a file."""
-
-    input_file = open(filename, "r")
-    for line in input_file:
-        line = line.strip()
-        print line
-    input_file.close()
-if __name__ == "__main__":
-    process_file(open('hopedale.txt', 'r'))
-
-
-``` 
-
-```python 
-import sys
-
-def process_file(reader):
-    """ Read and print the contents of reader."""
-
-    for line in reader:
-        line = line.strip()
-        print line
-
-if __name__ == "__main__":
-	input_file = open('hopedale.txt', 'r')
-    process_file(input_file)
-    input_file.close()
-
-``` 
-
-```python 
-import sys
-import urllib.request
-
-def process_file(reader):
-    """ Read and print the contents of reader."""
-
-    for line in reader:
-        line = line.strip()
-        print(line)
-
-if __name__ == "__main__":
-    webpage = urllib.request.urlopen(sys.argv[1])
-    process_file(webpage)
-    webpage.close()
-
-``` 
-
-```python 
-""" Display the lines of data.txt from the given starting line number to the
-given end line number.
-
-Usage: read_lines_range.py start_line end_line """
-
-import sys
-
-if __name__ == '__main__':
-    
-    # get the start and end line numbers
-    start_line = int(sys.argv[1])
-    end_line = int(sys.argv[2])
-    
-    # read the lines of the file and store them in a list
-    data = open('data.txt', 'r')
-    data_list = data.readlines()
-    data.close()
-
-    # display lines within start to end range    
-    for line in data_list[start_line:end_line]:
-        print(line.strip())
-        
-``` 
