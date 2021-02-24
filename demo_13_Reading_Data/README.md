@@ -282,8 +282,8 @@ This time, we need an additional loop:
     - If the line begins with a ```#```, skip to the next line.
     - If the line does not begin with a ```#```:
         - For each piece of data on the line:
-        - Process that piece.
-        - Break this loop.
+            - Process that piece.
+            - Break this loop.
 1. For each of the remaining lines in the file:
     - Read the data on that line. 
     - For each piece of data on the line:
