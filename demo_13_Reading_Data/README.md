@@ -95,12 +95,16 @@ if __name__ == '__main__':
 
 ``` 
 
+Let's save this in a file ```time_series.py``` to call these
+functions in other programs using ```import time_series```
+(the functions use files in the *T*ime *S*eries *D*ata *L*ibrary).
+
 The above file only prints out the relevant lines in the file. 
 That is a fine first step to make sure that the algorithm
 is processing the files you expect. 
 
 Now let's modify it to perform a simple task. 
-The next script finds the smallest value
+The next script, called ```read_smallest.py```, finds the smallest value
 in any line in the dataset. 
 In this case, it finds the smallest number of pelts colected in any single year. 
 
@@ -197,7 +201,7 @@ ValueError: invalid literal for int() with base 10: '-'
 Python throws a ```ValueError``` when it tries to change 
 the missing value ```'-'``` to type ```int```. 
 
-The following program corrects for this condition. 
+The following program ```read_smallest_w_missing.py``` corrects for this condition. 
 
 
 
@@ -336,6 +340,10 @@ This fits within the following algorithm.
     - Compare it to the largest value so far and replace if it is larger. 
 
 
+The following program is saved in the script
+```read_largest_modular.py``` and the reason for the naming convention
+we be more clearly stated below.
+
 ```python 
 from typing import TextIO
 from io import StringIO
@@ -388,9 +396,14 @@ if __name__ == '__main__':
 With this approach, the code in the function ```process_file``` 
 is much more simple--
 and simpler functions usually mean fewer errors. 
+The script ```read_largest_modular.py``` illustrates 
+the modular approach to programming: divide problems into smaller,
+well-defined problems and solve them one at a time. 
 
 To illustrate the point, compare this to a single function
-that processes the entire file. 
+that processes the entire file in
+```read_largest_single_fn.py```. 
+
 
 ```python 
 from typing import TextIO
@@ -464,6 +477,9 @@ Sometimes there is too much data to fit using a single line for each measurement
 With *multiline records*, you can use an additional loop 
 to process related values over several lines.
 
+The following is a sample of a file ```pdb_1.txt``` in a Protein Data Bank (PDB) format
+that describes the arrangements of atoms in ammonia. 
+
 
 ```python 
 COMPND      AMMONIA
@@ -471,6 +487,25 @@ ATOM      1  N  0.257  -0.363   0.000
 ATOM      2  H  0.257   0.727   0.000
 ATOM      3  H  0.771  -0.727   0.890
 ATOM      4  H  0.771  -0.727  -0.890
+END
+``` 
+The first line has the name of the molecule. 
+The next lines list the ID, type, and XYZ coordinates
+of the atoms in the molecule.
+
+Reading this file, for one molecule, is a simple
+application of the techniques we have used so far. 
+If there are more molecules listed, the file
+(```pdb_2.txt```)
+becomes more complicated:
+
+```python 
+COMPND      AMMONIA
+ATOM      1  N  0.257  -0.363   0.000
+ATOM      2  H  0.257   0.727   0.000
+ATOM      3  H  0.771  -0.727   0.890
+ATOM      4  H  0.771  -0.727  -0.890
+END
 COMPND      METHANOL
 ATOM      1  C  -0.748  -0.015   0.024
 ATOM      2  O  0.558   0.420  -0.278
@@ -478,46 +513,36 @@ ATOM      3  H  -1.293  -0.202  -0.901
 ATOM      4  H  -1.263   0.754   0.600
 ATOM      5  H  -0.699  -0.934   0.609
 ATOM      6  H  0.716   1.404   0.137
-
+END
 ``` 
 
+Again, we will tackle this problem by dividing it into smaller problems
+and solving each of those in turn. 
+Our algorithm takes this form:
+
+1. While there are more molecules in the file:
+    - Read a molecule from the file
+    - Append it to the list of molecules read so far.
+
+Simnple enough, except that we need to read from the file 
+to know if there are more molecules left to process.
+Modify the algorithm as follows:
 
 
-```python 
-from typing import TextIO
+```
+reading = True
+while reading:
+    Try to read a molecule from the file
+    if there is one:
+        Append it to the list of molecules read so far
+    else: 
+        # Nothing left, so end the loop
+        reading = False
+```
 
-def read_molecule(reader: TextIO) -> list:
-    """Read a single molecule from reader and return it, or return None to
-    signal end of file.  The first item in the result is the name of the
-    compound; each list contains an atom type and the X, Y, and Z coordinates
-    of that atom.
-    """
 
-    # If there isn't another line, we're at the end of the file.
-    line = reader.readline()
-    if not line:
-        return None
-
-    # Name of the molecule: "COMPND   name"
-    parts = line.split()
-    name = parts[1]
-
-    # Other lines are either "END" or "ATOM num atom_type x y z"
-    molecule = [name]
-    reading = True
-
-    while reading:
-        line = reader.readline()
-        if line.startswith('END'):
-            reading = False
-        else:
-            parts = line.split()
-            molecule.append(parts[2:])
-
-    return molecule
-
-``` 
-
+This algorithm is written into the script ```read_pdb.py```
+(so named because it reads molecules from the *P*rotein *D*ata *B*ase).
 
 
 ```python 
@@ -592,11 +617,63 @@ if __name__ == '__main__':
     print(molecules)
 
 ``` 
+In this program, the work of reading a single molecule
+has been put in a function of its own that must return ```False```
+if it can't find another molecule in the file.
+To do this, the function checks the first line it tries to read
+to see if there is any data left in the file. 
+If not, it tells ```read_all_molecules``` that the end of the file has been reached. 
+Otherwise, it pulls the name of the molecule out of the first line
+and proceeds to read the list of atoms until it reaches the ```END```. 
+
+
+```python 
+from typing import TextIO
+
+def read_molecule(reader: TextIO) -> list:
+    """Read a single molecule from reader and return it, or return None to
+    signal end of file.  The first item in the result is the name of the
+    compound; each list contains an atom type and the X, Y, and Z coordinates
+    of that atom.
+    """
+
+    # If there isn't another line, we're at the end of the file.
+    line = reader.readline()
+    if not line:
+        return None
+
+    # Name of the molecule: "COMPND   name"
+    parts = line.split()
+    name = parts[1]
+
+    # Other lines are either "END" or "ATOM num atom_type x y z"
+    molecule = [name]
+    reading = True
+
+    while reading:
+        line = reader.readline()
+        if line.startswith('END'):
+            reading = False
+        else:
+            parts = line.split()
+            molecule.append(parts[2:])
+
+    return molecule
+
+``` 
 
 
 
 ## Looking Ahead
 
+
+Suppose the the file were slightly more complex:
+the molules are not conveniently separated by the word ```END```. 
+After all, these lines carry no data and, over a large number of molecules, 
+these would take up a large amount of storage space. 
+
+The next file format simply lists the next molecule with a new 
+```COMPND``` line (in the file ```pdb_3.txt```). 
 
 ```python 
 COMPND      AMMONIA
@@ -604,21 +681,25 @@ ATOM      1  N  0.257  -0.363   0.000
 ATOM      2  H  0.257   0.727   0.000
 ATOM      3  H  0.771  -0.727   0.890
 ATOM      4  H  0.771  -0.727  -0.890
-END
 COMPND      METHANOL
 ATOM      1  C  -0.748  -0.015   0.024
-ATOM      2  O  0.558   0.420  -0.278 
+ATOM      2  O  0.558   0.420  -0.278
 ATOM      3  H  -1.293  -0.202  -0.901
 ATOM      4  H  -1.263   0.754   0.600
 ATOM      5  H  -0.699  -0.934   0.609
-ATOM      6  H  0.716   1.404   0.137 
-END
-
+ATOM      6  H  0.716   1.404   0.137
 ``` 
 
 
+
+At first glance, this may not seem like such a difficulty, 
+but when the program reads the ```COMPND``` line insterad of an ```END``` line, 
+it is too late to record the name of the next molecule (and all the rest). 
+
+
+
 ```python 
-from lookahead_2 import read_molecule
+from look_ahead_pdb import read_molecule
 from typing import TextIO
 
 def read_all_molecules(reader: TextIO) -> list:
@@ -635,6 +716,30 @@ def read_all_molecules(reader: TextIO) -> list:
     return result
 
 ``` 
+
+This new version of ```read_all_molecules``` begins by 
+reading the first line of the file. 
+If the string is not empty (that is, if the file is not empty)
+it passes both the file and the4 line into ```read_molecule```. 
+The new version of ```read_molecule``` then has to return two things:
+the next molecule in the file and 
+the first line immediately after the end of that molecule
+(or an empty string if it reaches the end of the file). 
+
+
+Now we can modify the ```read_molecule``` function. 
+First, it has to check that ```line``` is actually the start of a molecule. 
+Then, it reads lines from ```reader``` one at a time, 
+looking for one of three situations:
+  - The end of the file, which signals the end of both the molecule and the file.
+  - Another ```CMPND``` line, which signals the end of this molecule 
+  and the start of the next one. 
+  - An ```ATOM```, which is to be added to the current molecule. 
+  
+The key feature of this revised function is that
+it returns *both* the molecule *and* the next line, 
+so that the caller can keep processing. 
+
 
 ```python 
 from typing import TextIO
