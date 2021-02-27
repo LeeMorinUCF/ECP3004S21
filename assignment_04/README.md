@@ -98,4 +98,11 @@ Click on the commit message
 in your GitHub repo to see the corrections I made to your 
 ```my_A4_functions.py``` script.
 
-
+As with Assignment 3, you will see two versions of the output of your script when I run it. 
+The first I called ```my_A4_functions_out_LM.txt```, 
+with my initials, in case you used the same filename for your examples. 
+After making adjustments to your ```my_A4_functions.py``` script, 
+I output the results to ```my_A4_functions_adj_out_LM.txt```. 
+You can compare the differences in the outputs 
+with the changes visible when you click the commit message 
+"Solutions and testing scripts for Assignment 4"
