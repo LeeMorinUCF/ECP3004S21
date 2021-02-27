@@ -67,7 +67,7 @@ of different versions of your code.
 That is why it is called *version control software*. 
 It also provides a nice way to view a line-by-line comparison of changes between successive versions. 
 
-You can see the changes I made to different versions of the solutions o Assignment 4. 
+You can see the changes I made to different versions of the solutions to Assignment 4. 
 Go to a location in your repo and click on the commit message beside a particular file to see the changes in that file. 
 Here, you would click the message 
 "Replaced original solutions to show changes". 
@@ -87,7 +87,7 @@ You will see the following display:
 
 The lines that were removed are highlighted in red 
 and the lines that were added are highlighted in green. 
-I added some comments and modifies some parts of the functions
+I added some comments and modified some parts of the functions
 to make the function more robust. 
 I also copied the original version to the file 
 ```my_A4_functions_soln_orig.py``` 
