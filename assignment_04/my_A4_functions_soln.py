@@ -35,38 +35,67 @@ import doctest
 
 # Exercise 1
 
-# Here is a sketch of the solutions.
-# I will fix it later to show how edits are displayed on GitHub.
-# Stay tuned for the next update. 
+# This is an improved version.
+# Notice that I removed some lines (highlighted in red on GitHub)
+# and I added some lines (highlighted in green on GitHub).
+# To see the changes, click on the commit message
+# at the top pf the page in any file on the GitHub repo. 
 
 def matrix_multiply(mat_1, mat_2):
     """Multiplies two matrices together using loops.
-    mat_1 has dimension n_1 and m_1
-    mat_2 has dimension n_2 and m_2
+    mat_1 has dimension m_1 and n_1
+    mat_2 has dimension m_2 and n_2
     To be conformable, n_1 == m_2.
     It returns a matrix mat_out with n_1 rows and m_2 columns.
     
-    This version works sometimes but it is a good start.
-    It needs more examples, too.
+    mat_1 and mat_2 can be lists or np.arrays. 
+    A list like [[1],[4],[6],[3],[8]] is a 5x1 column vector.
+    A list like [1,4,6,3,8] is converted to a 1x5 row vector.
     
-    >>> matrix_multiply(np.full((2,2), 7), np.array([[1.], [2.]]))
-    array([[21.], 
-           [21.]])
-
+    Note that this version has a large header 
+    to make the function robust to variation in the form of inputs.
+    Your function does not have to accommodate every *type* of input
+    but it should work for matrics of arbitrary size.
+    
+    
+    >>> matrix_multiply(np.array([[1., 2.], [3., 4.]]), np.array([1., 1.]).reshape(2,1))
+    array([[3.],
+           [7.]])
+    >>> matrix_multiply(np.array(range(4)), np.full((4,1), 5))
+    array([[30.]])
+    >>> matrix_multiply([[1], [2]], [3, 4])
+    array([[3., 4.],
+           [6., 8.]])
     
     """
     
     # Docstring has to go above the body of the function. 
     
-    # First check if the matrices are conformable.
-    m_1 = len(mat_2)
-    n_1 = len(mat_1[0]) # Won't work for all kinds of arrays. 
-    m_2 = len(mat_2)
-    n_2 = len(mat_2[0])
+    # First, change the input to np.array type, 
+    # in case it is a list.
+    mat_1 = np.array(mat_1)
+    mat_2 = np.array(mat_2)
     
+    # Next, in case one of the vectors is a one-dimensional vector, 
+    # Change it to a two dimensional array, 
+    # assuming it is a column vector. 
+    # Assumption: this is a 5x1 column: [[1],[4],[6],[3],[8]]
+    # Assumption: this is a 1x5 row: [1,4,6,3,8]
+    if len(np.shape(mat_1)) == 1:
+        mat_1 = np.expand_dims(mat_1, axis = 0)
+    if len(np.shape(mat_2)) == 1:
+        mat_2 = np.expand_dims(mat_2, axis = 0)
+    
+    # Obtain the corrected dimensions of both matrices. 
+    m_1, n_1 = np.shape(mat_1)
+    m_2, n_2 = np.shape(mat_2)
+    
+    # Check if the matrices are conformable.
     if (n_1 != m_2):
         print('Error: Matrices are not conformable.')
-        print('Make sure (# columns of mat_1) = (# rows of mat_2).')
+        print('m_1 = ', m_1, 'n_1 = ', n_1)
+        print('and m_2 = ', m_2, 'n_1 = ', n_1)
+        print('Make sure n_1 (# columns of mat_1) = m_2 (# rows of mat_2).')
         return None
     else:
         # Initialize the output matrix.
@@ -103,6 +132,8 @@ def ssr_loops(y, x, beta_0, beta_1):
     3.0
     >>> ssr_loops(y = [3, 0, 3], x = [0, 2, 2], beta_0 = 1.0, beta_1 = 0.5)
     9.0
+    >>> ssr_loops(y = [2, 3, 4], x = [1, 2, 3], beta_0 = 1.0, beta_1 = 1.0)
+    0.0
 
     """
     
@@ -125,10 +156,12 @@ def ssr_vec(y, x, beta_0, beta_1):
     Note that this works for lists or arrays the same shape
     because the call to np.array transforms them to matrix form. 
     
-    >>> ssr_loops(y = [2, 2, 2], x = [1, 1, 1], beta_0 = 0.5, beta_1 = 0.5)
+    >>> ssr_vec(y = [2, 2, 2], x = [1, 1, 1], beta_0 = 0.5, beta_1 = 0.5)
     3.0
-    >>> ssr_loops(y = [3, 0, 3], x = [0, 2, 2], beta_0 = 1.0, beta_1 = 0.5)
+    >>> ssr_vec(y = [3, 0, 3], x = [0, 2, 2], beta_0 = 1.0, beta_1 = 0.5)
     9.0
+    >>> ssr_vec(y = [2, 3, 4], x = [1, 2, 3], beta_0 = 1.0, beta_1 = 1.0)
+    0.0
 
     """
     
@@ -177,23 +210,31 @@ def logit_like_sum(y: list, x: list, beta_0: float, beta_1: float) -> float:
     
     Notice if you are missing the space after the >>>, 
     it causes an error.
-    Also, the example without the >>> does not get run.
+    Also, an example without the >>> does not get run.
     
     >>> logit_like_sum([1, 1, 1], [13.7, 12, 437], 0.0, 0.0)
-    -2.0794415416798357 # = math.log(8)
+    -2.0794415416798357
     >>> logit_like_sum([1, 0], [1, 1], 0.0, math.log(2))
-    -1.504077396776274 # = math.log(2) - math.log(9)
-    logit_like_sum([1, 0], [2, 3], math.log(5), math.log(2))
-    -3.762362230873739 # = math.log(20) - math.log(21) - math.log(41)
-    # Notice it didn't run the third example.
-    # doctest confused it with the second example.
+    -1.504077396776274
+    >>> logit_like_sum([1, 0], [2, 3], math.log(5), math.log(2))
+    -3.762362230873739
     """
     
     like_sum = 0
     for i in range(len(y)):
-        like_sum_i = logit_like(y[i], x[i], beta_0, beta_1)
-        like_sum = like_sum + like_sum_i
+        if y[i] in [0,1]:
+            # Note that you could place the code from the body of 
+            # logit_like() here but it is simpler to call the function
+            # within this function. 
+            like_sum_i = logit_like(y[i], x[i], beta_0, beta_1)
+            like_sum = like_sum + like_sum_i
+        else:
+            print('Error: Observations in y must be either zero or one.')
+            # This return statement ends the function early
+            # as soon as there is an inadmissible observation.
+            return None
         
+    
     return like_sum
 
 # Indenting should return to the margin after the last return statement 
@@ -227,7 +268,7 @@ print("# Testing with doctest module")
 print("#" + 50*"-")
 
 # Test the examples with doctest.
-doctest.testmod()
+print(doctest.testmod())
 
 print("#" + 50*"-")
 
