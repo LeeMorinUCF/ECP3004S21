@@ -60,4 +60,42 @@ It's important that your script runs without errors because it stops running onc
 and the examples will fail. 
 
 
+## How to View Corrections to Your Script
+
+One of the main features of GitHub is that it keeps track
+of different versions of your code. 
+That is why it is called *version control software*. 
+It also provides a nice way to view a line-by-line comparison of changes between successive versions. 
+
+You can see the changes I made to different versions of the solutions o Assignment 4. 
+Go to a location in your repo and click on the commit message beside a particular file to see the changes in that file. 
+Here, you would click the message 
+"Replaced original solutions to show changes". 
+You can also access the history of all previous changes, 
+labeled by the GitHub user who made those changes by pressing "History". 
+
+<img src="Images/How_to_View_Changes.png" width="500"/>
+
+
+To view the last change to ```my_A4_functions_soln.py```, 
+click the message 
+"Replaced original solutions to show changes". 
+You will see the following display:
+
+
+<img src="Images/View_of_Changes.png" width="500"/>
+
+The lines that were removed are highlighted in red 
+and the lines that were added are highlighted in green. 
+I added some comments and modifies some parts of the functions
+to make the function more robust. 
+I also copied the original version to the file 
+```my_A4_functions_soln_orig.py``` 
+for comparison. 
+
+Click on the commit message 
+"Solutions and testing scripts for Assignment 4"
+in your GitHub repo to see the corrections I made to your 
+```my_A4_functions.py``` script.
+
 
