@@ -146,7 +146,7 @@ but by now, you get the idea.
 ### Set Operations
 
 Now that you have a set in memory, what can you do with it? 
-Python provides a number of operations change the contents of a set. 
+Python provides a number of operations to change the contents of a set. 
 In essence, these commands take advantage of the fact that sets are *mutable*. 
 
 For example, you might recall from grade-school grammar class that 
