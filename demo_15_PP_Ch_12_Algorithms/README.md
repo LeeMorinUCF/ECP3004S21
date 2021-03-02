@@ -1,38 +1,102 @@
-# PP_Ch_12_Algorithms
+# Chapter 12: Designing Algorithms
 
-## Designing Algorithms
+An *algorithm* is a set of steps that accomplishes a task. 
+Each function in a program, as well as the program itself, 
+is an algorithm written in a language such as Python.
+
+Here, we will discuss the process of designing an algorithm, 
+which is best done in a combination of English and mathematics
+before it is translated into Python. 
+
+The specific approach we will use is calle *top-down design*. 
+Start by describing the solution in English 
+and then mark staments that can be translated directly into Python.
+Then rewrite the remaining statements until they can all be
+translated into Python. 
 
 
-### Searching for The Two Smallest Values
+## Searching for The Two Smallest Values
 
+We will explore how to find the index of the two smallest numbers 
+in an unsorted list, using three different approaches.
 
+Consider the following list of the number of humpback whales 
+sighted off the coast of British Columbia over ten years. 
+It is eay to find the smallest value. 
 
 ```python 
 >>> counts = [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
 >>> min(counts)
 96
-
 ``` 
+
+If we want to know the year in which this minimum value occurred, 
+we can use the ```list.index``` method. 
 
 ```python 
 >>> counts = [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
 >>> low = min(counts)
 >>> counts.index(low)
 6
-
 ``` 
+
+Or, more succinctly:
 
 ```python 
 >>> counts = [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
 >>> counts.index(min(counts))
 6
+``` 
+
+Now what could we do we wanted to find the *two* smallest values? 
+There is no method to do this directly, 
+so we have to design an algorithm. 
+As with any other function, start with the header.
+
+```python 
+from typing import List, Tuple
+
+def find_two_smallest(L: List[float]) -> Tuple[int, int]:
+    """Return a tuple of the indices of the two smallest values in list L.
+
+    >>> items = [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
+    >>> find_two_smallest(items)
+    (6, 7)
+    >>> items == [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
+    True
+    """
 
 ``` 
 
 
+Now that we have defined the problem, 
+let's consider the approaches wer could take. 
+There are three distinct algorithms that can achieve our goal
+and we'll start with a high-level description of each. 
+This is the first step in designing each of the algorithms.
+
+- *Find, remove, find.* Find the index of the minimum, 
+remove it from the list, and find the new minimum from the list.
+Then, replace the first item and, if necessary, 
+adjust the second index number to account for the first index. 
+
+- *Sort, identify minimums, get indices.* Sort the list, 
+get the two smallest numbers, and then find their index numbers
+in the original list. 
+
+- *Walk through the list.* Examine each value in that order, 
+keep track of the two smallest values found so far, 
+and update these values when a new smaller number is found. 
+
+The first two algorithms mutate the list, either by removing an item or sorting. 
+We need to put things back the way we found them. 
+Notice that the second example in the docstring above
+verifies that the list has not been modified. 
 
 
+### Find, Remove, Find
 
+Now let's write the first algorithm in words, in the form of comments.
 
 ```python 
 from typing import List, Tuple
@@ -55,6 +119,11 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ``` 
 
+Tackle the first line first. 
+Calling ```help(list)``` we find no function that does exactly that. 
+Now split that sentence into two:
+
+
 ```python 
 def find_two_smallest(L):
     """ (see above) """
@@ -68,6 +137,16 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+Now the first two sentences match Python functions and methods:
+```min``` does the first and ```list.index``` does the second. 
+The method ```list.remove``` will take care of the next line. 
+The next sentence 
+```Find the index of the new minimum item in the list``` 
+is a repetition of the firs two sentences with the new list. 
+Add these commands under each line, 
+keeping the comments there so that later users, including *future you*,
+will understand the algorithm. 
 
 ```python 
 def find_two_smallest(L):
@@ -87,6 +166,12 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+Now we need to replace the smallest item. 
+Since removing a value changes the indices of the following items, 
+we will need to add ```1``` to ```min2``` if the smallest item 
+came before the second-smallest item.
+Let's make that description more precise.
+
 
 ```python 
 def find_two_smallest(L):
@@ -107,6 +192,9 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+That's enough refinement to do it all in Python. 
+
 
 ```python 
 from typing import List, Tuple
@@ -141,12 +229,16 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ``` 
 
+That seemed like a lot of thought and care, and it is, 
+but this process is necessary to avoid problems later. 
+The extra comments pay for themselves many times over. 
+The goal is not to minimize the number of keystrokes
+but to improve the odds of getting it right without undue frustration. 
+
 
 ### Sort, Identify Minimums, Get Indices
 
-
-
-
+As above, let's start with one instruction per line. 
 
 ```python 
 from typing import List, Tuple
@@ -168,6 +260,13 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ``` 
 
+The first step is covered by the built-in function ```sorted```. 
+This returns a copy of the list with the smallest items at the top. 
+Notice that we are resisting the temptation to modify the list
+with ```list.sorted```. 
+The function ```sorted``` makes a copy without breaking a fundamental rule: 
+never mutate the contents of parameters unless said so in the docstring. 
+
 ```python 
 def find_two_smallest(L):
     """ (see above) """
@@ -182,6 +281,9 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+Now we can find the indices and return them 
+in the same way we did in find-remove-find.
 
 ```python 
 from typing import List, Tuple
@@ -212,10 +314,7 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ### Walk Through the List
 
-
-
-
-
+Again, let's start with a description. 
 
 
 ```python 
@@ -238,6 +337,12 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ``` 
 
+Let's swap the order of the first two statements
+because the second describes the entire process. 
+Also, when we use a phrase like "for each" we think of iteration;
+since the third line is part of the iteration, we'll indent it.
+
+
 ```python 
 def find_two_smallest(L):
     """ (see above) """
@@ -248,6 +353,12 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+Since we're using a loops, we need to consider the three parts of a loop:
+first, we initialize variables; 
+second, we set up the loop condition,;
+and third, we write the loop body. 
+Rewrite the first line. 
 
 ```python 
 def find_two_smallest(L):
@@ -260,6 +371,8 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+Now we can turn the first line into code:
 
 ```python 
 def find_two_smallest(L):
@@ -277,6 +390,18 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+Note that we keep the English sentence in as a comment. 
+
+Now we move to the loop. 
+With loops, there are three choices:
+- a ```for``` loop over the values,
+- a ```for``` loop over the indices, or
+- a ```while``` loop over the indices.
+
+Since our goal is to find indices, 
+and we are looking over the entire list, 
+we should use a ```for``` loop over the values. 
+
 
 ```python 
 def find_two_smallest(L):
@@ -295,6 +420,27 @@ def find_two_smallest(L):
     # Return the two indices
 
 ``` 
+
+Now for the body of the loop. 
+Consider the statement 
+```Update min1 and/or min2 when a new smaller value is found```.
+There are three possibilities:
+
+- If ```L[i]``` is smaller than both ```min1``` or ```min2```, 
+then this is the new smallest value. 
+Now ```min1``` holds the second-smallest 
+and ```min2``` holds the third-smallest value, 
+which is no longer necessary. Update both of them. 
+
+- If ```L[i]``` is larger than ```min1``` 
+but smaller than ```min2```, 
+then this is the new second-smallest value. 
+Replace ```min2```.
+
+- If ```L[i]``` is larger than both ```min1```  and ```min2```,
+skip it. 
+
+Replace the relevant comments with these more precise statements. 
 
 ```python 
 def find_two_smallest(L):
@@ -319,6 +465,9 @@ def find_two_smallest(L):
     return (min1, min2)
 
 ``` 
+
+Now, we have a complete set of English statements 
+that are easily translated into Python. 
 
 ```python 
 from typing import List, Tuple
@@ -358,14 +507,36 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 ``` 
 
-
+There is no code necessary for the "larger than both" case. 
 
 
 
 
 ## Timing the Functions
 
+With three options, we now have the luxury of deciding
+which one is better. 
 
+
+*Profiling* a program is the process of measuring 
+how long it takes to run and how much memory it uses.
+These measurements--time and space--are the fundamental concepts 
+of the theoretical study of algorithms. 
+Faster is better than slower 
+but programs that need more memory than your computer can handle
+are not useful. 
+We will analyze our three functions to see how they perform.
+
+We will use the data in the file ```air_pressure.txt```, 
+which provides 1,400 monthly readings of air pressure 
+in Darwin, Australia, from 1882 to 1998. 
+
+The module ```time``` contains the functions relating to time. 
+One of these function is ```perf_counter```, 
+which returns a time in seconds.
+We can call it before and after our code is run 
+to find out how many seconds elapsed 
+(and multiplying by 1,000 to convert to milliseconds). 
 
 ```python 
 import time
@@ -378,6 +549,13 @@ t2 = time.perf_counter()
 print('The code took {:.2f}ms'.format((t2 - t1) * 1000.))
 
 ``` 
+
+Now, let's write a script that imports our three modules
+and runs the algorithms to time them. 
+The ```Callable[[List[float]], Any]``` part of the type contract
+allows any type to be returned:
+we only care about the time they take. 
+
 
 ```python 
 import time
@@ -421,4 +599,11 @@ if __name__ == '__main__':
     print('"Walk through the list" took {:.2f}ms.'.format(walk_through_time))
 
 ``` 
+
+Run this program to see the differences. 
+They will be hardly noticeable for lists with thousands of elements
+but, for large lists, the differences can be very large. 
+
+
+
 
