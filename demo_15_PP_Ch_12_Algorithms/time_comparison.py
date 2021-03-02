@@ -44,3 +44,5 @@ if __name__ == '__main__':
     print('"Sort, get minimums" took {:.2f}ms.'.format(
         sort_get_minimums_time))
     print('"Walk through the list" took {:.2f}ms.'.format(walk_through_time))
+
+

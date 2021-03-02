@@ -22,7 +22,7 @@ in an unsorted list, using three different approaches.
 
 Consider the following list of the number of humpback whales 
 sighted off the coast of British Columbia over ten years. 
-It is eay to find the smallest value. 
+It is easy to find the smallest value. 
 
 ```python 
 >>> counts = [809, 834, 477, 478, 307, 122, 96, 102, 324, 476]
@@ -48,7 +48,7 @@ Or, more succinctly:
 6
 ``` 
 
-Now what could we do we wanted to find the *two* smallest values? 
+Now what could we do if we wanted to find the *two* smallest values? 
 There is no method to do this directly, 
 so we have to design an algorithm. 
 As with any other function, start with the header.
@@ -70,7 +70,7 @@ def find_two_smallest(L: List[float]) -> Tuple[int, int]:
 
 
 Now that we have defined the problem, 
-let's consider the approaches wer could take. 
+let's consider the approaches we could take. 
 There are three distinct algorithms that can achieve our goal
 and we'll start with a high-level description of each. 
 This is the first step in designing each of the algorithms.
@@ -143,7 +143,7 @@ Now the first two sentences match Python functions and methods:
 The method ```list.remove``` will take care of the next line. 
 The next sentence 
 ```Find the index of the new minimum item in the list``` 
-is a repetition of the firs two sentences with the new list. 
+is a repetition of the first two sentences with the new list. 
 Add these commands under each line, 
 keeping the comments there so that later users, including *future you*,
 will understand the algorithm. 
@@ -356,7 +356,7 @@ def find_two_smallest(L):
 
 Since we're using a loops, we need to consider the three parts of a loop:
 first, we initialize variables; 
-second, we set up the loop condition,;
+second, we set up the loop condition;
 and third, we write the loop body. 
 Rewrite the first line. 
 
@@ -527,7 +527,7 @@ but programs that need more memory than your computer can handle
 are not useful. 
 We will analyze our three functions to see how they perform.
 
-We will use the data in the file ```air_pressure.txt```, 
+We will use the data in the file ```sea_levels.txt```, 
 which provides 1,400 monthly readings of air pressure 
 in Darwin, Australia, from 1882 to 1998. 
 
@@ -601,7 +601,14 @@ if __name__ == '__main__':
 ``` 
 
 Run this program to see the differences. 
-They will be hardly noticeable for lists with thousands of elements
+```python 
+"Find, remove, find" took 0.07ms.
+"Sort, get minimums" took 0.13ms.
+"Walk through the list" took 0.25ms.
+```
+
+
+These times are hardly noticeable for lists with thousands of elements
 but, for large lists, the differences can be very large. 
 
 
