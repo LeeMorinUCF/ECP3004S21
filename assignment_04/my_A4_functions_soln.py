@@ -112,8 +112,8 @@ def matrix_multiply(mat_1, mat_2):
                     sum_element = sum_element + sum_i
                     
                 mat_out[i][j] = sum_element
-            
-    return mat_out
+                
+        return mat_out
 
 # Indenting returns to margin after body of function.
 # Also notice the specific indenting pattern in 

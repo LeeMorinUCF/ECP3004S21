@@ -260,15 +260,22 @@ def min_ssr(y: np.ndarray, x: np.ndarray,
     # Define grid of parameters for search.
     beta_0_list = np.arange(beta_0_min, beta_0_max, step)
     beta_1_list = np.arange(beta_1_min, beta_1_max, step)
+    # beta_1_list = np.arange(beta_0_min, beta_1_max, step)
+    
+    # print("beta_0_list = ", beta_0_list)
+    # print("beta_1_list = ", beta_1_list)
     
     # Initialize SSR and 
     min_SSR = 999999
+    # min_SSR = -1
     i_min = None
     j_min = None
     
     # Loop over candidate values to find a minimum SSR.
     for i in range(len(beta_0_list)):
         for j in range(len(beta_1_list)):
+            # print("i = ", i)
+            # print("j = ", j)
             
             # Extract candidate values of parameters.
             beta_0 = beta_0_list[i]
@@ -279,6 +286,7 @@ def min_ssr(y: np.ndarray, x: np.ndarray,
             
             # Replace values if SSR_ij is a new low.
             if SSR_ij < min_SSR:
+                # print(SSR_ij)
                 # Keep this as the new lowest value.
                 min_SSR = SSR_ij
                 # Record the location of the parameter values.
