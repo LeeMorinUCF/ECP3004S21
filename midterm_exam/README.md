@@ -9,6 +9,20 @@ Instructions for submission of the relevant website URL are included in the docu
 ### I will push the exam paper to this location at 4:30 EDT.
 ### Open this Webpage and refresh at 4:30 EDT to begin immediately.
 
+The exam question paper has the following instructions:
+
+"Follow the function design recipe to define functions for all of the following Exercises. 
+For each function, create three examples to test your functions. 
+Record the definitions in the sample script ```my_midterm_module.py```. 
+Together, the function definitions will form a module called ```my_midterm_module``` 
+that you can read in and test using another script.  
+
+"Under time constraints, the emphasis is on creating function definitions 
+and testing with examples. 
+You are not responsible for error handling and can assume that the user will 
+follow the preconditions and type contract. 
+Refer to the partial docstrings that are already included in ```my_midterm_module.py```."
+
 
 ## Guidelines
 
