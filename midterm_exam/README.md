@@ -6,8 +6,11 @@ Please see the document ```ECP3004_midterm_exam.pdf``` in this folder.
 Instructions for submission of the relevant website URL are included in the document
 (and are part of the content of the course).
 
+### I will push the exam paper to this location at 4:30 EDT.
+### Open this Webpage and refresh at 4:30 EDT to begin immediately.
 
 
+## Guidelines
 
 The following guidelines are copied from the announcement send over the weekend:
 
