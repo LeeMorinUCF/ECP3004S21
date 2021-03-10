@@ -247,15 +247,152 @@ print(f(m_6))
 # moves slowly taking steps of a predetermined length. 
 
 
+#--------------------------------------------------
+### Secant Method
+#--------------------------------------------------
+
+# A root-finding algorithm can be made more efficient if it takes advantage of the slope of the function. 
+# One method that does this is the secant method. 
+# It works by taking a secant line, the line that connects two points on the function, and taking the next step to the root of this line, which can be solved easily. 
+# The calculation proceeds as follows.
+
+# Graphically, the algorithm is initialized with two points, ```x_0``` and ```x_1``` 
+# and calculates the next candidate for a root at ```x_2```. 
+# Proceeding to use the pair of points ```x_1``` and ```x_2```, 
+# the algorithm next predicts ```x_3``` as a root. 
+# Although, in this example, ```x_3``` is further from the root, 
+# it allows a close approximation in the next iteration 
+# using points ```x_2``` and ```x_3``` for the next secant line. 
+
+
+# The following function solves for the root of the function ```f(x)``` above. 
+
+def secant_root_f(x0, x1, tol, num_iter):
+    """Solves for the root of the function f(x) 
+    using the secant method.
+    """
+    
+    for i in range(num_iter):
+        
+        x2 = x1 - f(x1)*(x1-x0)/(f(x1)-f(x0))
+        if (abs(f(x2)) < tol):
+            return x2
+        x0 = x1
+        x1 = x2
+        
+    # If it reaches the end of the loop, it has
+    # exceeded the maximum number of iterations.
+    print("Exceeded allowed number of iteractions")
+    return None
+
+
+
+
+# Note that this function requires four arguments.
+# The first two are the initial values of ```x```
+# for the first secant line. 
+# The next two determine when the algorithm ends: 
+# either the algorithm reaches a value of ```f(x_2)``` 
+# less than tolerance ```tol```, 
+# or the algorithm performs ```num_iter``` iterations. 
+# The second condition is to prevent the algorithm from continuing
+# too long (or forever!).
+
+
+
+# Let's apply this method to the function above:
+
+x_root = secant_root_f(1, 2, 10**(-7), 4)
+print(x_root)
+# Exceeded allowed number of iteractions
+# None
+
+# We'll have to try it with more iterations.
+
+x_root = secant_root_f(1, 2, 10**(-7), 100)
+print(x_root)
+# 1.3097995826147546
+
+# Now test it at that candidate value for the root, to make sure.
+
+print(f(x_root))
+# -3.295761330512903e-09
+
+# That's close enough for me. 
+# If you want a more accourate root, use a smaller ```tol```
+# (and possibly a larger value of ```num_iter```).
+
+
+#--------------------------------------------------
+### Newton's Method
+#--------------------------------------------------
+
+# Newton's method (often called the Newton-Raphson method, 
+# with due credit given to Joseph Raphson) uses calculus 
+# to get a more accurate measurement of the slope 
+# at a given point on the function. 
+# It chooses the next candidate point by solving for 
+# the root of the tangent line at the current point. 
+# The solution of this linear equation is represented 
+# by the following recurrence relation. 
+
+# In order to use Newton's method, we will need another function
+# to calculate the derivative of ```f(x)```, which we will call ```f_prime(x)```.
+
+def f_prime(x):
+    diff_out = 1/x + math.exp(-x)
+    return diff_out
+
+
+# The following function solves for the root of the function ```f(x)``` above. 
+
+def newton_root_f(x0, tol, num_iter):
+    """Solves for the root of the function f(x). 
+    using Newton's method.
+    """
+    x_i = x0
+    for i in range(num_iter):
+        
+        x_i = x_i - f(x_i)/f_prime(x_i)
+        if (abs(f(x_i)) < tol):
+            return x_i
+        
+    # If it reaches the end of the loop, it has
+    # exceeded the maximum number of iterations.
+    print("Exceeded allowed number of iteractions")
+    return None
+
+
+# Let's apply this method to the function above:
+
+x_root = newton_root_f(1, 10**(-7), 4)
+print(x_root)
+# 1.3097995858041345
+
+# It worked on only 4 iterations. 
+# Typically, Newton's method is faster than many other alternative methods
+# but there's a catch: you have to know how to calculate the derivative
+# (and that the derivative exists!). 
+
 
 
 ################################################################################
 # Solving Nonlinear equations with Python Modules
 ################################################################################
 
+# Now that we have seen what is going on under the hood, 
+# we can appreciate what kinds of things are going on in the 
+# modules already available. 
+# We can do everything we have done above
+# but also handle more complex problems. 
+
 #--------------------------------------------------
 # Single variable equations
 #--------------------------------------------------
+
+
+# We'll start by continuing with the single variable problem. 
+# As above, the goal is to find the root of this function.
 
 # Goal: Find the root of this function.
 def f(x):
