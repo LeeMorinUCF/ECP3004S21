@@ -137,6 +137,112 @@ print(quad_fn(x_root_2, a, b, c))
 # Other approaches are designed to take fewer steps to approach roots using information from more than one point at a time. 
 
 
+#--------------------------------------------------
+### Bisection Method
+#--------------------------------------------------
+
+# A common approach is the bisection method, in which the algorithm 
+# bisects an interval to progress to a subinterval that should contain a root.
+# It continues recursively, selecting smaller and smaller subintervals, up to 
+# the required degree of accuracy. 
+# In order for this algorithm to work, the function ```f(x)``` must be continuous 
+# and the first iteration has to be initialized such that ```f(x)``` 
+# has a different sign at each of the initial endpoints. 
+
+# For example, we can use the bisection method to
+# find the root of this function.
+
+def f(x):
+    f_out = math.log(x) - math.exp(-x)
+    return f_out
+
+# Initialize the algorithm with two values on either side of 
+# the horizontal axis.
+
+# Since we know the log function is zero when x = 1, 
+# we can choose initial values on each side of 1. 
+
+a_1 = 0.25
+b_1 = 2.5
+
+# Just to be sure, let's verify that these points 
+# place the function on either side of zero.
+
+print(f(a_1))
+# -2.1650951441912953
+
+print(f(b_1))
+# 0.8342057332502563
+
+
+# The algorithm begins by evaluating ```f(x)``` at the midpoint 
+# and then replacing the endpoint of the same sign with the midpoint, 
+# creating an interval of half the width that contains the root. 
+
+
+# Now take the midpoint.
+m_1 = (a_1 + b_1)/2
+
+# Evaluate the function at the midpoint to see the sign. 
+
+print(f(m_1))
+# 0.06561413531378812
+
+# This is much closer (but that doesn't have to be the case).
+# Since this value is positive, use m_1 to replace b_1 in the next iteration.
+
+
+a_2 = a_1
+b_2 = m_1
+
+# Again take the midpoint and evaluate the function 
+# at the midpoint to see the sign. 
+
+
+m_2 = (a_2 + b_2)/2
+
+print(f(m_2))
+# -0.6513866748593243
+
+# Now function is negative at the midpoint, 
+# so ```m_2``` should replace the lower endpoint.
+
+# Take another iteration.
+
+a_3 = m_2
+b_3 = b_2
+
+m_3 = (a_3 + b_3)/2
+
+print(f(m_3))
+
+
+#  It becomes more accurate to several decimal places
+# after a few more iterations.
+
+
+a_4 = m_3
+b_4 = b_3
+m_4 = (a_4 + b_4)/2
+print(f(m_4))
+# -0.08045182180248231
+
+a_5 = m_4
+b_5 = b_4
+m_5 = (a_5 + b_5)/2
+print(f(m_4))
+# -0.08045182180248231
+
+a_6 = m_5
+b_6 = b_5
+m_6 = (a_6 + b_6)/2
+print(f(m_6))
+# 0.03066641752381105
+
+
+# The algorithm proceeds until the desired number of iterations are performed. 
+# This approach is reliable but is also fairly expensive to execute because it 
+# moves slowly taking steps of a predetermined length. 
 
 
 
@@ -151,9 +257,9 @@ print(quad_fn(x_root_2, a, b, c))
 
 # Goal: Find the root of this function.
 def f(x):
-    out_value = math.log(x) - math.exp(-x)
+    f_out = math.log(x) - math.exp(-x)
     print("(x, f(x)) = (%f, %f)" % (x, out_value))
-    return out_value
+    return f_out
 # That is, find the x at which this function is zero.
 
 # Note that this function unnecessarily prints

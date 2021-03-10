@@ -113,7 +113,7 @@ In order for this algorithm to work, the function ```f(x)``` must be continuous 
 
 <img src="Images/bisection-interval.gif" width="500">
 
-The algorithm proceeds by evaluating ```f(x)``` at the midpoint and then replacing the endpoint of the same sign with the midpoint, creating an interval of half the width that contains the root. 
+The algorithm begins by evaluating ```f(x)``` at the midpoint and then replacing the endpoint of the same sign with the midpoint, creating an interval of half the width that contains the root. 
 
 <img src="Images/bisection-iterations.jpg" width="500">
 
