@@ -283,7 +283,7 @@ def secant_root_f(x0, x1, tol, num_iter):
         
     # If it reaches the end of the loop, it has
     # exceeded the maximum number of iterations.
-    print("Exceeded allowed number of iteractions")
+    print("Exceeded allowed number of iterations")
     return None
 ```
 
@@ -304,7 +304,7 @@ Let's apply this method to the function above:
 ```python
 x_root = secant_root_f(1, 2, 10**(-7), 4)
 print(x_root)
-Exceeded allowed number of iteractions
+Exceeded allowed number of iterations
 None
 ```
 
@@ -374,7 +374,7 @@ def newton_root_f(x0, tol, num_iter):
         
     # If it reaches the end of the loop, it has
     # exceeded the maximum number of iterations.
-    print("Exceeded allowed number of iteractions")
+    print("Exceeded allowed number of iterations")
     return None
 ```
 
