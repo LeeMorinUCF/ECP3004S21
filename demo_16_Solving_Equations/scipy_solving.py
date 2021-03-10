@@ -397,7 +397,7 @@ print(x_root)
 # Goal: Find the root of this function.
 def f(x):
     f_out = math.log(x) - math.exp(-x)
-    print("(x, f(x)) = (%f, %f)" % (x, out_value))
+    print("(x, f(x)) = (%f, %f)" % (x, f_out))
     return f_out
 # That is, find the x at which this function is zero.
 
