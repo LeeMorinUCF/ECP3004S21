@@ -54,10 +54,12 @@ from scipy import optimize
 # and there can be multiple solutions, depending on the function. 
 # The quadratic formula is the closed-form solution
 # to the problem of finding a root of ```f(x, a, b, c) = a*x**2 + b*x + c == 0```.
-# Solving a system of linear equations 
-# is also a root-finding problem: 
-# it solves for the root ```x``` of ```f(x) = A.dot(x) - b == 0```. 
-# There is one more element of complexity when the function is nonlinear. 
+# Solving linear equations, however, is a much more simple problem
+# because the slope of the function is constant. 
+# There is one more element of complexity when the function is nonlinear:
+# the behavior of the function at one location does not necessarily
+# describe the properties at other locations. 
+# You may have to try several approaches to find the solution. 
 
 #--------------------------------------------------
 ### The solution
@@ -72,7 +74,7 @@ from scipy import optimize
 
 # While not favored in terms of computational expense, 
 # one approach is to calculate a vector of values. 
-
+# Then, choose the value closest to zero. 
 
 # Define function.
 def quad_fn(x, a, b, c):
@@ -100,7 +102,7 @@ plt.ylabel('f(x)')
 plt.show()
 
 
-# From the plot, we can see that there are two roots, one near -5 and the other near 1 and two. 
+# From the plot, we can see that there are two roots, one near -5 and the other near 1 and 2. 
 # We can select the value of ```x``` such that the absolute value of ```f(x)``` is minimized, using the ```which.min()``` and ```abs()``` functions in ```R```. 
 
 
