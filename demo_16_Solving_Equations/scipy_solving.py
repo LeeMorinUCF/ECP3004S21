@@ -347,7 +347,7 @@ def f_prime(x):
 # The following function solves for the root of the function ```f(x)``` above. 
 
 def newton_root_f(x0, tol, num_iter):
-    """Solves for the root of the function f(x). 
+    """Solves for the root of the function f(x)
     using Newton's method.
     """
     x_i = x0
