@@ -2,12 +2,12 @@
 
 In the last chapter, *Algorithms*, we learned several ways
 of finding the two smallest values in a list. 
-While this is choice of example was somewhat arbitrary, the problem 
+While this choice of example was somewhat arbitrary, the problem 
 of organizing, storing and retrieving data is central to computer science. 
 
 Searching and sorting data are two fundamental operations
 and there are several ways to perform these functions. 
-We will compare sevral approaches, not only to show many solutions to
+We will compare several approaches, not only to show many solutions to
 these particular problems, but to develop intuition for 
 the way each computing approach uses memory and computing time. 
 
@@ -72,9 +72,9 @@ def linear_search(lst: list, value: Any) -> int:
 ``` 
 
 
-In the textbook, on page 245 to 246, you can see a visula description 
+In the textbook, on page 245 to 246, you can see a visual description 
 of the process of linear search. 
-It shows a sort of accounting exercise to keep track of what you have searched and what remains to be searched. 
+It shows a type of accounting exercise to keep track of what you have searched and what remains to be searched. 
 
 
 #### The ```while``` Loop Version of Linear Learch
@@ -201,7 +201,7 @@ Overall, this produces a faster algorithm, as we will see later.
 
 #### Sentinel Search
 
-The last linear search we will study is called *sentinel search*. 
+The last form of linear search we will study is called *sentinel search*. 
 (A *sentinel* is a guard whose job it is to stand watch.)
 Recall one problem with the ```while``` loop search 
 is that we check ```i != len(lst)``` every iteration, 
@@ -323,8 +323,8 @@ print_times(10000000, L)  # How fast is it to search near the end?
 ``` 
 
 As we did last week, we use the function ```perf_counter``` 
-in the ```time``` module to ampare performance. 
-The function ```time_it``` will call wichever search function it's given
+in the ```time``` module to compare performance. 
+The function ```time_it``` will call whichever search function it's given
 on ```v``` and ```L``` and return the time it took to complete the search. 
 Function ```print_times``` calls ```time_it``` 
 with the various linear search functions and prints those search times.
@@ -335,12 +335,15 @@ for values later in the list.
 The ```while``` loop search takes much longer than the others. 
 The ```for``` loop is a little faster than the sentinel search. 
 The built-in method ```lst.index``` dominates them all 
-but perhaps this is an unfail comparison because the compiled. 
+but perhaps this is an unfair comparison because 
+built-in functions are often compiled in a lower-level language, 
+such as C++ or FORTRAN. 
 
 ## Binary Search
 
 So far, the searching algorithms we have considered assume an unsorted list.
-In this linear search, we have to check *every single value* until we find what e are looking for. 
+In this linear search, we have to check *every single value* 
+until we find what we are looking for. 
 
 If we had a *sorted* list to start with, we could speed up the search considerably. 
 Consider this: if we were searching for a value in a sorted list
@@ -350,7 +353,7 @@ we have already ruled out 500,000 values!
 
 This algorithm is analogous to the *bisection method* that we used last week 
 to solve for the roots of equations. 
-We are essentially solving for the root of the "function"
+We are essentially solving for the "root"" of the "function"
 ```lst - value```. 
 
 Binary search and the bisection method work like the game of 20 questions, 
@@ -439,9 +442,9 @@ Our tests cover these cases:
 - The value is larger than everything in the list. 
 - The value isn't in the list, but it is larger than some and smaller than others. 
 - The list has no items. 
-The list has one item.
+- The list has one item.
 
-### Binary search Running Time
+### Binary Search Running Time
 
 Now we can compare the binary search lalgorithm to the 
 built-in ```list.index``` method. 
