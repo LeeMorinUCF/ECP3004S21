@@ -1,21 +1,53 @@
 # Chapter 13: Searching and Sorting
 
+In the last chapter, *Algorithms*, we learned several ways
+of finding the two smallest values in a list. 
+While this is choice of example was somewhat arbitrary, the problem 
+of organizing, storing and retrieving data is central to computer science. 
+
+Searching and sorting data are two fundamental operations
+and there are several ways to perform these functions. 
+We will compare sevral approaches, not only to show many solutions to
+these particular problems, but to develop intuition for 
+the way each computing approach uses memory and computing time. 
+
+
 ## Searching a List
+
+Let's continue searching for values in a list. 
+First, consider the built-in functions and methods available.
+Python lists have a method called ```index```
+that searches for a particular item. 
+
+
+```python 
+index(...)
+    L.index(value, [start, [stop]]) -> integer -- return first index of value
+``` 
+
+It starts at the front of the list and examines each item in turn--a
+technique called linear search. 
+Linear search is used to find items in an *unsorted* list. 
+If there are duplicate values, it finds the leftmost instance of ```value```:
 
 
 ```python 
 >>> ['d', 'a', 'b', 'a'].index('a')
 1
-
 ``` 
 
-```python 
-index(...)
-    L.index(value, [start, [stop]]) -> integer -- return first index of value
+We'll walk through several versions of linear search to determine how to compare 
+different algorithms that solve the same problem. 
 
-``` 
+
 
 ### An Overview of Linear Search
+
+Linear search starts at index zero and looks at each item one by one.
+For each item, we ask this question:
+Is this the value we are looking for at the current index?
+We'll show three variations and they are all versions
+of the function with this header and docstring. 
 
 ```python 
 from typing import Any
@@ -39,7 +71,47 @@ def linear_search(lst: list, value: Any) -> int:
 
 ``` 
 
+
+In the textbook, on page 245 to 246, you can see a visula description 
+of the process of linear search. 
+It shows a sort of accounting exercise to keep track of what you have searched and what remains to be searched. 
+
+
 #### The ```while``` Loop Version of Linear Learch
+
+This is our first version of linear search. 
+We will refine the commented lines to get them closer to Python commands.
+
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """Return the index of the first occurrence of value in lst, or return
+    -1 if value is not in lst.
+
+    >>> linear_search([2, 5, 1, -3], 5)
+    1
+    >>> linear_search([2, 4, 2], 2)
+    0
+    >>> linear_search([2, 5, 1, -3], 4)
+    -1
+    >>> linear_search([], 5)
+    -1
+    """
+    
+    i = 0 # The index in the next item in lst to examine.
+    
+    # While the unknown section isn't empty, and lst[i] isn't 
+    # the value we are looking for:
+    # add 1 to i
+    
+
+``` 
+That is easier to translate. 
+The unknown section is empty when ```i == len(lst)```, 
+so it isn't empty ```while i != len(lst)```. 
+
 
 ```python 
 from typing import Any
@@ -72,9 +144,39 @@ def linear_search(lst: list, value: Any) -> int:
 
 ``` 
 
+The extra code block is needed because the function terminates
+in two situations:
+either the ```value``` is found or we run out of values without finding ```value```. 
+Notice that the second condition ```lst[i] != value```
+terminates early when the ```value``` is found. 
+
+If it goes to the end without finding ```value```, 
+it returns ```-1``` to indicate that the search failed to find ```value```. 
+
 
 #### The ```for``` Loop Version of Linear Learch
 
+We could replace the ```while``` loop with a ```for``` loop
+by introducing a ```return``` statement when the value is found. 
+We might want to do this because the first ```while``` condition 
+is almost never used, except when the ```value``` is not found. 
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """... Exactly the same docstring goes here ...
+    """
+    
+    # For each index i in lst:
+    #    If lst[i] is the value we are looking for:
+    #       return i
+    # 
+    # If we get here, the value was not in lst, so we return -1. 
+
+``` 
+
+We can translate this into Python.
 
 ```python 
 from typing import Any
@@ -91,8 +193,49 @@ def linear_search(lst: list, value: Any) -> int:
 
 ``` 
 
+With the ```for``` loop, we no longer need the first ```while``` condition
+because the ```for``` loop iterator controls the iteration. 
+We also avoid incrementing the iterator ```i``` manually. 
+Overall, this produces a faster algorithm, as we will see later. 
+
+
 #### Sentinel Search
 
+The last linear search we will study is called *sentinel search*. 
+(A *sentinel* is a guard whose job it is to stand watch.)
+Recall one problem with the ```while``` loop search 
+is that we check ```i != len(lst)``` every iteration, 
+even though it can never evaluate to ```False``` except at the end of the ```lst```. 
+
+One trick we can use is to add the ```value``` to the end of the list
+to guarantee that the ```value``` will be found. 
+We do have to make sure to adjust the output in case the last item is the one we found. 
+
+
+```python 
+from typing import Any
+
+def linear_search(lst: list, value: Any) -> int:
+    """... Exactly the same docstring goes here ...
+    """
+    
+    # Set up the sentinel: append value to end of list.
+    
+    i = 0 # The index of the next item in lst to examine.
+    
+    # While lst[i] isn't the value we are looking for:
+    #   Add 1 to i
+    
+    # Remove the sentinel.
+    
+    return i
+
+``` 
+
+We also want to make sure that we clean up our mess:
+we alterest the list by ```append```ing a ```value```, 
+so we need to remove it to preserve the contents of the original list.
+In Python, the finished algorithm is: 
 
 ```python 
 from typing import Any
@@ -121,9 +264,17 @@ def linear_search(lst: list, value: Any) -> int:
 
 ``` 
 
+Note that all three of our searches are correct. 
+Which one you prefer is largely a matter of taste. 
+Some programmers dislike multiple return staements, with some buried
+in the middle of the function. 
+Others dislike modifying the inputs, for fear of introducing an error. 
+Still, others dislike the added ```while``` condition that is rarely used. 
+
 #### Timing the Searches
 
-
+One way to settle the score is to compare them on timing.
+Here is a program that compares the functions. 
 
 ```python 
 import time
@@ -171,10 +322,60 @@ print_times(10000000, L)  # How fast is it to search near the end?
 
 ``` 
 
+As we did last week, we use the function ```perf_counter``` 
+in the ```time``` module to ampare performance. 
+The function ```time_it``` will call wichever search function it's given
+on ```v``` and ```L``` and return the time it took to complete the search. 
+Function ```print_times``` calls ```time_it``` 
+with the various linear search functions and prints those search times.
 
+You'll see that, when the value is early in the list, they all run quickly.
+They differ in terms of the amount of time it takes to complete searches
+for values later in the list. 
+The ```while``` loop search takes much longer than the others. 
+The ```for``` loop is a little faster than the sentinel search. 
+The built-in method ```lst.index``` dominates them all 
+but perhaps this is an unfail comparison because the compiled. 
 
 ## Binary Search
 
+So far, the searching algorithms we have considered assume an unsorted list.
+In this linear search, we have to check *every single value* until we find what e are looking for. 
+
+If we had a *sorted* list to start with, we could speed up the search considerably. 
+Consider this: if we were searching for a value in a sorted list
+of a million values, we could first check the middle value. 
+If that value is lower than what we are looking for, 
+we have already ruled out 500,000 values! 
+
+This algorithm is analogous to the *bisection method* that we used last week 
+to solve for the roots of equations. 
+We are essentially solving for the root of the "function"
+```lst - value```. 
+
+Binary search and the bisection method work like the game of 20 questions, 
+except all 20 questions are of the form "Is the value in this range?"
+The secret to the power of this method to zoom in quickly on the value
+is the application of logarithms. 
+A *logarithm* of a number is how many times that number can be divided until we get 1. 
+For example, the log (base 2) of 4 is 2. 
+
+The log (base 2) of 16 is 4.
+
+The log (base 2) of 64 is 6.
+
+The log (base 2) of 256 is 8.
+
+The log (base 2) of 1024 is 10. 
+
+Continuing on, 2 raised to the power 20 is over a million, 
+so the log (base 2) of a million is less than 20. 
+This means that with 20 questions, we can find a value 
+in a sorted list of a million candidate values. 
+
+This is a good time to review the workings of 
+the bisection method for solving roots. 
+The analogue for the search problem is in the following program. 
 
 
 
@@ -227,90 +428,23 @@ if __name__ == '__main__':
 
 ``` 
 
+Notice that we have an exhaustive list of test cases 
+because the algorithm is quite complicated. 
+Our tests cover these cases:
+- The value is the first item. 
+- The value occurs twice. We want the index of the first one. 
+- The value is in the middle of the list.
+- The value is in the last item. 
+- The value is smaller than everything in the list. 
+- The value is larger than everything in the list. 
+- The value isn't in the list, but it is larger than some and smaller than others. 
+- The list has no items. 
+The list has one item.
 
+### Binary search Running Time
 
-
-
-## Additional Code Snippets
-
-
-
-
-
-
-
-
-```python 
-"""Test binary search."""
-
-import unittest
-from binary_search import binary_search
-
-# The list to search with.
-VALUES = [1, 3, 4, 4, 5, 7, 9, 10]
-
-
-class TestBS(unittest.TestCase):
-    def test_first(self):
-        """Test a value at the beginning of the list."""
-
-        expected = 0
-        actual = binary_search(VALUES, 1)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_duplicate(self):
-        """Test a duplicate value."""
-
-        expected = 2
-        actual = binary_search(VALUES, 4)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_middle(self):
-        """Test searching for the middle value."""
-
-        expected = 4
-        actual = binary_search(VALUES, 5)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_last(self):
-        """Test searching for the last value."""
-
-        expected = 7
-        actual = binary_search(VALUES, 10)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_missing_start(self):
-        """Test searching for a missing value at the start."""
-
-        expected = -1
-        actual = binary_search(VALUES, -3)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_missing_middle(self):
-        """Test searching for a missing value in the middle."""
-
-        expected = -1
-        actual = binary_search(VALUES, 2)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-    def test_missing_end(self):
-        """Test searching for a missing value at the end."""
-
-        expected = -1
-        actual = binary_search(VALUES, 11)
-        self.assertEqual(expected, actual,
-            "Error searching for {0}".format(expected))
-
-if __name__ == '__main__':
-    unittest.main()
-
-``` 
+Now we can compare the binary search lalgorithm to the 
+built-in ```list.index``` method. 
 
 ```python 
 import time
@@ -360,510 +494,15 @@ print_times(10000000, L)  # How fast is it to search near the end?
 ``` 
 
 
-```python 
-import bisect
+The results are impressive. 
+Binary search is much faster and is equally fast regrdless of the 
+location of the value in the list. 
 
-def bin_sort(values):
-    """Sort values in place.  THIS VERSION IS FLAWED"""
-    for i in range(1, len(values)):
-        bisect.insort_left(values, values[i], 0, i)
 
-``` 
+Keep in mind that this is an unfair comparison, 
+since the ```list.index``` method also works for unsorted lists, 
+so it doesn't take advantage of the sorted list. 
+Still, this is a good reason to investigate algorithms for sorting, 
+which we will do in the next lecture. 
 
-```python 
->>> from binsort_broken import bin_sort
->>> tests = [ [], [1], [1, 2], [2, 1] ]
->>> for t in tests:
-...     print t, '->',
-...     bin_sort(t)
-...     print t
-... 
-[] -> []
-[1] -> [1]
-[1, 2] -> [1, 2, 2]
-[2, 1] -> [1, 2, 1]
 
-``` 
-
-```python 
-def merge(L1, L2):
-    """ (list, list) -> list
-
-    Merge sorted lists L1 and L2 into a new list and return that new list.
-    """
-
-    newL = []
-    i1 = 0
-    i2 = 0
-
-    # For each pair of items L1[i1] and L2[i2], copy the smaller into newL.
-    while i1 != len(L1) and i2 != len(L2):
-        if L1[i1] <= L2[i2]:
-            newL.append(L1[i1])
-            i1 += 1
-        else:
-            newL.append(L2[i2])
-            i2 += 1
-
-    # Gather any leftover items from the two sections.
-    # Note that one of them will be empty because of the loop condition.
-    newL.extend(L1[i1:])
-    newL.extend(L2[i2:])
-
-    return newL
-
-
-def mergesort(L):
-    """ (list) -> NoneType
-
-    Sort L in increasing order.
-    """
-
-    # Make a list of 1-item lists so that we can start merging.
-    workspace = []
-    for i in range(len(L)):
-        workspace.append([L[i]])
-
-    # The next two lists to merge are workspace[i] and workspace[i + 1].
-    i = 0
-
-    # As long as there are at least two more lists to merge, merge them.
-    while i < len(workspace) - 1:
-        L1 = workspace[i]
-        L2 = workspace[i + 1]
-        newL = merge(L1, L2)
-        workspace.append(newL)
-        i += 2
-
-    # Copy the result back into L.
-    if len(workspace) != 0:
-        L[:] = workspace[-1][:]
-
-
-if __name__ == '__main__':
-
-    L = []
-    print "befor", L
-    mergesort(L)
-    print "after", L
-
-    L = [1]
-    print "befor", L
-    mergesort(L)
-    print "after", L
-
-    L = [5, 4, 2, 3, 6, 1]
-    print "befor", L
-    mergesort(L)
-    print "after", L
-
-``` 
-
-
-```python 
-# Make a list of 1-item lists so that we can start merging.
-workspace = []
-for i in range(len(L)):
-    workspace.append([L[i]])
-
-``` 
-
-```python 
-from ms import mergesort, merge
-import nose
-
-def run_mergesort(original, expected):
-    """Sort list original and compare it to list expected."""
-    mergesort(original)
-    assert original == expected
-
-def run_merge(L1, L2, expected):
-    """Merge list original[b1:e1] with original[b2:e2] and compare it to list
-    expected."""
-    result = merge(L1, L2)
-    assert result == expected
-    
-def test_merge_empty():
-    """Test merging a 0-item list."""
-    run_merge([], [], [])
-
-def test_merge_one():
-    """Test merging a 1-item list and a 1-item list."""
-    run_merge([2], [1], [1, 2])
-
-def test_merge_one_two():
-    """Test merging a 2-item list and a 1-item list."""
-    L = [1, 3, 2]
-    run_merge([1, 3], [2], [1, 2, 3])
-
-def test_merge_two_two():
-    """Test merging a 2-item list and a 2-item list."""
-    run_merge([1, 3], [2, 4], [1, 2, 3, 4])
-
-def test_merge_two_two_same():
-    """Test merging a 2-item list and a 2-item list where they have common
-    elements."""
-    run_merge([1, 3], [1, 3], [1, 1, 3, 3])
-
-def test_empty():
-    """Test sorting empty list."""
-    run_mergesort([], [])
-
-def test_one():
-    """Test sorting a list of one value."""
-    run_mergesort([1], [1])
-
-def test_two_ordered():
-    """Test sorting an already-sorted list of two values."""
-    run_mergesort([1, 2], [1, 2])
-
-def test_two_reversed():
-    """Test sorting a reverse-ordered list of two values."""
-    run_mergesort([2, 1], [1, 2])
-
-def test_three_identical():
-    """Test sorting a list of three equal values."""
-    run_mergesort([3, 3, 3], [3, 3, 3])
-
-def test_three_split():
-    """Test sorting a list with an odd value out."""
-    run_mergesort([3, 0, 3], [0, 3, 3])
-
-if __name__ == '__main__':
-    nose.runmodule()
-
-``` 
-
-```python 
-def merge(L1, L2):
-    """ (list, list) -> list
-
-    Merge sorted lists L1 and L2 into a new list and return that new list.
-
-    >>> merge([1, 3, 4, 6], [1, 2, 5, 7])
-    [1, 1, 2, 3, 4, 5, 6, 7]
-    """
-
-    newL = []
-    i1 = 0
-    i2 = 0
-
-    # For each pair of items L1[i1] and L2[i2], copy the smaller into newL.
-    while i1 != len(L1) and i2 != len(L2):
-        if L1[i1] <= L2[i2]:
-            newL.append(L1[i1])
-            i1 += 1
-        else:
-            newL.append(L2[i2])
-            i2 += 1
-
-    # Gather any leftover items from the two sections.
-    # Note that one of them will be empty because of the loop condition.
-    newL.extend(L1[i1:])
-    newL.extend(L2[i2:])
-
-    return newL
-
-
-def mergesort(L):
-    """ (list) -> NoneType
-
-    Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> mergesort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    # Make a list of 1-item lists so that we can start merging.
-    workspace = []
-    for i in range(len(L)):
-        workspace.append([L[i]])
-
-    # The next two lists to merge are workspace[i] and workspace[i + 1].
-    i = 0
-
-    # As long as there are at least two more lists to merge, merge them.
-    while i < len(workspace) - 1:
-        L1 = workspace[i]
-        L2 = workspace[i + 1]
-        newL = merge(L1, L2)
-        workspace.append(newL)
-        i += 2
-
-    # Copy the result back into L.
-    if len(workspace) != 0:
-        L[:] = workspace[-1][:]
-
-
-if __name__ == '__main__':
-
-    L = []
-    print("before", L)
-    mergesort(L)
-    print("after", L)
-
-    L = [1]
-    print("before", L)
-    mergesort(L)
-    print("after", L)
-
-    L = [5, 4, 2, 3, 6, 1]
-    print("before", L)
-    mergesort(L)
-    print("after", L)
-
-``` 
-
-
-```python 
-
-
-def find_min(L: list, b: int) -> int:
-    """Precondition: L[b:] is not empty.
-
-    Return the index of the smallest value in L[b:].
-
-    >>> find_min([3, -1, 7, 5], 0)
-    1
-    >>> find_min([3, -1, 7, 5], 1)
-    1
-    >>> find_min([3, -1, 7, 5], 2)
-    3
-    """
-
-    smallest = b  # The index of the smallest so far.
-    i = b + 1
-    while i != len(L):
-        if L[i] < L[smallest]:
-            # We found a smaller item at L[i].
-            smallest = i
-
-        i = i + 1
-
-    return smallest
-
-```
-
-
-```
-# from sort4 import selection_sort
-# import unittest
-
-
-# class TestSelectionSort(unittest.TestCase):
-
-#     def test_empty(self):
-#         '''Test sorting empty list.'''
-
-#         L = []
-#         expected = []
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_one(self):
-#         '''Test sorting a list of one value.'''
-
-#         L = [1]
-#         expected = [1]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_two_ordered(self):
-#         '''Test sorting an already-sorted list of two values.'''
-
-#         L = [1, 2]
-#         expected = [1, 2]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_two_reversed(self):
-#         '''Test sorting a reverse-ordered list of two values.'''
-
-#         L = [2, 1]
-#         expected = [1, 2]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_three_identical(self):
-#         '''Test sorting a list of three equal values.'''
-
-#         L = [3, 3, 3]
-#         expected = [3, 3, 3]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_three_split(self):
-#         '''Test sorting a list with one number different.'''
-
-#         L = [3, 0, 3]
-#         expected = [0, 3, 3]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-#     def test_several(self):
-#         '''Test sorting a list with several values, some duplicated.'''
-
-#         L = [-5, 3, 0, 3, -6, 2, 1, 1]
-#         expected = [-6, -5, 0, 1, 1, 2, 3, 3]
-#         selection_sort(L)
-#         self.assertEqual(expected, L,
-#             "Expected {0} but saw {1}".format(expected, L))
-
-# if __name__ == '__main__':
-#     unittest.main()
-
-``` 
-
-```python 
-def find_min(L: list, b: int) -> int:
-    """Precondition: L[b:] is not empty.
-
-    Return the index of the smallest value in L[b:].
-
-    >>> find_min([3, -1, 7, 5], 0)
-    1
-    >>> find_min([3, -1, 7, 5], 1)
-    1
-    >>> find_min([3, -1, 7, 5], 2)
-    3
-    """
-
-    smallest = b  # The index of the smallest so far.
-    i = b + 1
-    while i != len(L):
-        if L[i] < L[smallest]:
-            # We found a smaller item at L[i].
-            smallest = i
-
-        i = i + 1
-
-    return smallest
-
-
-def selection_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> selection_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        smallest = find_min(L, i)
-        L[i], L[smallest] = L[smallest], L[i]
-        i = i + 1
-
-
-def insert(L: list, b: int) -> None:
-    """Precondition: L[0:b] is already sorted.
-
-    Insert L[b] where it belongs in L[0:b + 1].
-
-    >>> L = [3, 4, -1, 7, 2, 5]
-    >>> insert(L, 2)
-    >>> L
-    [-1, 3, 4, 7, 2, 5]
-    >>> insert(L, 4)
-    >>> L
-    [-1, 2, 3, 4, 7, 5]
-    """
-
-    # Find where to insert L[b] by searching backwards from L[b]
-    # for a smaller item.
-    i = b
-    while i != 0 and L[i - 1] >= L[b]:
-        i = i - 1
-
-    # Move L[b] to index i, shifting the following values to the right.
-    value = L[b]
-    del L[b]
-    L.insert(i, value)
-
-
-def insertion_sort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> insertion_sort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    i = 0
-    while i != len(L):
-        insert(L, i)
-        i = i + 1
-
-
-def merge(L1: list, L2: list) -> list:
-    """Merge sorted lists L1 and L2 into a new list and return that new list.
-
-    >>> merge([1, 3, 4, 6], [1, 2, 5, 7])
-    [1, 1, 2, 3, 4, 5, 6, 7]
-    """
-
-    newL = []
-    i1 = 0
-    i2 = 0
-
-    # For each pair of items L1[i1] and L2[i2], copy the smaller into newL.
-    while i1 != len(L1) and i2 != len(L2):
-        if L1[i1] <= L2[i2]:
-            newL.append(L1[i1])
-            i1 += 1
-        else:
-            newL.append(L2[i2])
-            i2 += 1
-
-    # Gather any leftover items from the two sections.
-    # Note that one of them will be empty because of the loop condition.
-    newL.extend(L1[i1:])
-    newL.extend(L2[i2:])
-
-    return newL
-
-
-def mergesort(L: list) -> None:
-    """Reorder the items in L from smallest to largest.
-
-    >>> L = [3, 4, 7, -1, 2, 5]
-    >>> mergesort(L)
-    >>> L
-    [-1, 2, 3, 4, 5, 7]
-    """
-
-    # Make a list of 1-item lists so that we can start merging.
-    workspace = []
-    for i in range(len(L)):
-        workspace.append([L[i]])
-
-    # The next two lists to merge are workspace[i] and workspace[i + 1].
-    i = 0
-
-    # As long as there are at least two more lists to merge, merge them.
-    while i < len(workspace) - 1:
-        L1 = workspace[i]
-        L2 = workspace[i + 1]
-        newL = merge(L1, L2)
-        workspace.append(newL)
-        i += 2
-
-    # Copy the result back into L.
-    if len(workspace) != 0:
-        L[:] = workspace[-1][:]
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
-``` 
