@@ -467,18 +467,36 @@ def bin_sort(values: list) -> list:
     return result
 
 ``` 
-
+This code uses ```bisect.insort_left``` to figure out where to put 
+each value from the original list into a new list that is
+kept in sorted order. 
+It uses binary search to do this. 
+Essentially, we can use this to speed up the time it takes to
+insert values within a sorting algorithm. 
 
 
 ## Merge Sort: A Faster Sorting Algorithm
 
+There are several well-known, fast sorting algoeithms:
+merge sort, quick sort and heap sort are the ones that 
+computer science majors might study. 
+Most of these involve techniques that we haven't learnt yet
+but merge sort can be written to be more accessible. 
+Merge sort is built on the idea that taking two sorted lists 
+and merging them takes an amount of time that is
+proportional to the number of items in those lists, 
+rather than a multiple of the length of those lists.
 
 ### Merging Two Sorted Lists
 
+Let's start with a pair of small lists. 
+Given two sorted lists ```L1``` and ```L2```, 
+we can produce a new sorted list by running along ```L1``` and ```L2```
+and comparinf pairs of elements. 
+
+Here is the code for ```merge```:
 
 ```python 
-
-
 def merge(L1: list, L2: list) -> list:
     """Merge sorted lists L1 and L2 into a new list and return that new list.
     >>> merge([1, 3, 4, 6], [1, 2, 5, 7])
@@ -509,11 +527,19 @@ if __name__ == '__main__':
     doctest.testmod()
 
 ``` 
-
+In this algorithm, ```i1``` and ```i2``` 
+are the indices into ```L1``` and ```L2```, respectively:
+in each iteration, we compare ```L1[i1]``` and ```L2[i2]```
+and copy the smaller item to the resulting list. 
+At the end of the loop, we have run out of the items 
+in one of the two lists, and the two ```extend``` calls
+will append the rest of the items to the result. 
 
 
 ### Merge Sort
 
+Now, let's use this algorithm to sort a list. 
+We'll start with the header for ```mergesort```. 
 
 
 ```python 
@@ -527,8 +553,35 @@ def mergesort(L: list) -> None:
     """
 
 ``` 
+Function ```mergesort``` uses ```merge``` to do most of the work. 
+Here is the algorithm, which creates and keeps track
+of a list of lists:
+- Take list ```L``` and make a list of one-item lists from it.
+- As long as there are two lists left to merge, merge them,
+and append the new list to the list of lists. 
+The first step is straightforward: 
 
+```python
+# Make a list of 1-item lists so that we can start merging.
+workspace = []
+for i in range(len(L)):
+    workspace.append([L[i]])
 
+```
+The second step is trickier. 
+If we remove the two lists, 
+then we'll run into the same problem we had with ```bin_sort```:
+all the following lists will need to shift over, 
+which takes time proportional to the number of lists. 
+Instead, we'll keep track of the next lists to merge.
+
+Here is a revised algorithm:
+- Take list ```L``` and make a list of 1-item lists from it. 
+- Start index ```i``` of at 0.
+- As long as there are two lists (at indices ```i``` and ```i+1```), 
+merge them, append the new list to the list of lists, 
+and increment ```i``` by 2. 
+Now translate this to python code. 
 
 
 ```python 
@@ -562,8 +615,13 @@ def mergesort(L: list) -> None:
 
 ``` 
 
+Notice that since we're always making new lists, 
+we need to copy the merged lists back into the parameter ```L```. 
+
 ### Merge Sort Analysis
 
+As before, we can time this sorting algorithm
+and compare it with the others.
 
 ```python 
 import time
@@ -607,7 +665,12 @@ for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
 
 ``` 
 
-
+When we run this comparison in the demo script, 
+we'll see that ```mergesort``` is orders of magnitude faster
+than either selection sort or insertion sort.
+It's still not as fast as the built-in ```list.sort```
+but at least it's computing time grows at the same rate, 
+it just takes a fixed multiple of time to compute. 
 
 
 
