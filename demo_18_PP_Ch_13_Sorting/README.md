@@ -1,6 +1,6 @@
 # Chapter 13: Searching and Sorting
 
-Last day we talked about serching and one of the best algorithms 
+Last day we talked about searching and one of the best algorithms 
 for searching in a list was *binary search*, 
 which depends on a *sorted* list. 
 From the comparison of timing of the algorithms, 
@@ -91,7 +91,7 @@ is the ```Do something``` part.
 
 *Selection sort* works by searching the unknown section 
 for the smallest item and moving it into the index ```i```. 
-For this algorithm to work, te items in the sorted section 
+For this algorithm to work, the items in the sorted section 
 must all be smaller than those in the unsorted section. 
 
 
@@ -111,7 +111,7 @@ are larger than the sorted items,
 we always know where to put the next item: location ```i```. 
 This works because we are selecting the items in order. 
 On the first iteration, ```i``` is 0 and ```lst[0:]``` is the entire list. 
-This means tha on the first iteration, we take the smallest item and
+This means that on the first iteration, we take the smallest item and
 move it to the front. 
 On the second iteration, we take the second-smallest item
 and move it into the second position. 
@@ -315,7 +315,7 @@ def insertion_sort(L: list) -> None:
 
 ``` 
 This is the same starting point as for selection sort, 
-except that the comment in the loop. 
+except for the comment inside the loop. 
 As with selection sort, we'll write a helper function to do the work. 
 
 
@@ -369,7 +369,7 @@ if __name__ == '__main__':
 How does this work?
 This works by finding where ```L[b]``` belongs and then moving it. 
 Where does it belong?
-It belong after every value that is less than or equal to this value
+It belongs after every value that is less than or equal to this value
 and before every value that is greater.
 
 
@@ -477,7 +477,7 @@ insert values within a sorting algorithm.
 
 ## Merge Sort: A Faster Sorting Algorithm
 
-There are several well-known, fast sorting algoeithms:
+There are several well-known, fast sorting algorithms:
 merge sort, quick sort and heap sort are the ones that 
 computer science majors might study. 
 Most of these involve techniques that we haven't learnt yet
@@ -492,7 +492,7 @@ rather than a multiple of the length of those lists.
 Let's start with a pair of small lists. 
 Given two sorted lists ```L1``` and ```L2```, 
 we can produce a new sorted list by running along ```L1``` and ```L2```
-and comparinf pairs of elements. 
+and comparing pairs of elements. 
 
 Here is the code for ```merge```:
 
