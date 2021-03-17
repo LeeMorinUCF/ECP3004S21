@@ -422,7 +422,7 @@ for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
 
 ``` 
 
-In the demo script, we will run this test to see how "fast"" they are.
+In the demo script, we will run this test to see how "fast" they are.
 
 You will see that they are much slower than the built-in sorting function, 
 since our algorithms are thousands of times slower. 
