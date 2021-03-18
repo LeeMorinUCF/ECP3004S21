@@ -768,7 +768,7 @@ for list_size in [10, 1000, 2000, 3000, 4000, 5000, 10000]:
 
 # It's still not as fast as the built-in list.sort
 # but at least it's computing time grows at the same rate, 
-# it just takes a fixed multiple of time to compute. 
+# it just takes a fixed multiple of the time to compute. 
 
 
 
