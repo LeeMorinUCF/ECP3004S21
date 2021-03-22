@@ -29,14 +29,14 @@ plus an intercept
 ### The Minimization Problem
 
 The parameters 
-<img src="https://render.githubusercontent.com/render/math?math=\beta_1"> 
+<img src="https://render.githubusercontent.com/render/math?math=\beta_0"> 
 and
-<img src="https://render.githubusercontent.com/render/math?math=\beta_0">
+<img src="https://render.githubusercontent.com/render/math?math=\beta_1">
 are estimated by minimizing the sum of squared residuals from the regression line defined by
-<img src="https://render.githubusercontent.com/render/math?math=\beta_1"> 
+<img src="https://render.githubusercontent.com/render/math?math=\beta_0"> 
 and
-<img src="https://render.githubusercontent.com/render/math?math=\beta_0">.
-The residuals are the differerences from the observed values 
+<img src="https://render.githubusercontent.com/render/math?math=\beta_1">.
+The residuals are the differences from the observed values 
 <img src="https://render.githubusercontent.com/render/math?math=Y_i"> 
 from the values predicted by the regression line. 
 
@@ -85,13 +85,13 @@ print(reg_model_sm.summary())
 
 The quality of fit of a regression model is determined by the degree to which the observations fit close to the regression line. 
 It is represented by the statistic 
-<img src="https://render.githubusercontent.com/render/math?math=r^2">, 
+<img src="https://render.githubusercontent.com/render/math?math=R^2">, 
 pronounced "R-squared."
 This statistic ranges from 
-<img src="https://render.githubusercontent.com/render/math?math=r^2 = 1">, 
+<img src="https://render.githubusercontent.com/render/math?math=R^2 = 1">, 
 for a model that fits the data perfectly,
 to 
-<img src="https://render.githubusercontent.com/render/math?math=r^2 = 0">, 
+<img src="https://render.githubusercontent.com/render/math?math=R^2 = 0">, 
 if the dependent variable 
 <img src="https://render.githubusercontent.com/render/math?math=Y_i">
 is unrelated to the explanatory variable
@@ -121,7 +121,7 @@ The logistic regression model uses the logistic transformation to produce an est
 The logistic equation also implies that the data are a transformation of a linear equation in
 <img src="https://render.githubusercontent.com/render/math?math=X_i">
 by applying the *logit* transformation. 
-This transformation defines the probability random event in terms of 
+This transformation defines the probability of a random event in terms of 
 the *log-odds ratio*. 
 It is what it sounds like: calculate the *odds ratio*, 
 which is the ratio of the probability that
@@ -137,6 +137,49 @@ the logistic regression model to solve for the probabilites.
 This set of operations produces the logit link function
 that calculates probabilities (in the bottom line) 
 from a linear statistical model (in the top line). 
+
+
+### The *Maximization* Problem
+
+The probabilities calculated from the parameters a and b are applied
+to each observation in the sample to calculate the likelihood of
+observing the entire sample. 
+This is done by taking the product of the probabilities of each observation, 
+which is P, if 
+<img src="https://render.githubusercontent.com/render/math?math=Y_i = 1">
+and (1-P) if 
+<img src="https://render.githubusercontent.com/render/math?math=Y_i = 0">. 
+To consolidate the parameters into a single vector, 
+we will use a vector 
+<img src="https://render.githubusercontent.com/render/math?math=\theta">, 
+which contains the intercept ```a``` and slope ```b```, now called
+<img src="https://render.githubusercontent.com/render/math?math=\theta_0"> 
+and
+<img src="https://render.githubusercontent.com/render/math?math=\theta_1">
+in what follows. 
+
+The parameters 
+<img src="https://render.githubusercontent.com/render/math?math=\theta_0"> 
+and
+<img src="https://render.githubusercontent.com/render/math?math=\theta_1">
+are estimated by *maximizing* the likelihood function 
+from the logistic transformation of the regression line defined by
+<img src="https://render.githubusercontent.com/render/math?math=\theta_0"> 
+and
+<img src="https://render.githubusercontent.com/render/math?math=\theta_1">.
+
+In this more general form, the value P is represented by the 
+Cumulative Density Function (CDF), denoted ```F()```:
+
+
+<img src="Images/Logistic_Likelihood.png">
+
+
+We take the logarithmic transformation above 
+because it does not change the maximum, 
+since it is a monotonic transformation, 
+but it helps us rearrange the likelihood function 
+into a simpler form. 
 
 
 ### Comparison with Linear Probability Model
