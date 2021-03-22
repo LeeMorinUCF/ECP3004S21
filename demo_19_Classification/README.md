@@ -59,7 +59,9 @@ import pandas as pd
 my_data = pd.read_csv('name_of_my_data_set_file.csv')
 ```
 
-Much like the ```lm``` function in R, you pass the dataset and the fornula to the ```ols``` method in the ```statsmodels``` module. 
+Much like the ```lm``` function in R 
+(which you might encounter in an econometrics course), 
+you pass the dataset and the fornula to the ```ols``` method in the ```statsmodels``` module. 
 ```
 import statsmodels.formula.api as sm
 reg_model_sm = sm.ols(formula = "Y ~ X_1 + X_2 + X_3", data = my_data).fit()
@@ -101,6 +103,10 @@ the ```Adj. R-squared``` can only be improved by including more variables in the
 
 <img src="Images/Linear_regression.png">
 
+For logistic regression, the concepts are similar 
+but the nature of the problem is different, 
+so the particular calculations must be modified. 
+
 
 ## Logistic Regression
 
@@ -114,15 +120,30 @@ The logistic regression model uses the logistic transformation to produce an est
 
 The logistic equation also implies that the data are a transformation of a linear equation in
 <img src="https://render.githubusercontent.com/render/math?math=X_i">
-by applying the *logit* transformation:
+by applying the *logit* transformation. 
+This transformation defines the probability random event in terms of 
+the *log-odds ratio*. 
+It is what it sounds like: calculate the *odds ratio*, 
+which is the ratio of the probability that
+<img src="https://render.githubusercontent.com/render/math?math=Y_i = 1">
+to the probability that
+<img src="https://render.githubusercontent.com/render/math?math=Y_i = 0">. 
+
+You can apply the following operations to the linear equation for 
+the logistic regression model to solve for the probabilites. 
 
 <img src="Images/Logistic_Regression_Equation.gif">
+
+This set of operations produces the logit link function
+that calculates probabilities (in the bottom line) 
+from a linear statistical model (in the top line). 
+
 
 ### Comparison with Linear Probability Model
 
 
 The prediction from a linear regression is called the *linear probability model* when it is used to predict binary events. 
-Compared to the linear probability model, the logisti regression produces estimates of the probabilities that are constrained to lie between zero and one, as they should. 
+Compared to the linear probability model, the logistic regression produces estimates of the probabilities that are constrained to lie between zero and one, as they should. 
 In contrast, the predictions from the linear probability model will be greater than one and lower than zero for some values of 
 <img src="https://render.githubusercontent.com/render/math?math=X_i">.
 
@@ -132,7 +153,7 @@ In contrast, the predictions from the linear probability model will be greater t
 
 ### Estimating a Logistic Regression in Python
 
-Estimating a logistic regression in R involves the same three steps as
+Estimating a logistic regression in Python involves the same three steps as
 for a linear regression model.
 1. Reading in the data.
 1. Specifying the regression equation.

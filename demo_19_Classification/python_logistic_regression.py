@@ -2,7 +2,7 @@
 """
 ##################################################
 #
-# QMB 6358: Software Tools for Business Analytics
+# ECP 3004: Python for Business Analytics
 #
 # Data Analysis with Pandas: Logistic Regression
 #
@@ -12,9 +12,9 @@
 # College of Business Administration
 # University of Central Florida
 #
-# October 15, 2020
+# March 21, 2021
 #
-# This script outlies a few approaches to linear regression in python.
+# This script outlies a few approaches to logistic regression in python.
 # It uses a sample dataset credit_data.csv with the following variables:
 #   default: 1 if borrower defaulted on a loan
 #   bmaxrate: Maximum rate of interest on any part of the loan
@@ -31,6 +31,7 @@
 """
 
 # from __future__ import division
+# (Needed if you are using Python 2 - which you should NOT be doing!)
 
 ##################################################
 # Import Modules.
@@ -59,7 +60,9 @@ sns.set(style="whitegrid", color_codes=True)
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_12_linear_models_in_python')
+# Change to a new directory.
+git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
+os.chdir(git_path + 'demo_19_Classification')
 # Check that the change was successful.
 os.getcwd()
 
@@ -99,7 +102,7 @@ credit.describe()
 credit[['bmaxrate','amount','close','bankcardutil']].describe()
 credit[['AA','A','B','C']].describe()
 
-# Drop the observation numbers.
+# Drop the observation numbers, if you like.
 # housing = housing.drop('obsn_num', axis = 1)
 
 
@@ -123,6 +126,11 @@ credit.groupby('default').mean()
 credit[['default','bmaxrate','amount','close','bankcardutil']].groupby('default').mean()
 credit[['default','AA','A','B','C']].groupby('default').mean()
 
+# As a rule, if the distribution of the explanatory variables differ 
+# between the Y = 1 and Y = 0 observations, 
+# then there is the potential that you can use the explanatory variables 
+# to predict the probability that Y = 1.
+
 
 ##################################################
 # Logistic Regression.
@@ -132,6 +140,9 @@ credit[['default','AA','A','B','C']].groupby('default').mean()
 #--------------------------------------------------
 # Fit the Logistic Model (with statsmodels module).
 #--------------------------------------------------
+
+# This is a module designed in the format that would
+# commonly be used by statusticians (and in econometrics class). 
 
 
 # Get names of explanatory variables
@@ -157,6 +168,10 @@ print(logit_model_fit_sm.summary())
 # Fit the Logistic Model (with sklearn module).
 #--------------------------------------------------
 
+# This is a module that might be used for other 
+# machine learning models. 
+# It's a little less user-friendly but more powerful. 
+
 # Split the data into target and predictor variables.
 
 X = credit.loc[:, credit.columns != 'default']
@@ -169,7 +184,7 @@ y = credit.loc[:, credit.columns == 'default']
 # Initialize the regression model object.
 logit_model_fit_sk = LogisticRegression()
 
-# Fit the linear regression model.
+# Fit the logistic regression model.
 logit_model_fit_sk.fit(X, y.values.flatten())
 # Note that it will complain if you just pass 
 # the column vector y. 
