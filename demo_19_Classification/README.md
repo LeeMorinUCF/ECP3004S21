@@ -270,4 +270,29 @@ logit_roc_auc = roc_auc_score(y, logit_model_fit_sk.predict_proba(X)[:,1])
 
 ```
 
+The ROC curve takes the observations sorted by predicted porbability
+and plots the true positive rate against the false positive rate. 
+An example of the ROC curve is shown here:
+
+
+<img src="Images/ROC_Curve.png">
+
+The higher the curve, the higher the area, the better the predictive model. 
+Aline near the 45 degree line indicates a poor fit, 
+with a prediction about as good as guessing randomly. 
+
+In reality, the curve will be more noisy.
+In the example in our demo, 
+modeling the probability that a borrower will default on a loan, 
+the ROC curve looks like this:
+
+<img src="Images/Logit_ROC.pdf">
+
+This result is somewhat disappointing but
+it shows where the model works and where it doesn't. 
+There is an increase over the left part of the curve, 
+for the customers with high probabilities of default. 
+For those less likely to default, the curve is near the 45 degree line. 
+This indicates that the model is better able to distinguish 
+between risky borrowers but not so good at separating less risky borrowers.
 
