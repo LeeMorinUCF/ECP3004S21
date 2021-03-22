@@ -286,7 +286,7 @@ In the example in our demo,
 modeling the probability that a borrower will default on a loan, 
 the ROC curve looks like this:
 
-<img src="Images/Logit_ROC.pdf">
+<img src="Images/Logit_ROC.png">
 
 This result is somewhat disappointing but
 it shows where the model works and where it doesn't. 
