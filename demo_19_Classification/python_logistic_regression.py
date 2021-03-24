@@ -60,7 +60,6 @@ sns.set(style="whitegrid", color_codes=True)
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-# Change to a new directory.
 git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
 os.chdir(git_path + 'demo_19_Classification')
 # Check that the change was successful.

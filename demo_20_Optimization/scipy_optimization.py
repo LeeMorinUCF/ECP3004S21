@@ -29,12 +29,15 @@
 import numpy as np
 # import math
 import matplotlib.pyplot as plt
+# We used these earlier to solve equations:
 # from scipy.optimize import fsolve
 # from scipy import optimize
+# THese modules optimize by minimizing. 
 from scipy.optimize import minimize_scalar
 from scipy.optimize import minimize
-from scipy.optimize import Bounds
-from scipy.optimize import LinearConstraint
+# Other modules to use when you have constraints:
+# from scipy.optimize import Bounds
+# from scipy.optimize import LinearConstraint
 
 
 
@@ -59,7 +62,7 @@ plt.plot(x_grid, f_grid, label='f(x)' )
 plt.xlabel('x')
 plt.ylabel('f(x)')
 plt.show()
-
+# plt.savefig("f_example_1.png")
 
 
 #--------------------------------------------------
@@ -90,6 +93,7 @@ plt.plot(x_grid, f_grid, label='J_1(x)' )
 plt.xlabel('x')
 plt.ylabel('J_(x)')
 plt.show()
+# plt.savefig("f_example_2.png")
 
 # Search for good bounds first:
 j1(4)
