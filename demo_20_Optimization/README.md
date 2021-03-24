@@ -145,7 +145,7 @@ is closely related to the problem of solving for roots:
 the optimum is at a point where the derivative is zero, 
 i.e. it is the root of the slope of the objective function. 
 
-Now consider Newton-Raphson method for optimization.
+Now consider the Newton-Raphson method for optimization.
 The idea behind this algorithm is the same as that for finding roots:
 calculate a second-order approximation to the function at the current point
 and then solve this approximation for its optimum.
@@ -234,7 +234,7 @@ print(f(res_sc_br.x))
 It does find an optimum at x = 1.0, where the function has value -4.
 The third print statement verifies the optimum by plugging in the 
 optimal ```x``` into the function ```f```.
-This is not surprising because the function is quadratic
+This solution is not surprising because the function is quadratic
 and we could have found the solution on paper. 
 
 #### Bounded method: Need to specify an interval. 
@@ -266,7 +266,7 @@ plt.show()
 This mysterious function has a minimum somewhere between 5 and 5.5
 and has a minimum around -0.35. 
 Now we need a computer package to find the optimum. 
-Let's use the ```minimize_scalar``` function again bu this time, 
+Let's use the ```minimize_scalar``` function again but, this time, 
 we'll tell it to look over an interval. 
 
 ```python
@@ -289,7 +289,7 @@ print(j1(res_sc_bdd.x))
 ```
 
 This confirms what we inferred from the plot, 
-except it finds the minumum upt to many more digits of accuracy. 
+except it finds the minumum up to many more digits of accuracy. 
 
 
 Now let's try to break it:
@@ -312,7 +312,7 @@ It gives a different answer.
 It finds the value of ```x``` that gives the highest value of ```J(x)``` 
 *within the interval*. 
 In this case, it is just inside the upper boundary at 5.0. 
-If you are looking for a *global* minimum, thos would be the wrong answer. 
+If you were looking for a *global* minimum, this would be the wrong answer. 
 But it *is* the right answer to a different question:
 Where is the lowest value of ```J(x)``` *within the interval (4, 5)*?
 
@@ -330,8 +330,8 @@ the *Nelder-Mead Simplex algorithm*.  This algorithm proceeds by taking steps
 after evaluating the objective function on a set of points called a *simplex*. 
 It does not require that the function has a derivative, 
 or even that the function is contnuous, so it is very versatile. 
-For these examples, we will use the *Rosenbrock function* as an example, 
-defined below. 
+For these examples, we will use the *Rosenbrock function* 
+(whatever that is) as an example, defined below. 
 
 ```python
 def rosen(x):
@@ -353,7 +353,10 @@ Optimization terminated successfully.
 4.861153433422115e-17
 4.861153433422115e-17
 ```
-
+It finds a minimum where ```x = [1. 1. 1. 1. 1.]``` and obtains a minimum
+of zero. 
+It does so in 339 iterations, performing 571 function evaluations. 
+Let's see if we can do better. 
 
 #### Powell Method 
 
@@ -389,15 +392,17 @@ Optimization terminated successfully.
 Notice that it does fewer iterations but takes more function evaluations
 because it determines the direction and step size 
 by taking many values of the function at different points. 
-
+There is a trade-off between the number of function evaluations
+in a single iteration and the number of iterations needed to find an optimum. 
 
 #### Broyden-Fletcher-Goldfarb-Shanno algorithm (BFGS)
 
 Another very popular method is called the 
 *Broyden-Fletcher-Goldfarb-Shanno algorithm* or *BFGS*
 This method uses gradient vector, as well as function evaluations
-to reduce number of iterations.
+to reduce the number of iterations needed to find an optimum.
 The user can supply a function that returns the derivative, 
+more generally called the *Jacobian*,
 which is possible if this value can be determined on paper
 to code it up into a function like ```rosen_der```. 
 
@@ -448,7 +453,7 @@ because it uses the outer product of the gradient vector
 the Hessian matrix. 
 The Hessian matrix, or second derivative, gives some information 
 about the degree of curvature of the function, 
-which specified how large the step size should be between interations. 
+which specifies how large the step size should be between interations. 
 
 We can go one step further by providing a function that provides the
 calculation of the Hessian matrix, as in ```rosen_hess```. 
@@ -483,15 +488,15 @@ Optimization terminated successfully.
 3.5306674342205174e-17
 ```
 
-It is slightly more efficient than BFGS but not much. 
-many applied researchers do not bother to use the Hessian
-but it is a good idea if it is easier to do. 
+It is slightly more efficient than BFGS but not by much. 
+Many applied researchers do not bother to code up the Hessian
+but it is a good idea if it is easy to do. 
 You have to balance between the accuracy of the result, 
 the computing time, as well as the time taken to program the result
 (the computing time *outside the computer*).
 
 As a shortcut, a variant of this algorithm allows you to 
-use a similar algorithm using a matrix that is only 
+follow a similar procedure using a matrix that is only 
 proportional to the Hessian matrix. 
 Essentially, it gives information about the ratio of curvature 
 of the objective function along different input variables, 
@@ -537,7 +542,8 @@ There are many more variations on these algorithms.
 For a given optimization problem, you might try a few algorithms
 to make sure you are finding a true optimum. 
 If you try several and they do not agree, 
-observe the alleged optimum for each and determine 
+at most one of them is correct.
+Observe the alleged optimum for each and determine 
 whether it is the minimum or maximum among those you tried. 
 Often, the difference is a matter of setting a high number of iterations, 
 by passing the option ```maxiter``` or by increasing the tolerance, 
@@ -581,6 +587,6 @@ In fact, in each step of the multivariate optimization
 with the Newton-Raphson method, 
 the step is calculated by solving a linear system of equations 
 at each step, just as you would for the linear regression model.
-In fact, the algorithm is identical, except that the optimum
+As a result, the algorithm is identical, except that the optimum
 is reached in the linear regression model in one Newton step, 
 because the sum of squared residuals *is* a quadratic function. 
