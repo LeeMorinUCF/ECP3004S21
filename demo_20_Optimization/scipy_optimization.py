@@ -41,11 +41,78 @@ from scipy.optimize import minimize
 
 
 
-
-
 ##################################################
 # Univariate Optimization
 ##################################################
+
+#--------------------------------------------------
+# Newton's Method
+#--------------------------------------------------
+
+# Consider the following quadratic function:
+def f(x):
+    return x**3-6*x**2+4*x+2
+
+
+# Caculate this on a grid of values to plot this function.
+x_grid = np.arange(-1.0, 2, 0.01)
+f_grid = f(x_grid)
+
+plt.figure()
+plt.plot(x_grid, f_grid, label='f(x)' )
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.show()
+# plt.savefig("f_example_0.png")
+
+# It has a maximum of just over 2, for x just under 0.5 .
+
+# Now define functions for the first and second derivatives.
+def f_prime(x):
+    return 3*x**2-12*x+4
+
+def f_2prime(x):
+    return 6*x - 12
+
+
+# Now we use these in the following algorithm.
+# Note that we are restricting the algorithm to 
+# perform no more than 100 iterations
+# and to stop when the step size is less than ```tol = 0.0001```.
+
+def newton_f_opt(x0, f_prime, f_2prime, 
+                 maxiter = 100, tol = 0.0001):
+    x = x0
+    for i in range(maxiter):
+        x_next = x - f_prime(x)/f_2prime(x)
+        if x_next - x < tol:
+            return x_next
+            print('Optimization terminated successfully.')
+            print('Current parameter value: ' + str(x))
+            print('Iterations: ' + str(i))
+            break
+        x = x_next
+        
+        
+    if i == maxiter - 1 and x_next - x < tol:
+        print('Optimization terminated after maximum number of iterations.')
+        
+    return x
+
+
+# Now calculate the optimum.
+x_star = newton_f_opt(0, f_prime, f_2prime)
+print(x_star)
+
+print(f(x_star))
+
+
+#--------------------------------------------------
+# Using Python Modules
+#--------------------------------------------------
+
+
+# Now use Python modules to perform the optimization. 
 
 # Other approach to defining functions:
 f = lambda x: (x - 2) * (x + 1)**2
