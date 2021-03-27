@@ -86,15 +86,15 @@ def newton_f_opt(x0, f_prime, f_2prime,
     for i in range(maxiter):
         x_next = x - f_prime(x)/f_2prime(x)
         if x_next - x < tol:
-            return x_next
             print('Optimization terminated successfully.')
             print('Current parameter value: ' + str(x))
             print('Iterations: ' + str(i))
+            # return x_next
             break
         x = x_next
         
         
-    if i == maxiter - 1 and x_next - x < tol:
+    if i == maxiter - 1 and x_next - x > tol:
         print('Optimization terminated after maximum number of iterations.')
         
     return x
@@ -105,6 +105,27 @@ x_star = newton_f_opt(0, f_prime, f_2prime)
 print(x_star)
 
 print(f(x_star))
+
+
+# Set the tolerance lower (more accuracy):
+x_star = newton_f_opt(0, f_prime, f_2prime, 
+                      maxiter = 100, 
+                      tol = 0.000000001)
+print(x_star)
+
+print(f(x_star))
+
+
+
+# Start from a different point:
+x_star = newton_f_opt(1.5, f_prime, f_2prime, 
+                      maxiter = 100, 
+                      tol = 0.00001)
+print(x_star)
+
+print(f(x_star))
+# It broke. 
+
 
 
 #--------------------------------------------------
