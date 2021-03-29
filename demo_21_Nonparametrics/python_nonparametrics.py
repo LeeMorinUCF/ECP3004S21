@@ -25,7 +25,7 @@
 #   enghours is the number of hours the engine has been run
 #   diesel is an indicator that the engine runs on diesel fuel
 #   fwd indicates that the tractor has four-wheel-drive
-#   manul indicates that the tractor has a manual transmission
+#   manual indicates that the tractor has a manual transmission
 #   johndeere indicates that the brand of the tractor is John Deere
 #   cab indicates that the tractor has an enclosed cab
 #   spring indicates that the tractor was sold in the spring
@@ -35,8 +35,6 @@
 ##################################################
 """
 
-# from __future__ import division
-# (Needed if you are using Python 2 - which you should NOT be doing!)
 
 ##################################################
 # Import Modules.
@@ -47,9 +45,8 @@ import os # To set working directory
 import numpy as np # For log transformation
 # import math
 import pandas as pd # To read and inspect data
-# from sklearn.linear_model import LogisticRegression
 
-import statsmodels.formula.api as sm
+import statsmodels.formula.api as sm # to estimate linear regression
 # import statsmodels.formula.api as smf # Another way to estimate regression
 # import statsmodels.api as sm # Another way to estimate regression
 
@@ -219,7 +216,7 @@ ax.set_facecolor('#d8dcd6')
 
 
 # The kernel-smoothed density is essentially a
-# weighted average of the neigbouring points, taken at
+# weighted average of the neigboring points, taken at
 # each value along the horizontal axis. 
 
 
@@ -338,7 +335,6 @@ ax.set_facecolor('#d8dcd6')
 
 
 # Initialize and specify the logistic model.
-# reg_model_sm = sm.ols(tractors['log_saleprice'], tractors[X_cols])
 
 sm_fmla = "log_saleprice ~ \
     horsepower + \
@@ -401,7 +397,7 @@ print(reg_model_fit_sm.summary())
 ##################################################
 
 # Now consider that the quadratic model may not be quite right. 
-# Maybe it is some other nonliner function. 
+# Maybe it is some other nonlinear function. 
 
 # A nonparametric approach can estimate the relationship
 # flexibly to determine what functional form should be used. 
@@ -470,7 +466,7 @@ kde_reg = npreg.KernelReg(endog = y, exog = X, var_type = 'c')
 
 # Fit the predictions to a grid of values. 
 # X_grid = np.arange(0, 500, 10)
-kde_pred = kde_reg.fit()
+kde_pred = kde_reg.fit() # default fits to observations in dataset.
 
 # Create a variable with this predicted curve.
 tractors['horsepower_np'] = kde_pred[0]
