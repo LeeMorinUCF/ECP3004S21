@@ -476,3 +476,26 @@ This last point may seems insignificant to you now,
 but later you might find that it is difficult to book time
 with a Vice President to make a decision on your findings. 
 
+
+## Other Nonparametric Methods
+
+How does this relate to the nnparametric methods described in
+the textbook *Business Data Science* by Matt Taddy?
+The nonparametric techniques discussed in Chapter 9
+use decision trees to fit an arbitrary function to the data.
+This produces a step function, or piecewise constant function
+to approximate the relationship between, say, 
+sales price and horsepower. 
+
+Although decision trees produce a cruder approximation to the relationship, 
+the main advantage iof this method is in efficiency and, 
+as a result, scalability:
+it can be applied to datasets with a large number of variables
+to determine which variables should be included in the model. 
+Onece you have a manageable number of variables, 
+you can use an approach like the one we took above 
+to estimate a well-specified model, 
+with the flexibility to account for the nonlinearity present in the data. 
+
+
+
