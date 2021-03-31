@@ -492,7 +492,7 @@ the main advantage iof this method is in efficiency and,
 as a result, scalability:
 it can be applied to datasets with a large number of variables
 to determine which variables should be included in the model. 
-Onece you have a manageable number of variables, 
+Once you have a manageable number of variables, 
 you can use an approach like the one we took above 
 to estimate a well-specified model, 
 with the flexibility to account for the nonlinearity present in the data. 
