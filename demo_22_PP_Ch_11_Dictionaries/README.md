@@ -4,6 +4,30 @@
 
 ## Storing Data Using Dictionaries
 
+Now we will continue where we left off when we were discussing
+tuples and sets in Chapter 12. 
+Dictionaries are another data type that store collections of data. 
+Dictionaries differ in that they store multiple types of data 
+for each entry in a list. 
+The term *dictionary* is an appropriate name because the organization
+of records surrounds a *key*: in a dictionary (the book type), 
+the entries are organized by words, which are listed in order. 
+The remaining entries show a list of values incuding the part of speech, 
+the pronunciation, the definition, examples of usage, and so on. 
+
+The primary motivation behind our postponement of this data type
+is that it resembles the organization of databases. 
+Your information is entered into several databases. 
+For example, the IRS keeps a record of your tax imformation by 
+recording amounts in the fields of your tax return, 
+your vital statistics, and the primary key is your social security number. 
+If you have a driver's license, the DMV keeps a record of your vehicles, 
+any tickets you may have received, your vital statistics, 
+and these are indexed by your driver's license number as the primary key. 
+
+Before we get there, let's talk about dictionaries. 
+Recall this example of the following birds observed in the Arctic.
+
 ```python
 canada goose
 canada goose
@@ -16,7 +40,16 @@ canada goose
 northern fulmar
 
 ```
-
+The biologists have listed their observation. 
+Now we want to know how often a specimen of each species was seen. 
+We could use a list of lists: for each item in the lists, 
+item 0 is the species of bird
+and item two is the number of sightings of that species of bird. 
+You could record it as follows:
+- Start with an empty list.
+- Loop over the species names in the list.
+- If the next name does not appear in the list, create a new entry with count 1.
+- If the next name appears in the list, increment the count for that species.
 
 ```python
 from typing import TextIO, List, Any
@@ -54,6 +87,8 @@ if __name__ == '__main__':
 
 ```
 
+The above program did just that and produced the following list: 
+
 ```python
 canada goose 5
 long-tailed jaeger 2
@@ -62,8 +97,31 @@ northern fulmar 1
 
 ```
 
+The algorithm uses a boolean variable ```found```, 
+which is originally set to ```False```. 
+It then searches through the list and if it does not change 
+to ```True```, as it increments one of the counts, 
+it appends the new record with count 1. 
 
+This is fine for a simple program but there are two thing wrong with it:
+1. For the simplicity of the problem, the program is fairly complex. 
+The more loops and if staements involved, the greater the chance that you make a mistake. 
+1. This solution does not scale well: 
+for each addition it has to search over the entire list.
+There are only thousands of species of birds but if we were studying beetles,
+there are millions of species to loop over. 
+This algorithm would get slower and slower as the list grows. 
 
+A dictionary is the right tool for the job. 
+In some languages it is known as a *map*. 
+Whatever you call it, it is an 
+*unordered, mutable collection of key/value pairs*. 
+The keys form a set: any key can appear at most once in the dictionary.
+Like the elements in sets, the keys are immutable,
+although the values that are associated with the keys don't have to be. 
+
+In Python, you define a dictionary by putting key:value pairs inside braces, 
+with the pairs separated by a comma. 
 
 ```python
 >>> bird_to_observations = {'canada goose': 3, 'northern fulmar': 1}
@@ -71,11 +129,20 @@ northern fulmar 1
 {'northern fulmar': 1, 'canada goose': 3}
 ```
 
+To get the value associated with a key, 
+we put the key in square brackets, 
+much like indexing into a list. 
+
 ```
 >>> bird_to_observations['northern fulmar']
 1
 
 ```
+
+You might remember this sort of notation when referring 
+to columns of data in a data frame. 
+Note that indexing a dictionary with a key that doesn't exist 
+will produce an error much like that from an out-of-range index for a list. 
 
 
 ```python
@@ -87,8 +154,11 @@ Traceback (most recent call last):
 KeyError: 'long-tailed jaeger'
 
 ```
+The empty dictionary is written ```{}```
+and this is why we can't use this notation for empty sets, 
+which we did with the ```set()``` function. 
 
-
+As with sets, dictionaries are unordered:
 
 ```python
 >>> dict1 = {'canada goose': 3, 'northern fulmar': 1}
@@ -98,8 +168,23 @@ True
 
 ```
 
+They can be compared much like any other pair of data types. 
+
+
 ### Updating and Checking Membership
 
+Typically, dictionaries are accumulated over several operations, 
+rather than defined in one command.
+You can add key:value pairs or check that they exist. 
+
+To update the value associated with a key, 
+you update it as you would for a list, 
+except you use a key instead of an index. 
+If the key is already in the dictionary, 
+this assignment statement changes the value associated 
+with that key. 
+If the key is not present in the dictionary, 
+the key:value pair is added. 
 
 
 ```python
@@ -119,7 +204,10 @@ True
 {'eagle': 9, 'snow goose': 33}
 
 ```
-
+To ```delete``` an entry from a dictionary, 
+use the ```del d[k]``` command, 
+where ```d``` is the name of the dictionary 
+and ```k``` is the name of the key of the entry to be deleted. 
 
 ```python
 >>> bird_to_observations = {'snow goose': 33, 'eagle': 9}
@@ -132,6 +220,9 @@ Traceback (most recent call last):
 KeyError: 'gannet'
 
 ```
+
+To test whether a key is in a dictionary, 
+we can use the ```in``` operator.
 
 ```python
 >>> bird_to_observations = {'eagle': 999, 'snow goose': 33}
@@ -149,10 +240,23 @@ False
 ...
 >>>
 
+
 ```
+The ```in``` operator only checks the keys of the dictionary. 
+
+```python
+>>> 33 in bird_to_observations
+False
+```
+ The number 33 is a value, not a key. 
+
 
 ### Looping Over Dictionaries
 
+Like other collections of data, 
+you can loop over the entries in a dictionary.
+In the loop, the iterator is assigned each key 
+from the dictionary in turn. 
 
 ```python
 >>> bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
@@ -166,10 +270,15 @@ snow goose 63
 northern fulmar 1
 
 ```
+Within the loop, you can access the asociated values
+easily using the key. 
 
 
 ### Dictionary Operations
 
+Like lists, tuples and sets, dictionaries are objects
+endowed with operations and methods.
+Here are some examples. 
 
 ```python
 >>> scientist_to_birthdate = {'Newton' : 1642, 'Darwin' : 1809,
@@ -199,8 +308,13 @@ dict_items([('Darwin', 1809), ('Newton', 1642), ('Turing', 1912)])
 {}
 
 ```
+See Table 16 on page 219 of *Pactical Programming*
+for more options. 
+Notice the naming convention for the dictionaries themselves.
+It is common to use a name of the form ```keyname_to_valuename```.
 
-
+One common operation is to loop on both the keys 
+and the values at the same time.
 
 
 ```python
@@ -214,9 +328,16 @@ Darwin was born in 1809
 Newton was born in 1642
 
 ```
+In this loop there are two iterators moving in parallel
+through the entries of the dictionary. 
+
 
 #### Dictionaries, Key Order, and Versions of Python
 
+Prior to Python 3.6, 
+when iterating over the keys of a dictionary, 
+the keys were unordered. 
+Consider this program:
 
 ```python
 items = {'first': 1, 'second': 2, 'third': 3}
@@ -224,14 +345,17 @@ for key, value in items.items():
     print(key, value)
 
 ```
+Running it three times in Python 3.5
+obtained the following results.
 
+Run 1:
 ```python
 first 1
 third 3
 second 2
 
 ```
-
+Run 2:
 ```python
 second 2
 third 3
@@ -239,17 +363,40 @@ first 1
 
 ```
 
+Run 3:
 ```python
 third 3
 first 1
 second 2
 
 ```
+In versions of Python 3.6 and beyond, 
+the way in which dictionaries are stored has a side effect:
+the keys always come out in the same order. 
+As of right now, the language designers have warned
+that we should not rely on this ordering, 
+although it may become a guaranteed feature in future versions. 
 
-
+In keeping with this advice, none of the examples 
+in the book *Practical Programming* rely on the key order in a dictionary. 
+I think that this is good advice because it would be incredibly difficult 
+to troubleshoot a problem based on a surprise change in ordering.
 
 ### Dictionary Example
 
+We started this section with a crude approach
+to cataloguing our birwatching research using lists.
+Now let's revisit this example using a dictionary. 
+
+We start with an enpty dictionary. 
+Each time we read an observation in the file, 
+we check if we have seen that species before, 
+i.e. if the bird already has a key in the dictionary.
+If the bird species is already recorded in the dictionary, 
+we add a new entry with a 1 for the value. 
+
+Here is a program that does the job 
+(notice the type annotation for dictionaries):
 
 ```python
 from typing import TextIO, Dict
@@ -280,7 +427,9 @@ if __name__ == '__main__':
             print(bird, observations)
 
 ```
-
+Note that this is much more concise than the version with lists. 
+We shorten it further by using the method ```dict.get```, 
+saving three more lines.
 
 ```python
 from typing import TextIO, Dict
@@ -308,10 +457,35 @@ if __name__ == '__main__':
             print(bird, observations)
 
 ```
-
+Using the ```get``` method does make the program shorter but 
+to go this far is a matter of taste. 
+Some programmers find it harder to understand at a glance and
+would prefer a program that is more clear, if only a few lines longer. 
 
 ### Inverting a Dictionary
 
+Maybe you want to print the values of a dictionary in another order:
+in order of the values.
+This is what it means to *invert* the dictionary. 
+You can create a new dictionary in which you use
+the values as keys
+and the keys as values. 
+
+This is tricky because there is no guarantee that the values are unique.
+When there are duplicate values in the inversion, 
+these are known as *collisions*. 
+For example, if you invert the dictionary 
+```{'a': 1, 'b': 1, 'c' 1}```, a key would be 1
+but it's not clear what value ('a', 'b', or 'c') would be associated with it. 
+
+Since you'd like to preserve all of the data from the original dictionary, 
+you may need to use another type of collection, 
+such as a list, 
+to keep track of the values associated with a key. 
+In the short example above, you might record the key:value pair
+```{1: ['a', 'b', 'c']}. 
+Here is a program to convert the dictionary of birds to 
+a dictionary of observation numbers and the birds observed in those numbers. 
 
 ```python
 >>> bird_to_observations
@@ -331,6 +505,16 @@ if __name__ == '__main__':
 5: ['canada goose']}
 ```
 
+This program loops over the key:value pairs.
+If that value is not yet a key in the dictionary, 
+it is added to the new dictionary with a single-element list
+with the new species name. 
+If the value is already a key, the new value of the inverted dictionary
+will be a list with one more element, the new species. 
+
+Now that the dictionary is inverted, 
+you can print each key and all the items in its value list. 
+
 ```python
 >>> # Print the inverted dictionary
 ... observations_sorted = sorted(observations_to_birds_list.keys())
@@ -345,105 +529,9 @@ if __name__ == '__main__':
 5 :   canada goose
 
 ```
-
-
-## Using the ```in``` Operator on Dictionaries
-
-
-
-
-```python
->>> bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
-...     'snow goose': 63, 'northern fulmar': 1}
->>> 'snow goose' in bird_to_observations
-True
->>> 183 in bird_to_observations
-False
-
-```
-
-## Creating New Type Annotations
-
-
-
-```python
-from typing import TextIO, Tuple, List, Dict
-from io import StringIO
-
-Atom = Tuple[str, Tuple[str, str, str]]
-CompoundDict = Dict[str, Atom]
-
-
-def read_molecule(reader: TextIO) -> CompoundDict:
-    """Read a single molecule from reader and return it, or return None to
-    signal end of file.  The returned dictionary has one key/value pair where
-    the key is the name of the compound and the value is a list of Atoms.
-
-    >>> instring = 'COMPND TEST\\nATOM 1 N 0.1 0.2 0.3\\nATOM 2 N 0.2 0.1 0.0\\nEND\\n'
-    >>> infile = StringIO(instring)
-    >>> read_molecule(infile)
-    {'TEST': [('N', ('0.1', '0.2', '0.3')), ('N', ('0.2', '0.1', '0.0'))]}
-    """
-
-    # If there isn't another line, we're at the end of the file.
-    line = reader.readline()
-    if not line:
-        return None
-
-    # Name of the molecule: "COMPND   name"
-    key, name = line.split()
-
-    # Other lines are either "END" or "ATOM num atom_type x y z"
-    molecule = {name: []}
-
-    reading = True
-    while reading:
-        line = reader.readline()
-        if line.startswith('END'):
-            reading = False
-        else:
-            key, num, atom_type, x, y, z = line.split()
-            molecule[name].append((atom_type, (x, y, z)))
-
-    return molecule
-
-
-def read_all_molecules(reader: TextIO) -> CompoundDict:
-    """Read zero or more molecules from reader, returning a list of the
-    molecule information.
-
-    >>> cmpnd1 = 'COMPND T1\\nATOM 1 N 0.1 0.2 0.3\\nATOM 2 N 0.2 0.1 0.0\\nEND\\n'
-    >>> cmpnd2 = 'COMPND T2\\nATOM 1 A 0.1 0.2 0.3\\nATOM 2 A 0.2 0.1 0.0\\nEND\\n'
-    >>> infile = StringIO(cmpnd1 + cmpnd2)
-    >>> result = read_all_molecules(infile)
-    >>> result['T1']
-    [('N', ('0.1', '0.2', '0.3')), ('N', ('0.2', '0.1', '0.0'))]
-    >>> result['T2']
-    [('A', ('0.1', '0.2', '0.3')), ('A', ('0.2', '0.1', '0.0'))]
-    """
-
-    # The dictionary of molecule information.
-    result = {}
-
-    reading = True
-    while reading:
-        next_molecule = read_molecule(reader)
-        if next_molecule:  # None is treated as False in an if statement
-            result.update(next_molecule)
-        else:
-            reading = False
-    return result
-
-
-if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod()
-    molecule_file = open('multimol.pdb', 'r')
-    molecules = read_all_molecules(molecule_file)
-    molecule_file.close()
-    print(molecules)
-
-```
+The outer loop passes over each key in the inverted dictionary
+and the inner loop passes over the list of the items in the values list 
+associated with that key. 
 
 
 
