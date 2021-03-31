@@ -16,8 +16,10 @@ The remaining entries show a list of values incuding the part of speech,
 the pronunciation, the definition, examples of usage, and so on. 
 
 The primary motivation behind our postponement of this data type
-is that it resembles the organization of databases. 
-Your information is entered into several databases. 
+is that it resembles the organization of databases, 
+the topic in chapter 17, which we will study next week.
+You already have some familiarity with databases:
+your very own information is entered into several databases. 
 For example, the IRS keeps a record of your tax imformation by 
 recording amounts in the fields of your tax return, 
 your vital statistics, and the primary key is your social security number. 
@@ -25,7 +27,7 @@ If you have a driver's license, the DMV keeps a record of your vehicles,
 any tickets you may have received, your vital statistics, 
 and these are indexed by your driver's license number as the primary key. 
 
-Before we get there, let's talk about dictionaries. 
+On our way toward studying databases, let's talk about dictionaries. 
 Recall this example of the following birds observed in the Arctic.
 
 ```python
@@ -40,12 +42,12 @@ canada goose
 northern fulmar
 
 ```
-The biologists have listed their observation. 
+The biologists have listed their observations. 
 Now we want to know how often a specimen of each species was seen. 
 We could use a list of lists: for each item in the lists, 
 item 0 is the species of bird
-and item two is the number of sightings of that species of bird. 
-You could record it as follows:
+and item 1 is the number of sightings of that species of bird. 
+You could record this list as follows:
 - Start with an empty list.
 - Loop over the species names in the list.
 - If the next name does not appear in the list, create a new entry with count 1.
@@ -103,14 +105,14 @@ It then searches through the list and if it does not change
 to ```True```, as it increments one of the counts, 
 it appends the new record with count 1. 
 
-This is fine for a simple program but there are two thing wrong with it:
+This is fine for a simple problem but there are two things wrong with it:
 1. For the simplicity of the problem, the program is fairly complex. 
-The more loops and if staements involved, the greater the chance that you make a mistake. 
+The more loops and if statements involved, the greater the chance that you make a mistake. 
 1. This solution does not scale well: 
 for each addition it has to search over the entire list.
 There are only thousands of species of birds but if we were studying beetles,
-there are millions of species to loop over. 
-This algorithm would get slower and slower as the list grows. 
+there would be millions of species to loop over. 
+This algorithm gets slower and slower as the list grows. 
 
 A dictionary is the right tool for the job. 
 In some languages it is known as a *map*. 
@@ -128,6 +130,9 @@ with the pairs separated by a comma.
 >>> bird_to_observations
 {'northern fulmar': 1, 'canada goose': 3}
 ```
+
+Notice the naming convention for the dictionary itself.
+It is common to use a name of the form ```keyname_to_valuename```.
 
 To get the value associated with a key, 
 we put the key in square brackets, 
@@ -208,6 +213,7 @@ To ```delete``` an entry from a dictionary,
 use the ```del d[k]``` command, 
 where ```d``` is the name of the dictionary 
 and ```k``` is the name of the key of the entry to be deleted. 
+This operation also works just as it does on data frames. 
 
 ```python
 >>> bird_to_observations = {'snow goose': 33, 'eagle': 9}
@@ -308,10 +314,9 @@ dict_items([('Darwin', 1809), ('Newton', 1642), ('Turing', 1912)])
 {}
 
 ```
-See Table 16 on page 219 of *Pactical Programming*
+See Table 16 on page 219 of *Practical Programming*
 for more options. 
-Notice the naming convention for the dictionaries themselves.
-It is common to use a name of the form ```keyname_to_valuename```.
+
 
 One common operation is to loop on both the keys 
 and the values at the same time.
@@ -385,14 +390,15 @@ to troubleshoot a problem based on a surprise change in ordering.
 ### Dictionary Example
 
 We started this section with a crude approach
-to cataloguing our birwatching research using lists.
+to cataloguing our bird-watching research using lists.
 Now let's revisit this example using a dictionary. 
 
-We start with an enpty dictionary. 
+We start with an empty dictionary. 
 Each time we read an observation in the file, 
 we check if we have seen that species before, 
 i.e. if the bird already has a key in the dictionary.
-If the bird species is already recorded in the dictionary, 
+If so, we increment the count for that species. 
+If the bird species is not already recorded in the dictionary, 
 we add a new entry with a 1 for the value. 
 
 Here is a program that does the job 
@@ -428,7 +434,20 @@ if __name__ == '__main__':
 
 ```
 Note that this is much more concise than the version with lists. 
-We shorten it further by using the method ```dict.get```, 
+It is also easy to understand. Recall the description before the program:
+
+"We start with an empty dictionary. 
+Each time we read an observation in the file, 
+we check if we have seen that species before, 
+i.e. if the bird already has a key in the dictionary.
+If so, we increment the count for that species. 
+If the bird species is not already recorded in the dictionary, 
+we add a new entry with a 1 for the value."
+
+The lines of the program exactly correspond 
+to the English-language description of the algorithm. 
+
+We can shorten it further by using the method ```dict.get```, 
 saving three more lines.
 
 ```python
@@ -461,11 +480,16 @@ Using the ```get``` method does make the program shorter but
 to go this far is a matter of taste. 
 Some programmers find it harder to understand at a glance and
 would prefer a program that is more clear, if only a few lines longer. 
+In business, this is usually a more important consideration. 
+You want your code to work in the hands of another junior analyst, 
+so that you can work on another project. 
+Your employer wants your code to survive long after you have left the company. 
+
 
 ### Inverting a Dictionary
 
 Maybe you want to print the values of a dictionary in another order:
-in order of the values.
+in the order of the values.
 This is what it means to *invert* the dictionary. 
 You can create a new dictionary in which you use
 the values as keys
@@ -483,7 +507,7 @@ you may need to use another type of collection,
 such as a list, 
 to keep track of the values associated with a key. 
 In the short example above, you might record the key:value pair
-```{1: ['a', 'b', 'c']}. 
+```{1: ['a', 'b', 'c']}```. 
 Here is a program to convert the dictionary of birds to 
 a dictionary of observation numbers and the birds observed in those numbers. 
 
