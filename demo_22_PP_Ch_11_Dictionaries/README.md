@@ -1,6 +1,6 @@
 
 
-# Chapter 12: Dictionaries
+# Chapter 11: Storing Data Using Other Collection Types
 
 ## Storing Data Using Dictionaries
 
@@ -173,7 +173,7 @@ True
 
 ```
 
-They can be compared much like any other pair of data types. 
+Dictionaries can be compared much like any other pair of data types. 
 
 
 ### Updating and Checking Membership
@@ -254,7 +254,7 @@ The ```in``` operator only checks the keys of the dictionary.
 >>> 33 in bird_to_observations
 False
 ```
- The number 33 is a value, not a key. 
+The number 33 is a value, not a key. 
 
 
 ### Looping Over Dictionaries
