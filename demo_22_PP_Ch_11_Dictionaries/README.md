@@ -42,7 +42,8 @@ canada goose
 northern fulmar
 
 ```
-The biologists have listed their observations. 
+The biologists have listed these observations
+in the file ```observations.txt```. 
 Now we want to know how often a specimen of each species was seen. 
 We could use a list of lists: for each item in the lists, 
 item 0 is the species of bird

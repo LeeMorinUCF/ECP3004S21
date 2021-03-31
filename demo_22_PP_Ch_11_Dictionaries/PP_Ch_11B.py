@@ -20,6 +20,27 @@
 ##################################################
 """
 
+##################################################
+# Import Modules.
+##################################################
+
+
+import os # To set working directory
+
+##################################################
+# Set Working Directory.
+##################################################
+
+
+# Find out the current directory.
+os.getcwd()
+# Change to a new directory.
+git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
+os.chdir(git_path + 'demo_22_PP_Ch_11_Dictionaries')
+# Check that the change was successful.
+os.getcwd()
+
+
 
 
 ##################################################
@@ -41,7 +62,8 @@
 # northern fulmar
 
 
-# The biologists have listed their observations. 
+# The biologists have listed these observations
+# in the file observations.txt. 
 # Now we want to know how often a specimen of each species was seen. 
 # We could use a list of lists: for each item in the lists, 
 # item 0 is the species of bird
@@ -203,12 +225,12 @@ bird_to_observations['snow goose'] = 33
 # Add a new key/value pair, 'eagle': 999.
 bird_to_observations['eagle'] = 999
 bird_to_observations
-{'eagle': 999, 'snow goose': 33}
+# {'eagle': 999, 'snow goose': 33}
 
 # Change the value associated with key 'eagle' to 9.
 bird_to_observations['eagle'] = 9
 bird_to_observations
-{'eagle': 9, 'snow goose': 33}
+# {'eagle': 9, 'snow goose': 33}
 
 
 # To delete an entry from a dictionary, 
@@ -252,7 +274,7 @@ del bird_to_observations['eagle']
 if 'eagle' in bird_to_observations:
   print('eagles have been seen')
 
-
+# (Nothing prints out.)
 
 
 
@@ -275,8 +297,8 @@ if 'eagle' in bird_to_observations:
 # from the dictionary in turn. 
 
 
-bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71,
-# 'snow goose': 63, 'northern fulmar': 1}
+bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71, 
+                        'snow goose': 63, 'northern fulmar': 1}
 
 for bird in bird_to_observations:
     print(bird, bird_to_observations[bird])

@@ -488,7 +488,7 @@ to approximate the relationship between, say,
 sales price and horsepower. 
 
 Although decision trees produce a cruder approximation to the relationship, 
-the main advantage iof this method is in efficiency and, 
+the main advantage of this method is in efficiency and, 
 as a result, scalability:
 it can be applied to datasets with a large number of variables
 to determine which variables should be included in the model. 
