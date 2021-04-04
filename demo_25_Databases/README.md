@@ -273,7 +273,7 @@ It has the following structure.
 <img src="Images/cross_join_tables.png" width="500">
 
 This is not used as often but is also shown for completeness. 
-Examples of these joins have the following forms. 
+Examples of these joins are as follows. 
 
 
 #### Left Join
