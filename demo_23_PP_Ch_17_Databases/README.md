@@ -107,8 +107,8 @@ by passing the SQL command in the form of a string.
 
 The basic command for creating a table is 
 
-```
-CREATE TABLE Name_of_Tale(Column_name type, ...)
+```python
+'CREATE TABLE Name_of_Tale(Column_name type, ...)'
 ```
 
 The types for each column of data are shown in the following table.
@@ -122,7 +122,13 @@ The types for each column of data are shown in the following table.
 | TEXT    | str               | Strings of Characters
 | BLOB    | bytes             | Binary data
 
-Now we will use this to create a two-column table
+Most of these data types should be familiar to you. 
+The new term is ```BLOB```, which stands for 
+*Binary Large Object*, which could represent any object that can be stored in binary form. 
+Your playlist might be stored in this format, 
+as the ```BLOB``` data type is rich enough to store ```mp3``` files, for example. 
+
+Now we will use these data types to create a two-column table
 named ```PopByRegion``` to store 
 regions named as strings in the ```Region``` column
 and projected populations as integers in the ```Population``` column. 
@@ -133,7 +139,9 @@ and projected populations as integers in the ```Population``` column.
 <sqlite3.Cursor object at 0x102e3e490>
 
 ``` 
-
+Note that this command only returns the cursor and its location. 
+So far, the table is empty but we can ```INSERT``` some ```VALUES```
+to change that. 
 
 ```python 
 >>> cur.execute('INSERT INTO PopByRegion VALUES("Central Africa", 330993)')
@@ -146,10 +154,19 @@ and projected populations as integers in the ```Population``` column.
 <sqlite3.Cursor object at 0x102e3e490>
 
 ``` 
+Much like the way a dictionary works, 
+it looks as though we pass it a tuple
+in the order of the fields in the database. 
+Again, this command is passed to the database with the ```execute``` method. 
 
+For a large number of entries, you will not want to
+type these commands manually. 
+Another way that you could execute the ```INSERT VALUES``` command
+is to use question marks as placeholders and pass tuples 
+of field values to fill in the ```?``` places in the string ```'(?, ?)'```. 
 
 ```python 
->>> cur.execute('INSERT INTO PopByRegion VALUES ("Japan", 100562)')
+>>> cur.execute('INSERT INTO PopByRegion VALUES (?, ?)', ("Japan", 100562))
 
 ``` 
 
@@ -157,32 +174,47 @@ and projected populations as integers in the ```Population``` column.
 
 ### Saving Changes
 
+However you enter your data, you will need to save the state of your database,
+much like you would for any other program. 
 The commit method saves the changes. 
 
 ```python 
 >>> con.commit()
 
 ``` 
+Use the commit command like you would the ````Ctrl-S``` command. 
+(You are doing this, aren't you? 
+You know what they say: "Save early. Save often.")
+
+If the program crashes, for any reason, the work you have done 
+is only stored up to the last commit. 
+
+
 
 ### Closing the Connection
 
-Close the connection when finished. 
+Finally, when all the work is done, we need to
+```close``` the connection.. 
 
 
 ```python 
 >>> con.close()
 
 ``` 
-
-
-
+This is just like closing a file. 
+make sure, though, that you have "saved" all of your changes
+with a call to ```commit```, 
+otherwise those changes will not be saved. 
+The main purpose of closing the connection is to free up resources, 
+such as the memory required to store a database. 
 
 
 ## Retrieving Data
 
-
-First, reopen the database (we just closed it).
-Create a database, if it does not already exist.
+Now that we have a database that contains some data, 
+how do we access the data?
+First, reopen the database (since we just closed it).
+Again, this will also create a database, if it does not already exist.
 
 ```python
 con = sqlite3.connect('population.db')
@@ -198,16 +230,18 @@ cur = con.cursor()
 This is the procedure you would follow to interact with an existing database.
 
 
-
-Basic form of a query:
-
-
+The primary command issued in SQL is a query. 
+The most common is the ```SELECT``` statement. 
+The basic form of a query is as follows. 
 
 ```python 
 cur.execute('SELECT Column_1, Column_2 FROM Name_of_Table')
 ```
 
-
+You pass the names of the columns you want to ```SELECT```
+and say which table you want them to be ```SELECT```ed from. 
+Notice that the command reads like the instructions you would
+give a person in English. 
 
 ```python 
 >>> cur.execute('SELECT Region, Population FROM PopByRegion')
@@ -219,14 +253,16 @@ It only stores the result of the query in memory.
 We can access the contents of the ```SELECT```ed table
 by reading parts of it from the cursor. 
 
+With the ```fetchone``` method, we can
+fetch one line at a time. 
 
-Fetch one line at a time:
 ```python 
 >>> cur.fetchone()
 ('Central Africa', 330993)
 ``` 
 
-Fetch all the rest:
+If thst is not enough for you, you can use the ```fetchone``` method, 
+to fetch all the rest.
 
 
 ```python 
@@ -237,25 +273,32 @@ Asia', 2051941), ('Asia Pacific', 785468), ('Middle East', 687630),
 223427), ('North America', 661157), ('Western Europe', 387933), ('Japan',
 100562)]
 ``` 
-Note that the first line was already fetched above.
-
-Further fetches have nothing to fetch.
+Notice that the first line was already fetched above. 
+The subsequent fetches start from the location of the cursor. 
+Since we have fetched all that the query has returned, 
+further fetches have nothing more to fetch.
 
 ```python 
 >>> cur.fetchone()
 >>> cur.fetchall()
 []
 ``` 
+In this case, ```cur.fetchone()``` returns ```None``` and
+```cur.fetchall()``` returns an empty list. 
 
 
-Calculate functions of variables
+Databases are not very interesting if you can only
+pull out what you put in. 
+You can also calculate functions of the variables in your database. 
+
 ```python 
 >>> cur.execute('SELECT SUM(Population) FROM PopByRegion')
 >>> cur.fetchall()
 [(8965762,)]
 ```
 
-Star (*) denotes a wildcard variable.
+One of the most common shortcuts is to use the 
+star, or asterisk, (```*```), which denotes a wildcard for the column names.
 ```python 
 >>> cur.execute('SELECT * FROM PopByRegion')
 >>> cur.fetchall()
@@ -275,11 +318,11 @@ Star (*) denotes a wildcard variable.
 
 This is a good go-to command to verify that your tables was created as you intended.
 Be careful! It can backfire for large examples, such as a query on an entire database.
-You migh, however, use this on a small table that you have created with your query. 
+You might, however, use this on a small table that you have created with your query. 
 
-
-
-Use an ```ORDER BY``` clause to sort the output.
+For now, we will focus on extracting the data. 
+If your data has to be in order, 
+use an ```ORDER BY``` clause to sort the output.
 
 ```python 
 >>> cur.execute('SELECT Region, Population FROM PopByRegion ORDER BY Region')
@@ -292,7 +335,7 @@ America', 593121), ('Southeastern Africa', 743112), ('Southern Asia',
 ``` 
 
 
-You can also sort in ````DESC````ending order.
+You can also sort in ````DESC````ending order...
 
 
 ```python 
@@ -307,7 +350,7 @@ You can also sort in ````DESC````ending order.
 Europe', 223427), ('Japan', 100562)]
 
 ``` 
-
+...or in ```ASC```ending order, if that is what you need. 
 
 ```python 
 >>> cur.execute('SELECT Region FROM PopByRegion')
@@ -327,9 +370,23 @@ Europe', 223427), ('Japan', 100562)]
  661157), ('Western Europe', 387933), ('Japan', 100562)]
 
 ``` 
+Since we have all studied sorting algorithms, 
+we might be tempted to sort the returned list in Python. 
+Instead, sorting it within your SQL query takes advantage of the fact that
+entries in the databased are stored in a particular order that makes it easier to sort. 
+Also, in practice, the database is usually housed on much more powerful computing system, 
+which is especially useful if you have large tables 
+that need to be sorted within intermediate calculations. 
+It is better to transfer the smallest file in its final form. 
 
 
 ### Query Conditions
+
+Note that we referred to the use of the ```ORDER``` qualifier as a *clause*. 
+This is consistent with the notion that the statements are much like 
+instructions in the English language:
+extra qualifications are appended as clauses
+(although sometimes the query is more like a run-on sentence).
 
 You can select a subset of rows with the ```WHERE``` clause.
 This precedes a Boolean expression that uses one or more of 
@@ -351,8 +408,9 @@ much like you would in the English language.
 [('Northern Africa',), ('Southern Asia',), ('Eastern Asia',)]
 
 ``` 
+
 You can use logical operators such as ```AND```, ```OR```, and ```NOT``` 
-in the WHERE clause.
+in the ```WHERE``` clause.
 These are used the same way one would use them in Python. 
 
 
@@ -366,16 +424,32 @@ These are used the same way one would use them in Python.
 ``` 
 
 Notice how the ```<``` operator works on strings.
+Also note that we had to use two kinds of quotes
+in the above command:
+the query was passed in double quotes, 
+while the string ```'L'``` in the Boolean expression
+was passed in single quotes within the larger string. 
 
 
 ## Updating and Deleting
 
+Databases change over time. 
+We laerned how to ```INSERT VALUES``` in our database
+but that only operates one row at a time. 
+If we want to make larger changes, 
+we can use the ```UPDATE``` command to take advantage of
+the use of Boolean logic passed through a ```WHERE``` caluse. 
 
 ```python 
 >>> cur.execute('SELECT * FROM PopByRegion WHERE Region = "Japan"')
 <sqlite3.Cursor object at 0x102e3e490>
 >>> cur.fetchone()
 ('Japan', 100562)
+```
+This the value recorded for Japan. 
+Now we can change it by updating.
+
+```python 
 >>> cur.execute('''UPDATE PopByRegion SET Population = 100600
                    WHERE Region = "Japan"''')
 <sqlite3.Cursor object at 0x102e3e490>
@@ -385,8 +459,11 @@ Notice how the ```<``` operator works on strings.
 ('Japan', 100600)
 
 ``` 
+As you can see the value was changed. 
+It would also work for all rows for which the columns 
+satisfy the Boolean expression in the ```WHERE``` clause. 
 
-
+Similarly, we can also ```DELETE``` records from the database.
 
 ```python 
 >>> cur.execute('DELETE FROM PopByRegion WHERE Region < "L"')
@@ -399,35 +476,51 @@ Notice how the ```<``` operator works on strings.
  593121), ('North America', 661157), ('Western Europe', 387933)])]
 
 ``` 
-
+As before, we can put them back, one row at a time. 
 
 ```python 
 >>> cur.execute('INSERT INTO PopByRegion VALUES (?, ?)', ("Japan", 100562))
 ``` 
 
-
+We can also delete all entries in the database, 
+including the table itself, by ```DROP```ping the ```TABLE```. 
 
 ```python 
 >>> cur.execute('DROP TABLE PopByRegion')
 
 ``` 
 
+Be careful with this one! There is no "Undo" button. 
+
+<img src="Images/little_bobby_tables.png" width="500">
+
 
 ## Using ```NULL``` for Missing Data
 
-
+Just like the value ```None``` in Python, 
+SQL provides a placeholder for missing values. 
+The missing keyword is ```NULL```. 
+Since we don't know the value of the population on Mars, we can enter
 
 ```python 
 >>> cur.execute('INSERT INTO PopByRegion VALUES ("Mars", NULL)')
 
 ``` 
 
+Sometimes, as the architect of the database, 
+you make this an impossibility. 
+You have seen the red starred fields in an online application before, 
+under name, address, etc. 
+Lurking in the background is a ```NOT NULL``` qualifier in the *schema*
+of the database. 
+
 ```python 
 >>> cur.execute('CREATE TABLE Test (Region TEXT NOT NULL, '
 ...             'Population INTEGER)')
 
 ``` 
-
+It is much like a type contract with automated error handling
+to prevent any entries that are missing values in certain fields. 
 
 ```python 
 >>> cur.execute('INSERT INTO Test VALUES (NULL, 456789)')
@@ -436,16 +529,41 @@ Traceback (most recent call last):
     cur.execute('INSERT INTO Test VALUES (NULL, 456789)')
 sqlite3.IntegrityError: Test.Region may not be NULL
 
-
 ``` 
+This is fine because SQL gives you a precise error message
+but this may not be ideal because the entry is blocked. 
+In some cases, you might want to insert a particular value 
+such as ```0```, an empty string```''``` or ```false```, 
+which could be used to represent different kinds of missing data. 
+Some databases use default codes, such as negative integers or 
+an unlikely value, such as ```-999990```. 
+Then it is up to the programmer 
+to handle the default or missing values downstream. 
 
+The tretment of ```NULL``` variables in SQL differs from 
+those in other languages, such as ```None``` in Python. 
+Of course, many operations involving ```NULL``` produce ```NULL```
+because if the input value is missing or unknown, 
+then so is the output value. 
+Logical operations are more complicated, however. 
+The Boolean expression ```NULL or 1``` produces 1, rather than ```NULL```, 
+for the following reasons:
+- If the first argument were false or zero, then the full expression would evaluate to 1. 
+- If the first argument were true or one, then the full expression would also evaluate to 1. 
+The technical term for this is *three-valued logic*. 
+In SQL, statements are not only true or false, they can be true, false or unknown. 
+Note also that different database formats might handle this sort of logic, 
+so the best practice is to test it on your infrastructure. 
 
 
 
 ## Using Joins to Combine Tables
 
+So far, we have been limiting ourselves to a single table. 
+The main value of organizing data into a *relational database* is to 
+form relationships between data in other tables. 
 
-Create another table to experiment with joins.
+Let's create another table to experiment with the ways in which we can ```JOIN``` data.
 
 
 ```python 
@@ -474,7 +592,7 @@ Asia", "Republic of Korea", 41491), ("Eastern Asia", "Taiwan", 1433),
 ```
 
 
-Now loop through those entries and INSERT the VALUES.
+Now loop through those entries and ```INSERT``` the ```VALUES```.
 
 ```python 
 >>> for c in countries:
@@ -548,11 +666,33 @@ set of commands.
  ('North America', 'United States', 493038)]
 ```
 
+Now we have a pair of related tables in our database. 
+We can join them by adding ```JOIN``` keywords after the ```FROM``` clause. 
+We can join data in several ways. 
+We will use ```INNER JOIN```s, ```LEFT JOIN```s and what are called self-joins. 
 
+In an ```INNER JOIN```, the syntax is as follows. 
 
+```python 
+>>> cur.execute('''
+SELECT Table1.Column1, Table2.ColumnX 
+FROM   Table1 INNER JOIN Table2 
+WHERE  (Table1.Column1 = Table2.Column1) 
+AND    (Table1.ColumnY > 1000000)
+''')
+<sqlite3.Cursor object at 0x102e3e490>
 
+``` 
+What does SQL do here?
+It executes the following three steps. 
+1. Construct the cross product of the tables
+1. Discard rows that do not meet the selection criteria
+1. Select columns from the remaining rows
 
-
+Now, let's repeat our query for the list of regions
+with high populations, 
+except we will list the countries in each region, 
+taking those from the new table, ```PopByCountry```. 
 
 ```python 
 >>> cur.execute('''
@@ -568,7 +708,6 @@ AND    (PopByRegion.Population > 1000000)
 ('Eastern Asia', 'Republic of Korea'), ('Eastern Asia', 'Taiwan')]
 
 ``` 
-
 
 
 Another very popular option is a ```LEFT JOIN```, 
@@ -610,9 +749,24 @@ are represented by ```None```,
 since there is no value in the other table.
 
 
+To appreciate the difference between the two forms of joins, 
+let's reconsider the steps that SQL executes under these two types of joins. 
+An ```INNER JOIN``` comprises the following three steps. 
+1. Construct the cross product of the tables
+1. Discard rows that *do not have matching keys from both tables*
+1. Select columns satisfying the ```WHERE``` clause* from the remaining rows
+
+In contrast, a ```LEFT JOIN``` comprises the following three steps. 
+1. Construct the cross product of the tables
+1. Discard rows that *do not have matching keys in the RIGHT table*
+1. Select columns from the remaining rows
+
+
 ### Removing Duplicates
 
-
+Sometimes you only need to know the set of entries that uniquely satisfy
+certain conditions. 
+To achieve this, you remove duplicates. 
 Consider this example:
 
 ```python 
@@ -626,8 +780,9 @@ AND ((PopByCountry.Population * 1.0) / PopByRegion.Population > 0.10)''')
 [('Eastern Asia',), ('North America',), ('North America',)]
 ``` 
 
-
-Now repeat with the ```DISTINCT``` keyword.
+Notice that the string ```'North America'``` appears twice. 
+Now repeat the query with the ```DISTINCT``` keyword
+after the ```SELECT``` command.
 
 ```python 
 >>> cur.execute('''
@@ -640,10 +795,21 @@ AND ((PopByCountry.Population * 1.0) / PopByRegion.Population > 0.10)''')
 
 ``` 
 
-Only unique values remain.
+Now, only the unique values remain.
 
 
 ## Keys and Constraints
+
+Our query in the previous section relied on the fact that our regions and countries
+were uniquely identified by their names. 
+A column in a table that is used this way is called a *key*. 
+Your social security number, driver's license number and variaous customer numbers
+are all keys within databases. 
+Ideally, the values of the keys should be unique, 
+just liek the words in a dictionary. 
+
+To tell the database to enforce this constraint, 
+we can use a ```PRIMARY KEY``` clause when we create the table. 
 
 
 ```python 
@@ -652,7 +818,16 @@ Only unique values remain.
                    Population INTEGER NOT NULL, 
                    PRIMARY KEY (Region))''')
 ``` 
+Sometimes your data are organized according to more than one value. 
+For example, your customer information on file at an online retailer
+will also reference invoice numbers and transaction numbers. 
+These can be used as multiple keys in some tables.
 
+Sometimes, however, the uniqueness of your records only holds
+in terms of combinations of several columns. 
+The ```CONSTRAINT``` keyword is used below
+to specify that no two entries in the table created below
+will ever have tha same values for region *and* country. 
 
 ```python 
 >>> cur.execute('''
@@ -665,3 +840,6 @@ Only unique values remain.
 
 ``` 
 
+In practice, databases are often designed to use integers as keys. 
+This way, they can be generated to satisfy the uniqueness constraints
+and it avoids any complications from having two entries with, say, the same name. 
