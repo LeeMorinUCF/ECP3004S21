@@ -6,6 +6,8 @@
 
 ### Aggregation
 
+We have already encountered an instance of aggregation:
+the ```SUM``` is th emost basic form of aggregation. 
 
 
 ```python
@@ -15,6 +17,14 @@
 (8965762,)
 
 ```
+
+There exist several other commands, as in the following table.
+
+| Type    | Python Equivalent | Usage
+| ------- | ----------------- | -----------------------------
+| NULL    | NoneType          | Means "no information"
+
+
 
 
 ### Grouping
