@@ -270,7 +270,7 @@ from one of the tables.
 There also exists a type of join called a cross-join. 
 It has the following structure. 
 
-<img src="Images/join_tables.png" width="500">
+<img src="Images/cross_join_tables.png" width="500">
 
 This is not used as often but is also shown for completeness. 
 Examples of these joins have the following forms. 
