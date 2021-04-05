@@ -44,7 +44,7 @@ import sqlite3
 os.getcwd()
 # Change to a new directory.
 git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
-os.chdir(git_path + 'demo_23_PP_Ch_17_Dictionaries')
+os.chdir(git_path + 'demo_23_PP_Ch_17_Databases')
 # Check that the change was successful.
 os.getcwd()
 
@@ -226,6 +226,23 @@ AND ((PopByCountry.Population * 1.0) / PopByRegion.Population > 0.10)''')
 cur.fetchall()
 # Only unique values remain. 
 
+
+
+
+
+##################################################
+# Commit changes and close the connection
+##################################################
+
+
+# The commit method saves the changes. 
+con.commit()
+
+
+# Close the connection when finished. 
+con.close()
+
+# Then we can continue with this file on the next lecture.
 
 
 ##################################################

@@ -7,7 +7,7 @@
 ### Aggregation
 
 We have already encountered an instance of aggregation:
-the ```SUM``` is th emost basic form of aggregation. 
+the ```SUM``` is the most basic form of aggregation. 
 
 
 ```python
@@ -168,10 +168,15 @@ Computer B: cur.commit()
 
 ## Examples
 
+### Example 1: Population, Area and Population Density of Provinces
+
+In this example, we will create a table 
+to store the population and land area of the provinces and
+territories of Canada, according to the 2001 census with Statistics Canada. 
 
 
-1.
- a.
+
+a. Create a new database called ```census.db```.
  
 ```python
 import sqlite3 as dbapi
@@ -179,7 +184,10 @@ con = dbapi.connect('census.db')
 ```
 
 
-b.
+b. Make a database table called ```Density``` that will 
+hold the name of the province or territory (TEXT), 
+the population (INTEGER), 
+and the land area (REAL). 
 
 
 ```python
@@ -190,7 +198,8 @@ con.commit()
 ```
 
 
- c.
+c. Insert the data from the table above. 
+
 ```python
 table = [
  ('Newfoundland and Labrador', 512930, 370501.69),
@@ -213,30 +222,84 @@ con.commit()
 ```
 
 
- d.
+d. Retrieve the contents of the table.
+
 ```python
 cur.execute('SELECT * FROM Density')
 for row in cur.fetchall():
  print(row)
 ```
 
+The result is the following, which should match the table.
 
- e.
+```python
+('Newfoundland and Labrador', 512930, 370501.69)
+('Prince Edward Island', 135294, 5684.39)
+('Nova Scotia', 908007, 52917.43)
+('New Brunswick', 729498, 71355.67)
+('Quebec', 7237479, 1357743.08)
+('Ontario', 11410046, 907655.59)
+('Manitoba', 1119583, 551937.87)
+('Saskatchewan', 978933, 586561.35)
+('Alberta', 2974807, 639987.12)
+('British Columbia', 3907738, 926492.48)
+('Yukon Territory', 28674, 474706.97)
+('Northwest Territories', 37360, 1141108.37)
+('Nunavut', 26745, 1925460.18)
+
+```
+
+
+
+e. Retrieve the populations. 
+
 ```python
 cur.execute('SELECT Population FROM Density')
 for row in cur.fetchall():
  print(row)
 ```
+The result is a list of population figures.
 
+```python
+(512930,)
+(135294,)
+(908007,)
+(729498,)
+(7237479,)
+(11410046,)
+(1119583,)
+(978933,)
+(2974807,)
+(3907738,)
+(28674,)
+(37360,)
+(26745,)
+```
 
-f.
+f. Retrieve the provinces that have populations of less than one million. 
+
 ```python
 cur.execute('''SELECT Province FROM Density
  WHERE Population < 1000000''')
 for row in cur.fetchall():
  print(row)
 ```
-g.
+This is the list:
+
+```python
+('Newfoundland and Labrador',)
+('Prince Edward Island',)
+('Nova Scotia',)
+('New Brunswick',)
+('Saskatchewan',)
+('Yukon Territory',)
+('Northwest Territories',)
+('Nunavut',)
+```
+
+g. Retrieve the provinces that have populations of less than one million
+or greater than five million. 
+
 ```python
 cur.execute('''SELECT Province FROM Density
  WHERE Population < 1000000
@@ -244,8 +307,25 @@ cur.execute('''SELECT Province FROM Density
 for row in cur.fetchall():
  print(row)
 ```
+This returns the provinces in the above list
+with a few additional names.
 
-h.
+```python
+('Newfoundland and Labrador',)
+('Prince Edward Island',)
+('Nova Scotia',)
+('New Brunswick',)
+('Quebec',)
+('Ontario',)
+('Saskatchewan',)
+('Yukon Territory',)
+('Northwest Territories',)
+('Nunavut',)
+```
+
+h. Retrieve the provinces that *do not* have populations of less than one million
+or greater than five million. 
+
 ```python
 cur.execute('''SELECT Province FROM Density
  WHERE NOT(Population < 1000000
@@ -253,24 +333,80 @@ cur.execute('''SELECT Province FROM Density
 for row in cur.fetchall():
  print(row)
 ```
-i.
+The remaining provinces are found here.
+
+```python
+('Manitoba',)
+('Alberta',)
+('British Columbia',)
+```
+
+i. Retrieve the populations of provinces that have a land area
+greater than 200,000 square kilometers. 
+
 ```python
 cur.execute('''SELECT Population FROM Density
  WHERE Area > 200000''')
 for row in cur.fetchall():
  print(row)
 ```
+Verify that these population figures match the criteria. 
 
+```python
+(512930,)
+(7237479,)
+(11410046,)
+(1119583,)
+(978933,)
+(2974807,)
+(3907738,)
+(28674,)
+(37360,)
+(26745,)
+```
+In practice, you cannot make this verification for large datasets
+but you could use this process to test it on a small sample. 
 
-j.
+j. Retrieve the provinces along with their population densities
+(population divided by land area). 
+
 ```python
 cur.execute('SELECT Province, Population / Area FROM Density')
 for row in cur.fetchall():
  print(row)
 ```
+Simply insert the formula in the place of the variable
+with the desired calculation. 
 
+```python
+('Newfoundland and Labrador', 1.384420135843375)
+('Prince Edward Island', 23.8009707286094)
+('Nova Scotia', 17.15893988048928)
+('New Brunswick', 10.223406212848959)
+('Quebec', 5.330521736115201)
+('Ontario', 12.570898175154742)
+('Manitoba', 2.0284583842743027)
+('Saskatchewan', 1.6689353978062142)
+('Alberta', 4.648229483118348)
+('British Columbia', 4.217776273802028)
+('Yukon Territory', 0.060403579075318826)
+('Northwest Territories', 0.03274009812056676)
+('Nunavut', 0.013890185981410428)
 
-2.
+```
+
+### Example 2: Population of Capital Cities
+
+Now add a new table called ```Capitals``` to the database. 
+```Capitals``` has three columns: 
+province/territory (TEXT),
+capital (TEXT), and population (INTEGER). 
+
+The first three lines depend on the situation. 
+We are continuing from above
+but if we started another session,
+we would have to reopen and reconnect to the database.
+
 ```python
 import sqlite3 as dbapi
 con = dbapi.connect('census.db')
@@ -299,15 +435,35 @@ con.commit()
 
 ```
 
+a. Retrieve the contents of the table. 
 
-a.
 ```python
 cur.execute('SELECT * FROM Capitals')
 for row in cur.fetchall():
  print(row)
 ```
+Again, the star wildcard gets all the columns. 
 
-b.
+```python
+('Newfoundland and Labrador', "St. John's", 172918)
+('Prince Edward Island', 'Charlottetown', 58358)
+('Nova Scotia', 'Halifax', 359183)
+('New Brunswick', 'Fredericton', 81346)
+('Quebec', 'Qeubec City', 682757)
+('Ontario', 'Toronto', 4682897)
+('Manitoba', 'Winnipeg', 671274)
+('Saskatchewan', 'Regina', 192800)
+('Alberta', 'Edmonton', 937845)
+('British Columbia', 'Victoria', 311902)
+('Yukon Territory', 'Whitehorse', 21405)
+('Northwest Territories', 'Yellowknife', 16541)
+('Nunavut', 'Iqaluit', 5236)
+```
+
+b. Retrieve the populations of the provinces and capitals 
+(in a list of tuples of the form 
+```[province_population, capital_population]```). 
+
 ```python
 cur.execute('''SELECT Density.Population, Capitals.Population
  FROM Capitals INNER JOIN Density
@@ -315,8 +471,28 @@ cur.execute('''SELECT Density.Population, Capitals.Population
 for row in cur.fetchall():
  print(row)
 ```
+This pulls pairs of population figures
+from provinces and capital cities.
 
-c.
+```python
+(512930, 172918)
+(135294, 58358)
+(908007, 359183)
+(729498, 81346)
+(7237479, 682757)
+(11410046, 4682897)
+(1119583, 671274)
+(978933, 192800)
+(2974807, 937845)
+(3907738, 311902)
+(28674, 21405)
+(37360, 16541)
+(26745, 5236)
+```
+
+c. Retrieve the land area of the provinces whose capitals 
+have populations greater than 100,000. 
+
 ```python
 cur.execute('''SELECT Density.Area
  FROM Capitals INNER JOIN Density
@@ -325,10 +501,25 @@ cur.execute('''SELECT Density.Area
 for row in cur.fetchall():
  print(row)
 ```
+This returns 
+
+```python
+(370501.69,)
+(52917.43,)
+(1357743.08,)
+(907655.59,)
+(551937.87,)
+(586561.35,)
+(639987.12,)
+(926492.48,)
+```
 
 
- d.
-Note: This query doesn't return any results.
+d. Retrieve the provinces with land densities
+less than two people per square kilometer
+and capital city populations more than 500,000. 
+
+
 ```python
 cur.execute('''SELECT Density.Province
  FROM Capitals INNER JOIN Density
@@ -339,31 +530,66 @@ for row in cur.fetchall():
  print(row)
 ```
 
- e.
+
+```python
+
+```
+Notice that This query doesn't return any results.
+
+e. Retrieve the total land area of Canada. 
+
 ```python
 cur.execute('SELECT SUM(Area) FROM Density')
 print(cur.fetchone())
 ```
 
-f.
+```python
+(9012112.19,)
+```
+
+We can use ```fetchone()``` because there is only one item to fetch. 
+
+f. Retrieve the average population of the capital cities. 
+
 ```python
 cur.execute('SELECT AVG(Population) FROM Capitals')
 print(cur.fetchone())
 ```
 
-g.
+```python
+(630343.2307692308,)
+```
+
+Again, sometimes the answer is a single number. 
+
+g. Retrieve the lowest population of the capital cities. 
+
 ```python
 cur.execute('SELECT MIN(Population) FROM Capitals')
 print(cur.fetchone())
 ```
+Iqualuit, way up North in Nunavut
+is the capital city with the smallest population. 
 
-h.
+```python
+(5236,)
+```
+
+h. Retrieve the highest population of the provinces or territories. 
 ```python
 cur.execute('SELECT MAX(Population) FROM Density')
 print(cur.fetchone())
 ```
 
-i.
+Ontario is the province with the largest population in Canada. 
+
+```python
+(11410046,)
+```
+
+i. Retrieve the provinces that have land densities within 0.5 persons per square kilometer of one another. 
+Have each pair of provinces reported only once. 
+
 ```python
 cur.execute('''SELECT A.Province, B.Province
  FROM Density A INNER JOIN Density B
@@ -374,7 +600,21 @@ for row in cur.fetchall():
  print(row)
 ```
 
+These are the pairs of provinces with densities of similar magnitudes. 
 
+```python
+('Newfoundland and Labrador', 'Saskatchewan')
+('Manitoba', 'Saskatchewan')
+('Alberta', 'British Columbia')
+('Northwest Territories', 'Yukon Territory')
+('Northwest Territories', 'Nunavut')
+('Nunavut', 'Yukon Territory')
+```
 
+There are many more examples of calculations you could perform. 
+This is just a taste. 
+In practice, the true value of the ability to work with databases, 
+at least for a Business Analyst, 
+is in the ability to make datasets to study with statistical models. 
 
 
