@@ -576,6 +576,7 @@ is the capital city with the smallest population.
 ```
 
 h. Retrieve the highest population of the provinces or territories. 
+
 ```python
 cur.execute('SELECT MAX(Population) FROM Density')
 print(cur.fetchone())
