@@ -29,7 +29,7 @@
 # Names of Tables, Columns And Variables
 # Are Usually In "CamelCase". 
 
-# In contrast, Python is usuall written in "snake_case".
+# In contrast, Python is usually written in "snake_case".
 
 ##################################################
 # Import Modules.
@@ -121,6 +121,7 @@ cur.fetchall()
 
 # Further fetches have nothing to fetch.
 cur.fetchone()
+
 cur.fetchall()
 
 
