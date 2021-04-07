@@ -77,7 +77,6 @@ classified according to the following taxonomy of positions.
 
 <img src="Images/Business_Analytics_Hourglass_ECP.png" width="500"/>
 
-#### A Taxonomy of Business Analysts
 
 The hourglass shape indicates the relative proportions of performers in each role
 (and, in fact, understate the proportions to a large degree). 
