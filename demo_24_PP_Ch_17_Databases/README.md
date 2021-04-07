@@ -4,11 +4,23 @@
 
 ## Advanced Features
 
+The primary use of databases is to organize and retrieve data. 
+In practice, you often want to retrieve the data to perform some sort of calculation
+and it is often worthwhile to perform these calculations on the computer system
+that contains the database. 
+Servers typically have much more computing power than your PC or laptop, 
+so it is best to do any calculations you can on a server
+and then transfer only a small dataset to your computer. 
+
+
+
+
 ### Aggregation
 
 We have already encountered an instance of aggregation:
 the ```SUM``` is the most basic form of aggregation. 
 
+This command calculates the sum of the population, tabulated by Region.
 
 ```python
 >>> cur.execute('SELECT SUM (Population) FROM PopByRegion')
@@ -17,6 +29,29 @@ the ```SUM``` is the most basic form of aggregation.
 (8965762,)
 
 ```
+
+We can restrict the calculation to North America
+with a ```WHERE``` clause.
+
+```python
+>>> cur.execute('''SELECT SUM (Population) FROM PopByCountry
+                   WHERE Region = "North America"''')
+>>> cur.fetchall()
+<sqlite3.Cursor object at 0x102e3e490>
+[(661200,)]
+```
+
+and similarly for Eastern Asia.
+
+```python
+>>> cur.execute('''SELECT SUM (Population) FROM PopByCountry
+                   WHERE Region = "Eastern Asia"''')
+>>> cur.fetchall()
+<sqlite3.Cursor object at 0x102e3e490>
+[(1364389,)]
+```
+
+
 
 There exist several other commands, as in the following table.
 
@@ -28,11 +63,20 @@ There exist several other commands, as in the following table.
 | COUNT              | Number of non-NULL values
 | SUM                | Sum of the values
 
-
+There are many others that you might find online. 
+Note that the syntax may vary, depending
+on the dialect of SQL. 
 
 
 ### Grouping
 
+
+Sometimes you want to tabulate results by category. 
+Aggregation commands can pass through a ```GROUP BY``` clause
+to perform a series of aggregate calculations by category. 
+
+Using the ```GROUP BY``` command, we can tabulate the sum of the population,
+for every category of ```Region```. 
 
 
 ```python
@@ -46,23 +90,19 @@ There exist several other commands, as in the following table.
 
 
 
-```python
->>> cur.execute('''SELECT SUM (Population) FROM PopByCountry
-                   WHERE Region = "North America"''')
-<sqlite3.Cursor object at 0x102a3bb20>
->>> cur.fetchall()
-[(661200,)]
->>> cur.execute('''SELECT SUM (Population) FROM PopByCountry
-                   WHERE Region = "Eastern Asia"''')
-<sqlite3.Cursor object at 0x102a3bb20>
->>> cur.fetchall()
-[(1364389,)]
-```
-
-
 ### Self-Joins
 
+Now, let's consider the problem of comparing some values from a table
+to other values drawn from the same table. 
+This can be achieved using a *self-join*. 
+You treat two instances of tables drawn from the same root table
+as separate tables that can be joined together, 
+as you could with any other pair of tables. 
 
+Suppose we want to find pairs of countries whose populations 
+are close to each other--say, within 1,000 of each other. 
+
+Our first attempt might look like this: 
 
 
 ```python
@@ -75,6 +115,18 @@ There exist several other commands, as in the following table.
 ('Greenland',), ('Mexico',), ('United States',)]
 
 ```
+
+This is not what was wanted, for two reasons: 
+- First, the phrase ```SELECT Country``` is going to return only one country per record, but we want pairs of countries.
+- Second, Second, the expression 
+```(ABS(Population - Population) < 1000)``` is always going to return zero
+because it compares every population agains itself, line-by-line. 
+Since they will all be zero, the query will return all the country names in the table. 
+
+
+What we want to do is compare the population in each row with the populations 
+of countries in other rows. 
+To do this, we need to join ```PopByCountry``` with itself using an ```INNER JOIN```. 
 
 ```python
 >>> cur.execute('''
@@ -89,7 +141,68 @@ AND    (A.Country != B.Country)''')
 
 ```
 
+Notice that we used the absolute value function ```ABS()```. 
+Without this, the ```WHERE``` clause would also return other pairs
+of countries where the second country is much larger than the first, 
+i.e. where the difference ```A.Population - B.Population``` would be negative. 
+
+
 ### Nested Queries
+
+
+Instead of pulling from a table, you can replace
+the name of a table with a query that produces the required table.
+
+Example: Select the list of regions that do not have
+a country with a population of 8,764,000.
+
+To make the example more clear, 
+let's remind ourselves what region that might be. 
+
+```python
+>>> cur.execute('''SELECT *
+                   FROM PopByCountry''')
+<sqlite3.Cursor object at 0x102e3e490>
+>>> cur.fetchall()
+[('Eastern Asia', 'China', 1285238),
+ ('Eastern Asia', 'DPR Korea', 24056),
+ ('Eastern Asia', 'Hong Kong (China)', 8764),
+ ('Eastern Asia', 'Mongolia', 3407),
+ ('Eastern Asia', 'Republic of Korea', 41491),
+ ('Eastern Asia', 'Taiwan', 1433),
+ ('North America', 'Bahamas', 368),
+ ('North America', 'Canada', 40876),
+ ('North America', 'Greenland', 43),
+ ('North America', 'Mexico', 126875),
+ ('North America', 'United States', 493038)]
+
+```
+When you include the ```WHERE``` clause to exclude Hong Kong, 
+it also excludes Hong Kong from the list of countries in that region. 
+
+```python
+>>> cur.execute('''SELECT *
+                   FROM PopByCountry
+                   WHERE (PopByCountry.Population != 8764)''')
+<sqlite3.Cursor object at 0x102e3e490>
+>>> cur.fetchall()
+[('Eastern Asia', 'China', 1285238),
+ ('Eastern Asia', 'DPR Korea', 24056),
+ ('Eastern Asia', 'Mongolia', 3407),
+ ('Eastern Asia', 'Republic of Korea', 41491),
+ ('Eastern Asia', 'Taiwan', 1433),
+ ('North America', 'Bahamas', 368),
+ ('North America', 'Canada', 40876),
+ ('North America', 'Greenland', 43),
+ ('North America', 'Mexico', 126875),
+ ('North America', 'United States', 493038)]
+
+```
+
+However, when you try to obtain the list of regions, 
+it still includes Eastern Asia
+because the other countries in Eastern Asia
+do not match the exclusion condition. 
 
 
 ```python
@@ -102,6 +215,11 @@ AND    (A.Country != B.Country)''')
 
 ```
 
+
+As an intermediate step, create a query that creates a table that
+lists the Regions that do have a country with a population of 8,764,000.
+
+
 ```python
 >>> cur.execute('''
 SELECT DISTINCT Region
@@ -113,6 +231,9 @@ WHERE (PopByCountry.Population = 8764)
 [('Eastern Asia',)
 
 ```
+
+Then nest this query in the place of a table 
+within a nested query. 
 
 ```python
 >>> cur.execute('''
@@ -129,7 +250,32 @@ WHERE Region NOT IN
 
 ```
 
+The bracketed expression is a query that produces a table, 
+which is then passed to the nesting query, 
+much like the way you pass a calculated expression as an argument 
+to another function.
+
+
 ### Transactions
+
+A *transaction* is a series of database operations that are interdependent. 
+No operation can be committed unless every single operation 
+can be successfully be committed in sequence. 
+
+For example, processing payroll involves pairs of transactions: 
+withdrawing funds from the employer's account 
+and depositing funds in the employee's account. 
+By grouping the operations into a transaction, 
+it is guaranteed that either both operations occur or neither one does. 
+If the transaction fails, 
+all operations must be *rolled back*. 
+
+Imagine that a library has multiple copies of the same book. 
+It uses a computerized system to track its books by ISBN number. 
+When a patron signs out a book,
+a query is executed on the ```Books``` table to find out
+how many copies of the book are currently signed out
+and updates the count by one more copy. 
 
 ```python
 cur.execute('SELECT SignedOut FROM Books WHERE ISBN = ?', isbn)
@@ -139,6 +285,7 @@ cur.execute('''UPDATE Books SET SignedOut = ?
 cur.commit()
 
 ```
+When a patron returns a book, the reverse happens. 
 
 ```python
 cur.execute('SELECT SignedOut FROM Books WHERE ISBN = ?', isbn)
@@ -148,7 +295,17 @@ cur.execute('''UPDATE Books SET SignedOut = ?
 cur.commit()
 
 ```
-
+What if the library had two computers that handled book sign-outs and returns?
+Both computers would be connected to the same database. 
+What would happen if one computer tried to process a return while the other was
+trying to sign out a copy of the same book at the same time? 
+Computer A might send a query to count the number of books avaiable
+just before computer B, which will get the same value. 
+After computer A updates the count, computer B updates the count again, 
+without taking into account the transaction from Computer A, 
+which was done after Computer B sent the query. 
+The result is that the database only reflects 
+the transaction from Computer B. 
 
 
 ```python
@@ -164,6 +321,9 @@ Computer B: cur.execute('''UPDATE Books SET SignedOut = ?
 Computer B: cur.commit()
 
 ```
+Fortunately, databases can detect such a pair of transactions and 
+would prevent Computer B from committing its transaction. 
+
 
 
 ## Examples

@@ -90,6 +90,61 @@ cur.fetchall()
 
 
 
+##################################################
+### Self-Joins
+##################################################
+
+# Now, let's consider the problem of comparing some values from a table
+# to other values drawn from the same table. 
+# This can be achieved using a *self-join*. 
+# You treat two instances of tables drawn from the same root table
+# as separate tables that can be joined together, 
+# as you could with any other pair of tables. 
+
+# Suppose we want to find pairs of countries whose populations 
+# are close to each other--say, within 1,000 of each other. 
+
+# Our first attempt might look like this: 
+
+
+cur.execute('''SELECT Country FROM PopByCountry
+                   WHERE (ABS(Population - Population) < 1000)''')
+# <sqlite3.Cursor object at 0x102e3e490>
+cur.fetchall()
+# [('China',), ('DPR Korea',), ('Hong Kong (China)',), ('Mongolia',),
+# ('Republic of Korea',), ('Taiwan',), ('Bahamas',), ('Canada',),
+# ('Greenland',), ('Mexico',), ('United States',)]
+
+
+# This is not what was wanted, for two reasons: 
+# - First, the phrase ```SELECT Country``` is going to return only one country per record, but we want pairs of countries.
+# - Second, Second, the expression 
+# ```(ABS(Population - Population) < 1000)``` is always going to return zero
+# because it compares every population agains itself, line-by-line. 
+# Since they will all be zero, the query will return all the country names in the table. 
+
+
+# What we want to do is compare the population in each row with the populations 
+# of countries in other rows. 
+# To do this, we need to join ```PopByCountry``` with itself using an ```INNER JOIN```. 
+
+cur.execute('''
+SELECT A.Country, B.Country
+FROM   PopByCountry A INNER JOIN PopByCountry B
+WHERE  (ABS(A.Population - B.Population) <= 1000)
+AND    (A.Country != B.Country)''')
+# <sqlite3.Cursor object at 0x102e3e490>
+cur.fetchall()
+# [('Republic of Korea', 'Canada'), ('Bahamas', 'Greenland'), ('Canada',
+# 'Republic of Korea'), ('Greenland', 'Bahamas')]
+
+
+# Notice that we used the absolute value function ```ABS()```. 
+# Without this, the ```WHERE``` clause would also return other pairs
+# of countries where the second country is much larger than the first, 
+# i.e. where the difference ```A.Population - B.Population``` would be negative. 
+
+
 
 ##################################################
 # Nested Queries
@@ -105,6 +160,16 @@ cur.fetchall()
 
 
 # Information:
+cur.execute('''SELECT *
+                   FROM PopByCountry''')
+
+cur.fetchall()
+
+
+# When you include the ```WHERE``` clause to exclude Hong Kong, 
+# it also excludes Hong Kong from the list of countries in that region. 
+
+
 cur.execute('''SELECT *
                    FROM PopByCountry
                    WHERE (PopByCountry.Population != 8764)''')
@@ -122,7 +187,7 @@ cur.fetchall()
 # but Eastern Asia is still included. 
 
 
-# As an inermediate step, create a query that creates a table that 
+# As an intermediate step, create a query that creates a table that 
 # lists the Regions that do have a country with a population of 8,764,000.
 
 # These are the other rows of the table. 
@@ -146,13 +211,19 @@ WHERE Region NOT IN
 
 cur.fetchall()
 
-
+# The bracketed expression is a query that produces a table, 
+# which is then passed to the nesting query, 
+# much like the way you pass a calculated expression as an argument 
+# to another function.
 
 # Close the connection when finished. 
-con.close()
+# con.close()
 
+# If you want to save that progress, 
+# make sure to commit before closing the connection.
 
-
+# con.commit()
+# con.close()
 
 
 ##################################################

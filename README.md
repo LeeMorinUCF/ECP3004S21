@@ -79,7 +79,7 @@ classified according to the following taxonomy of positions.
 
 
 The hourglass shape indicates the relative proportions of performers in each role
-(and, in fact, understate the proportions to a large degree). 
+(and, in fact, understates the proportions to a large degree). 
 Although many of you would like to attain a position with a prestigious job title, 
 there is plenty of work out there in some of the less glamorous jobs that need to be done, with some job titles you haven't heard of. 
 
@@ -97,7 +97,7 @@ These analysts are typically the consumers of the database
 and organize data for statistical modeling to answer business questions
 and monitor business performance. 
 
-As a junior job seeker, fresh out of college, 
+As a junior job-seeker, fresh out of college, 
 your goal is to find a position *somewhere* on this landscape
 and then your on-the-job performance record
 will open the doors to the next position. 
