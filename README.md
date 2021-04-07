@@ -77,10 +77,12 @@ classified according to the following taxonomy of positions.
 
 <img src="Images/Business_Analytics_Hourglass_ECP.png" width="500"/>
 
-The hourglass shapes indicate the relative proportions of performers in each role
+#### A Taxonomy of Business Analysts
+
+The hourglass shape indicates the relative proportions of performers in each role
 (and, in fact, understate the proportions to a large degree). 
-Although many of you would like to attain a position with a presigious job title, 
-there is plenty of work to be done in some of the less glamorous jobs that need to be done, with some job titles you haven't heard of. 
+Although many of you would like to attain a position with a prestigious job title, 
+there is plenty of work out there in some of the less glamorous jobs that need to be done, with some job titles you haven't heard of. 
 
 Many of the positions available to students of this course can apply the skills to two main areas. 
 One is to use SQL and File IO skills to organize data for measuring business success
@@ -96,3 +98,7 @@ These analysts are typically the consumers of the database
 and organize data for statistical modeling to answer business questions
 and monitor business performance. 
 
+As a junior job seeker, fresh out of college, 
+your goal is to find a position *somewhere* on this landscape
+and then your on-the-job performance record
+will open the doors to the next position. 
