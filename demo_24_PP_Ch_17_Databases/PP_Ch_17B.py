@@ -411,8 +411,50 @@ for row in cur.fetchall():
 
 
 
+# Check for yourself:
+cur.execute('''SELECT A.Province, A.Population / A.Area AS PopDensity
+ FROM Density A 
+ ORDER BY PopDensity''')
+for row in cur.fetchall():
+ print(row)
+
+
+
+##################################################
+# Commit changes and close the connection
+##################################################
+
+
+# The commit method saves the changes. 
+con.commit()
+
+
+# Close the connection when finished. 
+con.close()
+
+# Then we can continue with this file when you have time
+# to work on it later.
+
+
+
+##################################################
+# Extra code snippets
+##################################################
+
+
+# This can get the schema of the table,
+# cur.execute("PRAGMA table_info('Density')").fetchall()
+# cur.execute("PRAGMA table_info('Capitals')").fetchall()
+# which states the names of the variables and the data types.
+
+# In case things go wrong, you can always drop the table
+# and start over:
+# cur.execute('DROP TABLE Density')
+# cur.execute('DROP TABLE Population')
+
 
 ##################################################
 # End
 ##################################################
+
 

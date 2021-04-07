@@ -67,4 +67,32 @@ distribution of Python.
 repository to share course materials. This will be the primary medium for distributing materials for course demonstrations and it offers a convenient way to obtain feedback on coding assignments. 
 
 
+## After This Course
+
+What can you do with the skills you learn in this course? 
+There are quite a few options to apply Python programming to 
+business problems. 
+The landscape of business analytics roles can be
+classified according to the following taxonomy of positions. 
+
+<img src="Images/Business_Analytics_Hourglass_ECP.png" width="500"/>
+
+The hourglass shapes indicate the relative proportions of performers in each role
+(and, in fact, understate the proportions to a large degree). 
+Although many of you would like to attain a position with a presigious job title, 
+there is plenty of work to be done in some of the less glamorous jobs that need to be done, with some job titles you haven't heard of. 
+
+Many of the positions available to students of this course can apply the skills to two main areas. 
+One is to use SQL and File IO skills to organize data for measuring business success
+and for statistical modeling. 
+This is more closely related to the administration of databases and the "Data Engineering" role. 
+They keep the plumbing working, so to speak, keeping the data flowing through the pipes.
+
+On the other side, closer to the business operation, 
+many analysts use data to answer business questions and to make decisions. 
+These roles can be broadly labeled as "Business Analyst" but often have titles
+relating to a particular business function, such as marketing or operations. 
+These analysts are typically the consumers of the database
+and organize data for statistical modeling to answer business questions
+and monitor business performance. 
 
