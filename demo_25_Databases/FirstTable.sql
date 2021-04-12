@@ -1,6 +1,7 @@
 /*
     Create FirstTable table with variables: KeyID, Date and Name.
     The primary key is KeyID.
+    Then polulate FirstTable table with a few entries.
 
 */;
 
@@ -19,4 +20,3 @@ INSERT INTO FirstTable(KeyID, Date, Name)
 VALUES(2, "20131204", "Konstantin Golyaev");
 INSERT INTO FirstTable(KeyID, Date, Name)
 VALUES(3, "20131204", "Alberto M. Segre");
-

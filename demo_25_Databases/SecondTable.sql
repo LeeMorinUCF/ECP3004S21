@@ -1,6 +1,7 @@
 /*
     Create SecondTable table with variables: KeyID, OtherID and Name.
     The primary key is KeyID.
+    Then polulate SecondTable table with a few entries.
 
 */;
 

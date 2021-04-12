@@ -134,29 +134,41 @@ AND
 
 ### Using Command Files
 
-While you might type faster than I do, what you type at the prompt would have to be re-entered to make any modifications. In addition, there would be no record of what you entered.
+One of the benefits of writing your queries in separate files is *portability*: 
+SQL is a language in its own right, so you can run scripts with SQL queries
+on a number of different platforms. 
 
-If your commands are collected into ```.sql``` scripts then it would serve as a form of documentation, enabling someone else to build upon your work in the future.
+If your commands are collected into ```.sql``` scripts 
+then it would also serve as a form of documentation, 
+enabling someone else to build upon your work in the future.
 
 See the scripts ```FirstTable.sql```, ```SecondTable.sql``` and ```ExampleThetaJoin.sql``` above.
 
-You can create the first table by running the command 
+One way of inplementing this is by installing the program sqlite3
+on your operating system. 
+Then you can open it in a terminal window and write short commands to run the scripts. 
+These SQL scripts typically have other commands above and below the queries
+to format files and redirect output. 
+
+
+For example, you can create the first table by running the command 
 
 ```
 sqlite> .read FirstTable.sql
 ```
 at the ```sqlite>``` prompt and likewise for the second table. 
-Verify the result by entering ```.tables``` and ```.schema```.
+Verify the result by entering ```.tables``` and ```.schema```, 
+which are other sqlite3 commands that work at the command prompt.
 
-RUn the sample query by entering 
+Run the sample query by entering 
 ```
 sqlite> .read ExampleThetaJoin.sql
 ```
 at the ```sqlite>``` prompt.
 
-To see the result, type ```more ExampleThetaJoin.csv``` in a terminal window. 
+To see the result, type ```cat ExampleThetaJoin.csv``` in a terminal window. 
 
-
+This just one more among many ways to submit SQL queries to a database. 
 
 
 ## Auctions Database
@@ -249,10 +261,22 @@ INNER JOIN Bidders AS bidders
 ;
 ```
 
-This is but one of several kinds of joins possible. 
+The ```INNER JOIN``` is but one of several kinds of joins possible. 
 Since a feature of this database is that every bid corresponds to one bidder in the bidder table, this example is not rich enough to demonstrate the various kinds of joins. 
-As part of these examples, the query is made more complex by introducing subqueries in the place of the joined tables.
+As part of the following examples, the query is made more complex by introducing subqueries in the place of the joined tables, 
+```WHERE``` the table on one side is missing some rows, 
+to illustrate what happens when this is the case.
 
+In SQL, tables can be joined with four basic types of joins:
+- The ```INNER JOIN``` collects all of the entries that appear in *both* tables. 
+- The ```LEFT JOIN``` collects all of the entries that appear in the *first*, 
+or ```LEFT``` table but are not necessarily in both tables.
+- The ```RIGHT JOIN``` collects all of the entries that appear in the *second*, 
+or ```RIGHT``` table but are not necessarily in both tables.
+- The ```OUTER JOIN``` collects all of the entries that appear in *any* of the tables. 
+
+It is customary to illustrate the entries included in each type of join, 
+in which a set of entries are contained in any of two tables A and B. 
 
 
 <img src="Images/join_diagram.jpg" width="500">
@@ -278,6 +302,8 @@ Examples of these joins are as follows.
 
 #### Left Join
 
+The ```LEFT JOIN``` collects all of the entries that appear in the *first*, 
+or ```LEFT``` table but are not necessarily in both tables.
 
 ```
 SELECT 
@@ -298,6 +324,9 @@ GROUP BY
 
 #### Right Join
 
+The ```RIGHT JOIN``` collects all of the entries that appear in the *second*, 
+or ```RIGHT``` table but are not necessarily in both tables.
+
 ```
 SELECT 
     bidders.BidderID,
@@ -316,7 +345,25 @@ GROUP BY
 ```
 
 
+```python
+Traceback (most recent call last):
+
+  File "<ipython-input-89-6dbd0f81c504>", line 1, in <module>
+    cur.execute(
+
+OperationalError: RIGHT and FULL OUTER JOINs are not currently supported
+
+```
+
+Notice that sqlite3 will complain if you try to do a ```RIGHT JOIN```. 
+That is part of what makes it "lite". 
+It is not much of a loss, however, 
+because a ```RIGHT JOIN``` can be done with a ```LEFT JOIN```, 
+with the tables A and B switched. 
+
 #### Inner Join
+
+The ```INNER JOIN``` collects all of the entries that appear in *both* tables. 
 
 ```
 SELECT 
@@ -335,9 +382,14 @@ GROUP BY
 ;
 ```
 
+As with a ```RIGHT JOIN```, an ```INNER JOIN``` can be done 
+with a ```LEFT JOIN```, 
+with a ```WHERE``` clause to exclude missing values in table B. 
 
 
 #### Outer Join
+
+The ```OUTER JOIN``` collects all of the entries that appear in *any* of the tables. 
 
 ```
 SELECT 
@@ -356,15 +408,38 @@ GROUP BY
 ;
 ```
 
+```python
+Traceback (most recent call last):
+
+  File "<ipython-input-91-309ed246d196>", line 1, in <module>
+    cur.execute(
+
+OperationalError: RIGHT and FULL OUTER JOINs are not currently supported
+
+```
+
+As with ```RIGHT JOIN```s, sqlite3 does not have this functionality. 
+It can, however, be accomplished with two queries with ```RIGHT``` and ```LEFT JOIN```s
+that are stacked with a ```UNION``` clause 
+and the ```DISTINCT``` qualifier to eliminate duplicate entries that appear in both tables. 
+
+With this in mind, you can usually achieve anything you need to with a ```LEFT JOIN```, 
+so sqlite3 is not as light as it may seem. 
 
 
 ### Filters
 
 
-Additionally, one can select a subset of rows staisfying certain criteria. 
+As in many of the examples we have studied use ```WHERE``` clause, 
+one can select a subset of rows satisfying certain criteria. 
+In the same sense that the ```SELECT``` keyword selects columns of data, the vertical dimension,
+the ```WHERE``` keyword is used to select rows, the horizontal dimension. 
 
 Run the script ```ComputeBidSummariesAndFilter.sql``` to see such an example using a ```WHERE``` clause. 
-In the textbook, you will find an alternative approach using a ```HAVING``` clause. 
+In the textbook, *A Gentle Introduction to Effective Computing in 
+Quantitative Research* by Paarsch and Golyaev, 
+you will find an alternative approach using a ```HAVING``` clause, 
+which is another alternative. 
 
 
 
