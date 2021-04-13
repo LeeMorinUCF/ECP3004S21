@@ -1,4 +1,4 @@
-# Interacting with Databases
+# Interacting with Databases Using SQL Scripts
 
 Now that we know how to interact with a database, 
 we will consider a few more examples. 
@@ -19,7 +19,10 @@ We'll start with a simple example before we get too far.
 
 ### Operations on a single table
 
-First specify the schema of the first table
+First specify the *schema* of the first table.
+The *schema* is the list of specifications for the table, 
+including the names of *fields* and the data types of the variables
+in each field. 
 
 ```
 CREATE TABLE FirstTable(
@@ -30,8 +33,40 @@ PRIMARY KEY    (KeyID)
 );
 ```
 
-To verify the above, you can verify the schema by using the ```.schema``` command at the ```sqlite``` prompt. 
-Aside from checking for mistakes made on input, this is epecially useful for understanding a database created by someone else. 
+This query is saved in the SQL script ```Create_FirstTable.sql```. 
+We can run it by reading the SQL code in the script as a string, 
+then running it using the ```execute()``` method of our database connection, 
+as if we entered the string manually. 
+
+```python
+import sqlite3
+
+con = sqlite3.connect('example.db')
+cur = con.cursor()
+
+sql_str = open("Create_FirstTable.sql").read()
+cur.execute(sql_str)
+
+```
+
+
+
+To verify the above, you can output the schema by using the command 
+
+```python
+cur.execute("PRAGMA table_info('FirstTable')").fetchall()
+
+```
+
+It ouputs the following:
+```python
+[(0, 'KeyID', 'INTEGER', 1, None, 1),
+ (1, 'Date', 'TEXT', 1, None, 0),
+ (2, 'Name', 'TEXT', 1, None, 0)]
+```
+The most important parameters at this stage are the names of the fields 
+and the data types. 
+Aside from checking for mistakes made on input, this is especially useful for understanding a database created by someone else. 
 
 You can then populate ```FirstTable``` with a few entries as follows
 
@@ -43,41 +78,95 @@ VALUES(2, "20131204", "Konstantin Golyaev");
 INSERT INTO FirstTable(KeyID, Date, Name)
 VALUES(3, "20131204", "Alberto M. Segre");
 ```
-To see the table entered above, you can execute the simplest SQL query
+
+This information is recorded in the SQL script ```Populate_FirstTable.sql```.
+
+
+```python
+>>> sql_str = open("Populate_FirstTable.sql").read()
+>>> cur.execute(sql_str)
+
 ```
-SELECT * FROM FirstTable;
+
+This is the same set of commands we used to create the table 
+but it throws an error:
+
+```python
+Traceback (most recent call last):
+
+  File "<ipython-input-101-26fc28032745>", line 10, in <module>
+    cur.execute(sql_str)
+
+Warning: You can only execute one statement at a time.
+```
+
+The ```execute()``` method takes a string as the argument and
+is designed to execute only one SQL statement. 
+The right tool for the job is the ```executescript()``` method. 
+
+```python
+cur.executescript(sql_str)
+```
+
+
+To see the table entered above, you can execute the simplest SQL query
+```python
+>>> cur.execute('''SELECT * FROM FirstTable''')
+>>> cur.fetchall()
+[(1, '20131204', 'Harry J. Paarsch'),
+ (2, '20131204', 'Konstantin Golyaev'),
+ (3, '20131204', 'Alberto M. Segre')]
 ```
 which will return the entire table. 
 
 You can execute a query with a restriction by adding a ```WHERE``` clause
 
-```
-SELECT * FROM FirstTable WHERE KeyID > 1;
+```python
+>>> cur.execute("SELECT * FROM FirstTable WHERE KeyID > 1")
+>>> cur.fetchall()
+[(2, '20131204', 'Konstantin Golyaev'), (3, '20131204', 'Alberto M. Segre')]
 ```
 
 Alternatively, you can execute a query with a projection by specifying the fields
-```
-SELECT Name, Date FROM FirstTable;
+```python
+>>> cur.execute("SELECT Name, Date FROM FirstTable")
+>>> cur.fetchall()
+[('Harry J. Paarsch', '20131204'),
+ ('Konstantin Golyaev', '20131204'),
+ ('Alberto M. Segre', '20131204')]
 ```
 
 If you prefer variables that are functions of the fields in the table, you can specify them with additional functions
-```
-SELECT 
-    Name ,
-    SUBSTR(Date 1, 4) as Year 
-FROM FirstTable;
+```python
+>>> cur.execute(
+    "SELECT \
+        Name ,\
+        SUBSTR(Date, 1, 4) as Year \
+    FROM FirstTable"
+)
+>>> cur.fetchall()
+[('Harry J. Paarsch', '2013'),
+ ('Konstantin Golyaev', '2013'),
+ ('Alberto M. Segre', '2013')]
 ```
 
+Notice that the backslash ```\```
+allows a string to continue to the next line.
 
 Finally, you can combine these operations in a more complex query
 
-```
-SELECT 
-    Name ,
-    SUBSTR(Date 1, 4) as Year 
-FROM 
-    FirstTable
-WHERE KeyID > 1;
+```python
+>>> cur.execute(
+    "SELECT \
+        Name ,\
+            SUBSTR(Date, 1, 4) as Year \
+    FROM \
+        FirstTable \
+    WHERE KeyID > 1 \
+"
+)
+>>> cur.fetchall()
+[('Konstantin Golyaev', '2013'), ('Alberto M. Segre', '2013')]
 ```
 
 ### Combining more than one table
@@ -104,32 +193,45 @@ INSERT INTO SecondTable(KeyID, OtherID, Name)
 VALUES(102, 2, "Konstantin Golyaev");
 ```
 
-Now you can verify the contents of the database with ```.tables``` and ```.schema```
+Since we know how to execute an SQL script with multiple commands, 
+we can create the table and populate it from one script. 
 
-In addition, for a small example like this, you can output the tables to screen
-
-```
-SELECT * FROM FirstTable;
-```
-```
-SELECT * FROM SecondTable;
+```python
+sql_str = open("SecondTable.sql").read()
+cur.executescript(sql_str)
 ```
 
-With two tables, you can implement a theta join
+Now you can verify the contents of the database by executing 
+```PRAGMA table_info('SecondTable')``` or, 
+for a small example such as this, you can output the table to screen
 
+```python
+>>> cur.execute('''SELECT * FROM SecondTable''')
+>>> cur.fetchall()
+[(101, 1, 'Harry J. Paarsch'), (102, 2, 'Konstantin Golyaev')]
 ```
-SELECT 
-    FirstTable.KeyID ,
-    SecondTable.KeyID ,
-    FirstTable.Name
-FROM
-    FirstTable ,
-    SecondTable
-WHERE 
-    (FirstTable.Name = SecondTable.Name)
-AND
-    (FirstTable.KeyID = SecondTable.OtherID)
-;
+
+With two tables, you can implement what is sometimes called a *theta join*. 
+Theta is the Greek letter that is sometimes used to denote the operation
+of combining tables. 
+
+```python
+>>> cur.execute(
+    "SELECT \
+        FirstTable.KeyID , \
+        SecondTable.KeyID , \
+        FirstTable.Name \
+    FROM \
+        FirstTable , \
+        SecondTable \
+    WHERE \
+        (FirstTable.Name = SecondTable.Name) \
+    AND \
+        (FirstTable.KeyID = SecondTable.OtherID) \
+    ;"
+    )
+>>> cur.fetchall()
+[(1, 101, 'Harry J. Paarsch'), (2, 102, 'Konstantin Golyaev')]
 ```
 
 ### Using Command Files
@@ -157,7 +259,9 @@ For example, you can create the first table by running the command
 sqlite> .read FirstTable.sql
 ```
 at the ```sqlite>``` prompt and likewise for the second table. 
-Verify the result by entering ```.tables``` and ```.schema```, 
+Verify the result by entering 
+```.tables``` (which lists the tables in the database) 
+and ```.schema``` (which shows the fields and data types in each table), 
 which are other sqlite3 commands that work at the command prompt.
 
 Run the sample query by entering 
@@ -168,7 +272,7 @@ at the ```sqlite>``` prompt.
 
 To see the result, type ```cat ExampleThetaJoin.csv``` in a terminal window. 
 
-This just one more among many ways to submit SQL queries to a database. 
+This is just one more among many ways to submit SQL queries to a database. 
 
 
 ## Auctions Database
@@ -178,66 +282,163 @@ The procedure is very similar, aside from the commands for reading in the data.
 
 Open a new database in sqlite3
 
+```python
+con = sqlite3. connect("AuctionsDataBase.db")
+cur = con. cursor()
 ```
-sqlite3 AuctionsDataBase.db
-```
+
 Next, read in the scripts ```CreateAuctionsTable.sql```, ```CreateBiddersTable.sql``` and ```CreateBidsTable.sql``` to create the tables, just as for the sample database.
 
-As above, you can verify the entry by executing the ```.tables``` and ```.schema``` commands.
+```python
+# Create the Auctions table. 
+sql_str = open("CreateAuctionsTable.sql").read()
+cur.executescript(sql_str)
 
-The next step is to populate the tables with the ```.csv``` files associated with each, using the ```.import``` command.
+# Create the Bidders table. 
+sql_str = open("CreateBiddersTable.sql").read()
+cur.executescript(sql_str)
+
+# Create the Bids table. 
+sql_str = open("CreateBidsTable.sql").read()
+cur.executescript(sql_str)
 ```
-.separator ,
-.import AuctionsTable.csv Auctions
-.import BiddersTable.csv Bidders
-.import BidsTable.csv Bids
+
+
+As above, you can verify the entry by executing the 
+```PRAGMA table_info('Table_Name')``` command.
+
+The next step is to populate the tables with the ```.csv``` files associated with each.
+We need to read in the file, so we will use the ```csv``` module
+to obtain a list of entries in the rows of this file.
+
+```python
+import csv
+table_file = open("AuctionsTable.csv")
+rows = csv.reader(table_file)
+cur. executemany("INSERT INTO Auctions VALUES (?, ?, ?, ?)", rows)
 ```
+
+Notice that, this time, we used the ```executemany``` method
+to iterate over the list of rows in the ```csv``` file. 
+Do the same for the other two tables.
+
+```python
+table_file = open("BiddersTable.csv")
+rows = csv.reader(table_file)
+cur. executemany("INSERT INTO Bidders VALUES \
+                 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", rows)
+
+table_file = open("BidsTable.csv")
+rows = csv.reader(table_file)
+cur. executemany("INSERT INTO Bids VALUES \
+                 (?, ?, ?, ?)", rows)
+
+```
+
 You can still verify the contents of the tables with the query
 ```
-sqlite> SELECT * FROM Auctions;
+SELECT * FROM Auctions;
 ```
-and so on but we will move on to the scripted queries instead.
+and so on but we will move on to running the queries instead.
+Now let's execute a query: `ComputeBidSummariesByBidder.sql```.
+The above query performs two main actions.
+First, it aggregates data by bidder.
+Second, it calculates values for each bidder.
 
-To view the products of the queries, you may want to keep open a terminal window to view the output of ```ls``` before and after the query to see the output file created.
 
-As above, execute the queries using the ```.read``` command at the ```sqlite>``` prompt.
-
+In principle, you can write your queries in scripts
+and some samples are shown above, such as:
+```python
+sql_str = open("ComputeBidSummariesByBidder.sql").read()
+cur.executescript(sql_str)
+cur.fetchall()
 ```
-sqlite> .read ComputeBidSummariesByBidder.sql
-```
-Now you can view the table ```ComputeBidSummariesByBidder.out``` as specified in the script.
-The procedure is the same for the other queries.
 
-The above query performs two main actions. 
-First, it aggregates data by bidder. Second, it joins data from two different tables. 
-Let's look at these two components separately. 
+Note that the sample scripts are written in another dialect of SQL,
+which specifies the format of the outputs and
+directs the output to specific files.
+
+Instead, we will execute the queries
+by entering them in a string.
+
+
+
+```python
+>>> cur.execute(" \
+            SELECT \
+                b.BidderID     AS BidderID , \
+                MIN(b.Bid)     AS SmallestBid , \
+                AVG(b.Bid)     AS AverageBid , \
+                MAX(b.Bid)     AS LargestBid \
+            FROM \
+                Bids AS b \
+            GROUP BY \
+                b.BidderID \
+            ;")
+>>> cur.fetchall()
+[(1, 10.86, 13.531666666666666, 19.21),
+ (2, 8.81, 11.384285714285713, 13.09),
+ (3, 7.39, 10.5825, 15.62),
+ (4, 7.93, 12.267500000000002, 15.67),
+ (5, 7.35, 10.09, 14.28),
+ (6, 7.14, 9.898333333333333, 13.03),
+ (7, 7.99, 10.128, 12.34)]
+```
+
+Notice that we use the keyword ```AS``` for both the
+variables and the tables:
+Since we are calculating the variables, they do not have names.
+For the table, we can abbreviate the name,
+which is often useful in practice when the name of the table
+might be uninformative or excessively long.
+
 
 
 ### Aggregation 
 
 The aggregation step allows you to calculate functions of the data and tabulate them by different values of a particular variable. 
 
-```
-SELECT 
-    AVG(bids.Bid) AS AverageBid
-FROM
-    Bids AS bids
-GROUP BY
-    bids.BidderID
-;
+```python
+>>> cur.execute(" \
+            SELECT \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                Bids AS bids \
+            GROUP BY \
+                bids.BidderID \
+            ;"
+            )
+>>> cur.fetchall()
+[(13.531666666666666,),
+ (11.384285714285713,),
+ (10.5825,),
+ (12.267500000000002,),
+ (10.09,),
+ (9.898333333333333,),
+ (10.128,)]
 ```
 
 You can add unique variables by the grouping variable.
 
-```
-SELECT 
-    bids.BidderID,
-    AVG(bids.Bis) AS AverageBid
-FROM
-    Bids AS bids
-GROUP BY
-    bids.BidderID
-;
+```python
+>>> cur.execute(" \
+            SELECT \
+                bids.BidderID, \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                Bids AS bids \
+            GROUP BY \
+                bids.BidderID \
+            ;"
+            )
+>>> cur.fetchall()
+[(1, 13.531666666666666),
+ (2, 11.384285714285713),
+ (3, 10.5825),
+ (4, 12.267500000000002),
+ (5, 10.09),
+ (6, 9.898333333333333),
+ (7, 10.128)]
 ```
 
 
@@ -248,17 +449,58 @@ GROUP BY
 
 An intermediate step is to join together two tables by the join key BidderID. 
 
-```
-SELECT 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName,
-    bids.Bid
-FROM
-    Bids AS bids
-INNER JOIN Bidders AS bidders
-    ON bids.BidderID = bidders.BidderID
-;
+```python
+>>> cur.execute(
+            "SELECT \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName, \
+                bids.Bid \
+            FROM \
+                Bids AS bids \
+            INNER JOIN Bidders AS bidders \
+                ON bids.BidderID = bidders.BidderID \
+            ;"
+)
+>>> cur.fetchall()
+[(1, 'Adam', 'Cooper', 12.1),
+ (2, 'Bryan', 'Dykstra', 12.38),
+ (3, 'Charles', 'Elan', 11.63),
+ (5, 'Edward', 'Gulden', 8.84),
+ (6, 'Frank', 'Hollister', 8.37),
+ (7, 'George', 'Ivanov', 7.99),
+ (5, 'Edward', 'Gulden', 9.8),
+ (6, 'Frank', 'Hollister', 7.14),
+ (7, 'George', 'Ivanov', 12.34),
+ (2, 'Bryan', 'Dykstra', 12.84),
+ (4, 'David', 'Forester', 10.88),
+ (6, 'Frank', 'Hollister', 13.03),
+ (1, 'Adam', 'Cooper', 12.27),
+ (2, 'Bryan', 'Dykstra', 12.76),
+ (3, 'Charles', 'Elan', 7.39),
+ (4, 'David', 'Forester', 15.67),
+ (7, 'George', 'Ivanov', 12.25),
+ (1, 'Adam', 'Cooper', 19.21),
+ (2, 'Bryan', 'Dykstra', 9.93),
+ (3, 'Charles', 'Elan', 7.69),
+ (5, 'Edward', 'Gulden', 14.28),
+ (5, 'Edward', 'Gulden', 10.18),
+ (6, 'Frank', 'Hollister', 10.74),
+ (3, 'Charles', 'Elan', 15.62),
+ (4, 'David', 'Forester', 7.93),
+ (1, 'Adam', 'Cooper', 12.59),
+ (2, 'Bryan', 'Dykstra', 9.88),
+ (5, 'Edward', 'Gulden', 7.35),
+ (6, 'Frank', 'Hollister', 12.06),
+ (7, 'George', 'Ivanov', 8.96),
+ (1, 'Adam', 'Cooper', 14.16),
+ (2, 'Bryan', 'Dykstra', 13.09),
+ (6, 'Frank', 'Hollister', 8.05),
+ (7, 'George', 'Ivanov', 9.1),
+ (1, 'Adam', 'Cooper', 10.86),
+ (2, 'Bryan', 'Dykstra', 8.81),
+ (4, 'David', 'Forester', 14.59)]
+
 ```
 
 The ```INNER JOIN``` is but one of several kinds of joins possible. 
@@ -305,21 +547,30 @@ Examples of these joins are as follows.
 The ```LEFT JOIN``` collects all of the entries that appear in the *first*, 
 or ```LEFT``` table but are not necessarily in both tables.
 
-```
-SELECT 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName,
-    AVG(bids.Bid) AS AverageBid
-FROM
-    Bids AS bids
-LEFT JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
-    ON bids.BidderID = bidders.BidderID
-GROUP BY 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName
-;
+```python
+>>> cur.execute(
+            "SELECT \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName, \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                Bids AS bids \
+            LEFT JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
+                ON bids.BidderID = bidders.BidderID \
+            GROUP BY \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName \
+            ;"
+            )
+>>> cur.fetchall()
+[(None, None, None, 10.002727272727272),
+ (1, 'Adam', 'Cooper', 13.531666666666666),
+ (2, 'Bryan', 'Dykstra', 11.384285714285713),
+ (3, 'Charles', 'Elan', 10.5825),
+ (4, 'David', 'Forester', 12.267500000000002),
+ (5, 'Edward', 'Gulden', 10.09)]
 ```
 
 #### Right Join
@@ -327,25 +578,24 @@ GROUP BY
 The ```RIGHT JOIN``` collects all of the entries that appear in the *second*, 
 or ```RIGHT``` table but are not necessarily in both tables.
 
-```
-SELECT 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName,
-    AVG(bids.Bid) AS AverageBid
-FROM
-    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
-RIGHT JOIN Bidders AS bidders
-    ON bids.BidderID = bidders.BidderID
-GROUP BY 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName
-;
-```
-
-
 ```python
+>>> cur.execute(
+            "SELECT \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName, \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
+            RIGHT JOIN Bidders AS bidders \
+                ON bids.BidderID = bidders.BidderID \
+            GROUP BY \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName \
+            ;"
+            )
+>>> cur.fetchall()
 Traceback (most recent call last):
 
   File "<ipython-input-89-6dbd0f81c504>", line 1, in <module>
@@ -365,21 +615,27 @@ with the tables A and B switched.
 
 The ```INNER JOIN``` collects all of the entries that appear in *both* tables. 
 
-```
-SELECT 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName,
-    AVG(bids.Bid) AS AverageBid
-FROM
-    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
-INNER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
-    ON bids.BidderID = bidders.BidderID
-GROUP BY 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName
-;
+```python
+>>> cur.execute(
+            "SELECT \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName, \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
+            INNER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
+                ON bids.BidderID = bidders.BidderID \
+            GROUP BY \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName \
+            ;"
+            )
+>>> cur.fetchall()
+[(3, 'Charles', 'Elan', 10.5825),
+ (4, 'David', 'Forester', 12.267500000000002),
+ (5, 'Edward', 'Gulden', 10.09)]
 ```
 
 As with a ```RIGHT JOIN```, an ```INNER JOIN``` can be done 
@@ -391,24 +647,24 @@ with a ```WHERE``` clause to exclude missing values in table B.
 
 The ```OUTER JOIN``` collects all of the entries that appear in *any* of the tables. 
 
-```
-SELECT 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName,
-    AVG(bids.Bid) AS AverageBid
-FROM
-    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
-FULL OUTER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
-    ON bids.BidderID = bidders.BidderID
-GROUP BY 
-    bidders.BidderID,
-    bidders.FirstName,
-    bidders.LastName
-;
-```
-
 ```python
+>>> cur.execute(
+            "SELECT \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName, \
+                AVG(bids.Bid) AS AverageBid \
+            FROM \
+                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
+            FULL OUTER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
+                ON bids.BidderID = bidders.BidderID \
+            GROUP BY \
+                bidders.BidderID, \
+                bidders.FirstName, \
+                bidders.LastName \
+            ;"
+            )
+>>> cur.fetchall()
 Traceback (most recent call last):
 
   File "<ipython-input-91-309ed246d196>", line 1, in <module>

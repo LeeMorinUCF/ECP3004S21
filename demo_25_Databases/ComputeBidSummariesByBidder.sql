@@ -5,12 +5,11 @@
 
 
 SELECT
-    bids.BidderID     AS BidderID ,
-    MIN(bids.Bid)     AS SmallestBid ,
-    AVG(bids.Bid)     AS AverageBid ,
-    MAX(bids.Bid)     AS LargestBid
+    b.BidderID     AS BidderID ,
+    MIN(b.Bid)     AS SmallestBid ,
+    AVG(b.Bid)     AS AverageBid ,
+    MAX(b.Bid)     AS LargestBid
 FROM
-    Bids AS bids
+    Bids AS b
 GROUP BY
-    bids.BidderID
-;
+    b.BidderID

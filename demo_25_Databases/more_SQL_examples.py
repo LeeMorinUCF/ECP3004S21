@@ -94,6 +94,8 @@ cur.execute(sql_str)
 cur.execute("PRAGMA table_info('FirstTable')").fetchall()
 
 
+
+
 # Read another script to populate the table. 
 sql_str = open("Populate_FirstTable.sql").read()
 
@@ -186,7 +188,7 @@ cur.fetchall()
 # If you prefer variables that are functions of the fields
 # in the table, you can specify them with additional functions. 
 
-# Notice that the back-slash \
+# Notice that the backslash \
 # allows a string to continue to the next line. 
 
 cur.execute(
@@ -204,7 +206,7 @@ cur.fetchall()
 cur.execute(
     "SELECT \
         Name ,\
-            SUBSTR(Date 1, 4) as Year \
+            SUBSTR(Date, 1, 4) as Year \
     FROM \
         FirstTable \
     WHERE KeyID > 1 \
@@ -372,37 +374,41 @@ cur.fetchall()
 # Now let's execute a query: ComputeBidSummariesByBidder.sql.
 # The above query performs two main actions. 
 # First, it aggregates data by bidder. 
-# Second, it joins data from two different tables. 
+# Second, it calculates values for each bidder. 
 
 
+# In principle, you can write your queries in scripts
+# and some samples are shown above, such as: 
+# sql_str = open("ComputeBidSummariesByBidder.sql").read()
+# print(sql_str)
+# cur.executescript(sql_str)
+# cur.fetchall()
 
-sql_str = open("ComputeBidSummariesByBidder.sql").read()
-print(sql_str)
-cur.executescript(sql_str)
-cur.fetchall()
+# Note that they are written in another dialect of SQL, 
+# which specifies the format of the outputs and 
+# directs the output to specific files. 
 
-
-
-cur.execute("PRAGMA table_info('Bids')").fetchall()
-
-
-
+# Instead, we will execute the queries 
+# by entering them in a string. 
 cur.execute(" \
             SELECT \
-                bids.BidderID     AS BidderID , \
-                MIN(bids.Bid)     AS SmallestBid , \
-                AVG(bids.Bid)     AS AverageBid , \
-                MAX(bids.Bid)     AS LargestBid \
+                b.BidderID     AS BidderID , \
+                MIN(b.Bid)     AS SmallestBid , \
+                AVG(b.Bid)     AS AverageBid , \
+                MAX(b.Bid)     AS LargestBid \
             FROM \
-                Bids AS bids \
+                Bids AS b \
             GROUP BY \
-                bids.BidderID \
+                b.BidderID \
             ;")
 cur.fetchall()
 
-
-
-# Let's look at these two components separately.
+# Notice that we use the keyword "AS" for both the 
+# variables and the tables:
+# Since we are calculating the variables, they do not have names.
+# For the table, we can abbreviate the name, 
+# which is often useful in practice when the name of the table
+# might be uninformative or excessively long. 
 
 
 #--------------------------------------------------
@@ -462,13 +468,15 @@ cur.execute(
 )
 cur.fetchall()
 
-# This is but one of several kinds of joins possible. 
+# The INNER JOIN but one of several kinds of joins possible. 
 # Since a feature of this database is that 
 # every bid corresponds to one bidder in the bidder table, 
 # this example is not rich enough to demonstrate 
 # the various kinds of joins. As part of these examples, 
 # the query is made more complex by introducing subqueries 
-# in the place of the joined tables.
+# in the place of the joined tables, 
+# WHERE the table on one side is missing some rows, 
+# to illustrate what happens when this is the case.
 
 # Left Join
 
@@ -595,11 +603,25 @@ cur.fetchall()
 # 
 # OperationalError: RIGHT and FULL OUTER JOINs are not currently supported
 
+# As with RIGHT JOINs, sqlite3 does not have this functionality. 
+# It can, however, be accomplished with 
+# two queries with RIGHT and LEFT JOINs
+# that are stacked with a UNION clause 
+# and the DISTINCT qualifier to eliminate duplicate entries 
+# that appear in both tables. 
 
+# With this in mind, you can usually achieve anything you need to 
+# with a LEFT JOIN,  so sqlite3 is not as light as it may seem. 
+
+
+#--------------------------------------------------
 # Filters
+#--------------------------------------------------
 
 # Additionally, one can select a subset of rows 
-# satisfying certain criteria.
+# satisfying certain criteria, 
+# with a WHERE clause or a HAVING clause, 
+# in addition to the joins made in the table.
 
 # See the script ComputeBidSummariesAndFilter.sql 
 # to see such an example using a WHERE clause. 
