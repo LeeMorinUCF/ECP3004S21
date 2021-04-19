@@ -45,8 +45,9 @@ import csv # To import tables from csv files
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
-os.chdir(git_path + 'demo_25_Databases')
+drive_path = 'C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\'
+git_path = 'Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
+os.chdir(drive_path + git_path + 'demo_25_Databases')
 # Check that the change was successful.
 os.getcwd()
 
