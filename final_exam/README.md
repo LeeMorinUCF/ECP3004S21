@@ -72,6 +72,9 @@ A: Yes, you may use any online material during the exam.
 As this is a course in computer programming, 
 you will use the tools one normally has available to write software, 
 including-and especially-any course materials on GitHub.
+In fact, you are encouraged to avoid "reinventing the wheel"
+when producing software, 
+especially under time constraints. 
 The only exception is that *you may not communicate to each other during the exam*.
 
 
