@@ -622,11 +622,11 @@ do the following:
 A *dichotomy* is a contrast between two things. 
 Examples of dichotomies are empty/full, even/odd, 
 positive/negative, and alphabetic/nonalphabetic. 
-If a fuction deals with two or more different categories or situations, 
+If a function deals with two or more different categories or situations, 
 test all of them. 
 
 - *Think about boundaries*
-If a fucntion behaves differently around a boundary or threshold, 
+If a function behaves differently around a boundary or threshold, 
 test exactly on that boundary. 
 
 - *Think about order* 
@@ -639,7 +639,7 @@ you will want one list in order and another unordered.
 Following these guidelines, 
 you will get better and better at detecting errors and
 will commit fewer and fewer errors over time. 
-You will bocome more conscious of the errors that can occur
+You will become more conscious of the errors that can occur
 and that is the whole point of focusing on quality.
 The more you do it, 
 the less likely it becomes for problems to arise. 
@@ -659,8 +659,8 @@ it solves the problem.
 At least that is how it is supposed to work. 
 Many novice programmers attempt to debug their code 
 by making arbitrary changes. 
-Auto mechanics have a similar term, *parts changers*, 
-who will order and change car parts in an attempt to solve a problem,
+Auto mechanics have a term for someone who makes similar changes: *parts changers*
+These novice mechanics will order and change car parts in an attempt to solve a problem,
 which often results in replacing working parts and revisiting the same problem. 
 Programmers, on the other hand, do not have to order and pay for parts, 
 so it is tempting to try to solve a problem without "paying the price"
@@ -693,7 +693,7 @@ Then, change inputs to the calculation to start by troubleshooting a simpler cas
 Test after each such change: rerun your program and reproduce the error.
 Check whether the error still occurs or a new error appears. 
 If you make more than one change, you won't know which change in the code
-madea change to the error, if any remains. 
+made a change to the error, if any remains. 
 
 1. *Keep records.* 
 Like any other scientist, you should keep records. 
