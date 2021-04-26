@@ -66,7 +66,7 @@ I ask that you remain logged into Zoom for the entire session in case I have to 
 
 
 
-### Q: Are we allowed to use online sources during our midterm? Are we allowed to look back at our old assignments and your GitHub during the midterm?
+### Q: Are we allowed to use online sources during the exam? Are we allowed to look back at our old assignments and your GitHub during the exam?
 
 A: Yes, you may use any online material during the exam. 
 As this is a course in computer programming, 

@@ -100,7 +100,7 @@ A large part of business analytics involves organizing data.
 
 ### Demo 25: 
 
-Review the examples but using scripts are longer exercises best done after the exam.)
+Review the examples, however, using scripts are longer exercises best done after the exam.
 One topic that is important because much of the value of learning
 SQL derives from the ability to join multiple sources of data. 
 

@@ -39,7 +39,11 @@
 
 # import name_of_module
 # from scipy.optimize import minimize
-# import numpy as np
+
+# Added to plot the function before attempting to minimize. 
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 
 ##################################################
@@ -95,6 +99,46 @@ def g_2prime(x: float) -> float:
 
 
 
+##################################################
+# Optimization
+# Step 1: Plot the Function
+##################################################
+
+# Although this was not required, it helps 
+# to plot a function to give some intuition about
+# where to start the search for an optimum. 
+
+# Calculate function values across a grid of values of x.
+x_grid = np.arange(-5, 5, 0.01)
+g_grid = g(x_grid)
+
+
+plt.figure()
+plt.plot(x_grid, g_grid, label='f(x)' )
+plt.plot(x_grid, 0*g_grid)
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.show()
+
+
+# Zoom in because it is difficult to see the minimum. 
+x_grid = np.arange(-2.5, 2, 0.01)
+g_grid = g(x_grid)
+
+
+plt.figure()
+plt.plot(x_grid, g_grid, label='f(x)' )
+plt.plot(x_grid, 0*g_grid)
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.show()
+
+
+
+##################################################
+# Optimization
+# Step 2: Design the Algorithm
+##################################################
 
 
 # Exercise 2
