@@ -132,3 +132,21 @@ on your local computer and ```commit``` and ```push``` again.
 Most of the work in computer programming is about
 making, detecting, and correcting errors, and GitHub is a useful
 tool designed to keep track of all your changes over time. 
+
+### Pulling Changes
+
+Often, there may be changes made to the repo that have not been made
+on your local machine. 
+This will occur if other programmers are contributing to the repo
+or if you made contributions from another computer. 
+You can *pull* changes from the remote repository to get your 
+local copy up-to-date with the remote repository. 
+
+
+<img src="Images/GitHubBeforePull.png" width="750"/>
+
+After pressing the "Pull" button, 
+you should see that the updates have been made to your local folder.
+You can check for the new files or updated "Last Modified" dates
+in an application such as "File Explorer" in Wondows. 
+
