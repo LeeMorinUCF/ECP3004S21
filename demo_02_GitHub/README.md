@@ -148,5 +148,5 @@ local copy up-to-date with the remote repository.
 After pressing the "Pull" button, 
 you should see that the updates have been made to your local folder.
 You can check for the new files or updated "Last Modified" dates
-in an application such as "File Explorer" in Wondows. 
+in an application such as "File Explorer" in Windows. 
 
