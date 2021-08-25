@@ -102,6 +102,7 @@ def g_2prime(x: float) -> float:
 ##################################################
 # Optimization
 # Step 1: Plot the Function
+# (not required for assignment)
 ##################################################
 
 # Although this was not required, it helps 
@@ -135,6 +136,20 @@ plt.show()
 
 
 
+# Also consider the slope of g(x). 
+x_grid = np.arange(-2.5, 2, 0.01)
+g_grid = g_prime(x_grid)
+
+
+plt.figure()
+plt.plot(x_grid, g_grid, label='f(x)' )
+plt.plot(x_grid, 0*g_grid)
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.show()
+
+
+
 ##################################################
 # Optimization
 # Step 2: Design the Algorithm
@@ -148,7 +163,7 @@ def newton_g_opt(x_0: float, maxiter: int, tol: float) -> float:
     using Newton's method.
 
     >>> newton_g_opt(-2, 100, 0.001)
-    0
+    -2
     >>> newton_g_opt(0, 100, 0.000001)
     -0.7807763785162698
     >>> newton_g_opt(2, 100, 0.001)
